@@ -1,0 +1,190 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>阿里云ECS安装部署nginx - R•K</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="WangRenKe的个人博客,"> 
+    <meta name="description" content="路要一步一步走，坑要一个一个填！—— from WangRenKe的博客,记录一下阿里云ECS部署nginx，以及一些小小的坑。对于本篇文章大家有不理解的可以留言或私信，大家一起探讨共同进步！
+肯定是要先买个服务器了，我只是想玩玩，就买最便宜的就好了，够用。注意：买完需要,"> 
+    <meta name="author" content="WangRenKe"> 
+    <link rel="alternative" href="atom.xml" title="R•K" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="阿里云ECS安装部署nginx - R•K"/>
+    <meta name="twitter:description" content="路要一步一步走，坑要一个一个填！—— from WangRenKe的博客,记录一下阿里云ECS部署nginx，以及一些小小的坑。对于本篇文章大家有不理解的可以留言或私信，大家一起探讨共同进步！
+肯定是要先买个服务器了，我只是想玩玩，就买最便宜的就好了，够用。注意：买完需要,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="R•K"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="阿里云ECS安装部署nginx - R•K"/>
+    <meta property="og:description" content="路要一步一步走，坑要一个一个填！—— from WangRenKe的博客,记录一下阿里云ECS部署nginx，以及一些小小的坑。对于本篇文章大家有不理解的可以留言或私信，大家一起探讨共同进步！
+肯定是要先买个服务器了，我只是想玩玩，就买最便宜的就好了，够用。注意：买完需要,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">R•K</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://example.com"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">阿里云ECS安装部署nginx</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">阿里云ECS安装部署nginx</h1>
+        <div class="stuff">
+            <span>二月 04, 2022</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/nginx/" rel="tag">nginx</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/%E9%98%BF%E9%87%8C%E4%BA%91ECS/" rel="tag">阿里云ECS</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <h1 id="记录一下阿里云ECS部署nginx，以及一些小小的坑。对于本篇文章大家有不理解的可以留言或私信，大家一起探讨共同进步！"><a href="#记录一下阿里云ECS部署nginx，以及一些小小的坑。对于本篇文章大家有不理解的可以留言或私信，大家一起探讨共同进步！" class="headerlink" title="记录一下阿里云ECS部署nginx，以及一些小小的坑。对于本篇文章大家有不理解的可以留言或私信，大家一起探讨共同进步！"></a>记录一下阿里云ECS部署nginx，以及一些小小的坑。对于本篇文章大家有不理解的可以留言或私信，大家一起探讨共同进步！</h1><ol>
+<li><p>肯定是要先买个服务器了，我只是想玩玩，就买最便宜的就好了，够用。<br>注意：买完需要重置一下密码，连接服务器需要输入密码；<br><img src="https://img-blog.csdnimg.cn/75aa9dfe4bbb49c29ef1e86821d696fd.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn546L5Zyo6Lev5LiK,size_20,color_FFFFFF,t_70,g_se,x_16" alt="在这里插入图片描述"></p>
+</li>
+<li><p>使用<strong>Xshell</strong>和<strong>Xftp</strong>或者<strong>MobaXterm</strong>连接服务器。服务器的系统我选择的是centOS，这里我是用的是<code>MobaXterm</code>，注意ip地址一定是公网ip，端口一般情况下服务器都会默认配22端口，如果连不上，那么需要给服务器的安全组配置22端口规则；<br><img src="https://img-blog.csdnimg.cn/bef2778dd2234e87a578d05f77e16684.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn546L5Zyo6Lev5LiK,size_20,color_FFFFFF,t_70,g_se,x_16" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/d7d2b0dcb9b14defbcec8a2ecfa3c5a7.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn546L5Zyo6Lev5LiK,size_20,color_FFFFFF,t_70,g_se,x_16" alt="在这里插入图片描述"></p>
+</li>
+</ol>
+<ol start="3">
+<li>连接服务器成功之后，下面就是安装nginx了。</li>
+</ol>
+<p><strong>3.1</strong> 需要先安装几个nginx需要用到的依赖吧算是<br><code>3.1.1 先安装gcc-c++编译器  OpenSSL------</code> ==yum install gcc-c++== <code>--------</code> ==yum install -y openssl openssl-devel==<br><code>3.1.2 再安装pcre包 ---------</code> ==yum install -y pcre pcre-devel==<br><code>3.1.3 再安装zlib包 ----------</code>  ==yum install -y zlib zlib-devel==<br><strong>3.2</strong> 下载和使用nginx，我是在官网直接下载最新的稳定版本，在服务器解压使用，下载nginx的网站 <a target="_blank" rel="noopener" href="http://nginx.org/en/download.html">Nginx下载</a>，也可以直接命令下载 ==wget <a target="_blank" rel="noopener" href="https://nginx.org/download/nginx-1.20.0.tar.gz==">https://nginx.org/download/nginx-1.20.0.tar.gz==</a><br> <code>3.2.1 上传至 /usr/local/ 文件夹下解压 ---------- 解压命令 </code> ==tar -zxvf nginx-1.20.0.tar.gz==<br> <code>3.2.1 进入安装目录 cd /usr/local/nginx-1.20.0 使用默认的配置 ./configure</code><br> <code>3.2.3 编译安装 ------  </code> ==make install==<br> <code>3.2.4 找到sbin目录，启动nginx，这里可以使用 </code> ==whereis nginx== <code>命令查找nginx路径，找到路径下的sbin会有一个可执行文件，执行了它就可以了，启动nginx</code> ==./nginx==<br> <img src="https://img-blog.csdnimg.cn/ab4741d33672447eb9c3d3079293d7cf.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn546L5Zyo6Lev5LiK,size_20,color_FFFFFF,t_70,g_se,x_16" alt="在这里插入图片描述"><br> 4. 弄好之后，就可以访问我们的公网ip，就直接访问到nginx的成功页面了；然后就可以部署前端项目，结合nginx的配置玩一玩；<code>对了，这里有一个坑，就是nginx默认的是80端口，如果我们的服务器安全组不配置80端口，是访问不了的，需要设置一下；</code><br> <img src="https://img-blog.csdnimg.cn/f2079b7779374498bd37622c9ea09f9b.png" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/73ee797d5d95436091c9f9dd30bb63ef.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5aSn546L5Zyo6Lev5LiK,size_20,color_FFFFFF,t_70,g_se,x_16" alt="在这里插入图片描述"></p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                        
+                            <li title="1" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="false"
+        data-ae="false"
+        data-ci=""
+        data-cs=""
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>
