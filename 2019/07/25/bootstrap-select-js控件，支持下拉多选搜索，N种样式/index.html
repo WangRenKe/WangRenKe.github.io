@@ -1,0 +1,475 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>bootstrap-select.js控件，支持下拉多选搜索，N种样式 - R•K</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="WangRenKe的个人博客,"> 
+    <meta name="description" content="路要一步一步走，坑要一个一个填！—— from WangRenKe的博客,
+参考网址：https://www.cnblogs.com/landeanfen/p/7457283.html#_label1
+
+阅读目录
+
+一、组件开源地址以及API说明二、组件效果示例三、使用示,"> 
+    <meta name="author" content="WangRenKe"> 
+    <link rel="alternative" href="atom.xml" title="R•K" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="bootstrap-select.js控件，支持下拉多选搜索，N种样式 - R•K"/>
+    <meta name="twitter:description" content="路要一步一步走，坑要一个一个填！—— from WangRenKe的博客,
+参考网址：https://www.cnblogs.com/landeanfen/p/7457283.html#_label1
+
+阅读目录
+
+一、组件开源地址以及API说明二、组件效果示例三、使用示,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="R•K"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="bootstrap-select.js控件，支持下拉多选搜索，N种样式 - R•K"/>
+    <meta property="og:description" content="路要一步一步走，坑要一个一个填！—— from WangRenKe的博客,
+参考网址：https://www.cnblogs.com/landeanfen/p/7457283.html#_label1
+
+阅读目录
+
+一、组件开源地址以及API说明二、组件效果示例三、使用示,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">R•K</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://example.com"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">bootstrap-select.js控件，支持下拉多选搜索，N种样式</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">bootstrap-select.js控件，支持下拉多选搜索，N种样式</h1>
+        <div class="stuff">
+            <span>七月 25, 2019</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/bootstrap-select/" rel="tag">bootstrap-select</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <blockquote>
+<p>参考网址：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/landeanfen/p/7457283.html#_label1">https://www.cnblogs.com/landeanfen/p/7457283.html#_label1</a></p>
+</blockquote>
+<p><strong>阅读目录</strong></p>
+<blockquote>
+<p>一、组件开源地址以及API说明<br>二、组件效果示例<br>三、使用示例<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1、基础示例<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2、其他效果示例<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3、组件取值赋值<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4、组件其他用法<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5、组件封装<br>四、源码下载<br>五、总结</p>
+</blockquote>
+<p><strong>正文</strong></p>
+<blockquote>
+<p>前言：之前分享过两篇bootstrap下拉框的组件：JS组件系列——两种bootstrap multiselect组件大比拼  和 JS组件系列——Bootstrap Select2组件使用小结 ，收到很多园友的关注和提问，最后总结这两篇里面的下拉框组件都存在一些大大小小的问题，比如两种bootstrap mutiselect组件，界面渲染效果略差；再比如select2一些兼容性问题、多选的取值赋值等问题都困扰着博主以及很多园友，项目里面的下拉框很早就替换为今天介绍的这款组件，所以今天介绍给大家，让大家多一个选择也好！感谢大家的持续关注！</p>
+</blockquote>
+<blockquote>
+<p>说点题外话。本来这篇早就准备写了，不料最近项目准备走前端化开发路线，可忙坏博主了，一时间，Node.js、npm、webpack、react、react-router、ant.design等等技术都得学呀，脑子真是个好东西，能够一下子容纳这么多新知识，虽然各种不适应，但时间一长就慢慢习惯了，所幸博主经常关注这方面的技术，所以学起来并没有那么吃力。关于vue和react，很多群友都讨论过它们的优势和劣势，其实博主觉得说不上哪个组件更优，关键得看项目适应哪种生态，我们选用react很大一部分原因就是看中了ant.design的效果和丰富的组件库。好了，再说就跑题了，以后博主分享搭建前端环境的时候再来细说。</p>
+</blockquote>
+<blockquote>
+<p>一、组件开源地址以及API说明<br>bootstrap-select开源地址：<a target="_blank" rel="noopener" href="https://github.com/silviomoreto/bootstrap-select">https://github.com/silviomoreto/bootstrap-select</a><br>bootstrap-select使用示例：<a target="_blank" rel="noopener" href="http://silviomoreto.github.io/bootstrap-select/examples/">http://silviomoreto.github.io/bootstrap-select/examples/</a><br>bootstrap-select文档说明：<a target="_blank" rel="noopener" href="http://silviomoreto.github.io/bootstrap-select/options/">http://silviomoreto.github.io/bootstrap-select/options/</a></p>
+</blockquote>
+<p>二、组件效果示例<br>一睹初容<br><img src="https://img-blog.csdnimg.cn/20190725105515475.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80Mzk5Njk5OQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>多选效果<br><img src="https://img-blog.csdnimg.cn/2019072510561640.gif" alt="在这里插入图片描述"></p>
+<p>可配置搜索功能<br><img src="https://img-blog.csdnimg.cn/20190725110746131.gif" alt="在这里插入图片描述"></p>
+<p>分组选中<br><img src="https://img-blog.csdnimg.cn/20190725110815121.gif" alt="在这里插入图片描述"></p>
+<p>设置最多选中项为2个<br><img src="https://img-blog.csdnimg.cn/20190725110944854.gif" alt="在这里插入图片描述"></p>
+<p> 自定义说明Title，比如我们定义为“请选择省份”<br><img src="https://img-blog.csdnimg.cn/20190725111004440.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80Mzk5Njk5OQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br> 某些情况下如果多选的数量比较多，我们可以显示“缩略模式”。比如当选择了两项以上的时候<br><img src="https://img-blog.csdnimg.cn/20190725111023909.gif" alt="在这里插入图片描述"></p>
+<p>自定义样式<br><img src="https://img-blog.csdnimg.cn/20190725111045739.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80Mzk5Njk5OQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>显示图标加文字<br><img src="https://img-blog.csdnimg.cn/20190725111311863.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80Mzk5Njk5OQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>显示带颜色的标签<br><img src="https://img-blog.csdnimg.cn/20190725111332499.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80Mzk5Njk5OQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><img src="https://img-blog.csdnimg.cn/20190725111344927.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80Mzk5Njk5OQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>展开最多显示可配置的个数，不如最多显示3项<br><img src="https://img-blog.csdnimg.cn/20190725111449211.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80Mzk5Njk5OQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br> 全选和反选<br><img src="https://img-blog.csdnimg.cn/20190725111502714.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80Mzk5Njk5OQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<blockquote>
+<p>以上都是些常用功能，更多效果可以查看官方示例！</p>
+</blockquote>
+<p><strong>三、使用示例</strong></p>
+<blockquote>
+<p>1、基础示例<br>既然是bootstrap-select，组件肯定是依赖bootstrap的，而bootstrap又是依赖jquery的，所以使用组件必须引用如下文件。</p>
+</blockquote>
+<pre><code>&lt;link href=&quot;Content/bootstrap/css/bootstrap.min.css&quot; rel=&quot;stylesheet&quot; /&gt;
+&lt;link href=&quot;Content/bootstrap-select/css/bootstrap-select.min.css&quot; rel=&quot;stylesheet&quot; /&gt;
+&lt;script src=&quot;Content/jquery-1.9.1.min.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;Content/bootstrap/js/bootstrap.min.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;Content/bootstrap-select/js/bootstrap-select.min.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;Content/bootstrap-select/js/i18n/defaults-zh_CN.min.js&quot;&gt;&lt;/script&gt;
+</code></pre>
+<blockquote>
+<p>最后一个文件 defaults-zh_CN.min.js 非必需，是组件中文化的时候才需要引用。<br>使用就更加简单了，不用任何已经js，直接使用class就可以初始化。</p>
+</blockquote>
+<pre><code>&lt;select class=&quot;selectpicker&quot;&gt;
+    &lt;option value=&quot;1&quot;&gt;广东省&lt;/option&gt;
+    &lt;option value=&quot;2&quot;&gt;广西省&lt;/option&gt;
+    &lt;option value=&quot;3&quot;&gt;福建省&lt;/option&gt;
+    &lt;option value=&quot;4&quot;&gt;湖南省&lt;/option&gt;
+    &lt;option value=&quot;5&quot;&gt;山东省&lt;/option&gt;                            
+&lt;/select&gt;
+</code></pre>
+<p>给一个select标签加上selectpicker样式即可。</p>
+<p>多选就不用多说了</p>
+<pre><code>&lt;select class=&quot;selectpicker&quot; multiple&gt;
+    &lt;option value=&quot;1&quot;&gt;广东省&lt;/option&gt;
+    &lt;option value=&quot;2&quot;&gt;广西省&lt;/option&gt;
+    &lt;option value=&quot;3&quot;&gt;福建省&lt;/option&gt;
+    &lt;option value=&quot;4&quot;&gt;湖南省&lt;/option&gt;
+    &lt;option value=&quot;5&quot;&gt;山东省&lt;/option&gt;                            
+&lt;/select&gt;
+</code></pre>
+<p><strong>2、其他效果示例</strong></p>
+<blockquote>
+<p>上面是最简单的使用，下面就将一些常用的效果给出代码示例，高手请直接跳过此段。<br>给组件加搜索功能</p>
+</blockquote>
+<pre><code>&lt;select class=&quot;selectpicker&quot; multiple data-live-search=&quot;true&quot;&gt;
+    &lt;option value=&quot;1&quot;&gt;广东省&lt;/option&gt;
+    &lt;option value=&quot;2&quot;&gt;广西省&lt;/option&gt;
+    &lt;option value=&quot;3&quot;&gt;福建省&lt;/option&gt;
+    &lt;option value=&quot;4&quot;&gt;湖南省&lt;/option&gt;
+    &lt;option value=&quot;5&quot;&gt;山东省&lt;/option&gt;                            
+&lt;/select&gt;
+</code></pre>
+<p>选项分组</p>
+<pre><code>&lt;select class=&quot;form-control selectpicker&quot; data-live-search=&quot;true&quot; multiple&gt;
+        &lt;optgroup label=&quot;广东省&quot;&gt;
+                &lt;option value=&quot;1&quot;&gt;广州市&lt;/option&gt;
+                &lt;option value=&quot;2&quot;&gt;深圳市&lt;/option&gt;
+                &lt;option value=&quot;3&quot;&gt;珠海市&lt;/option&gt;
+         &lt;/optgroup&gt;   
+          &lt;optgroup label=&quot;广西&quot;&gt;
+                  &lt;option value=&quot;1&quot;&gt;南宁市&lt;/option&gt;
+                  &lt;option value=&quot;2&quot;&gt;柳州&lt;/option&gt;
+                  &lt;option value=&quot;3&quot;&gt;桂林市&lt;/option&gt;
+           &lt;/optgroup&gt;  
+           &lt;optgroup label=&quot;山东&quot;&gt;
+                   &lt;option value=&quot;1&quot;&gt;烟台&lt;/option&gt;
+                   &lt;option value=&quot;2&quot;&gt;青岛&lt;/option&gt;
+                   &lt;option value=&quot;3&quot;&gt;济南&lt;/option&gt;
+             &lt;/optgroup&gt;                          
+&lt;/select&gt;
+</code></pre>
+<p>设置最多选中项为2个</p>
+<pre><code>&lt;select class=&quot;selectpicker&quot; multiple data-live-search=&quot;true&quot; data-max-options=&quot;2&quot;&gt;
+    &lt;option value=&quot;1&quot;&gt;广东省&lt;/option&gt;
+    &lt;option value=&quot;2&quot;&gt;广西省&lt;/option&gt;
+    &lt;option value=&quot;3&quot;&gt;福建省&lt;/option&gt;
+    &lt;option value=&quot;4&quot;&gt;湖南省&lt;/option&gt;
+    &lt;option value=&quot;5&quot;&gt;山东省&lt;/option&gt;                            
+&lt;/select&gt;
+</code></pre>
+<p><strong>缩略模式，比如当选中值大于3个的时候只显示选中项的个数，注意这个属性只对多选生效</strong></p>
+<pre><code>&lt;select class=&quot;selectpicker&quot; multiple data-live-search=&quot;true&quot; data-selected-text-format=&quot;count &gt; 3&quot;&gt;
+    &lt;option value=&quot;1&quot;&gt;广东省&lt;/option&gt;
+    &lt;option value=&quot;2&quot;&gt;广西省&lt;/option&gt;
+    &lt;option value=&quot;3&quot;&gt;福建省&lt;/option&gt;
+    &lt;option value=&quot;4&quot;&gt;湖南省&lt;/option&gt;
+    &lt;option value=&quot;5&quot;&gt;山东省&lt;/option&gt;                            
+&lt;/select&gt;
+</code></pre>
+<p><strong>显示带颜色的标签</strong></p>
+<pre><code> &lt;select class=&quot;form-control selectpicker&quot; title=&quot;请选择省份&quot; multiple&gt;
+                        &lt;option data-content=&quot;&lt;span class=&#39;label label-success&#39;&gt;广东省&lt;/span&gt;&quot;&gt;广东省&lt;/option&gt;    
+                        &lt;option data-content=&quot;&lt;span class=&#39;label label-info&#39;&gt;广西省&lt;/span&gt;&quot;&gt;广西省&lt;/option&gt;  
+                        &lt;option data-content=&quot;&lt;span class=&#39;label label-warning&#39;&gt;福建省&lt;/span&gt;&quot;&gt;福建省&lt;/option&gt;  
+                        &lt;option data-content=&quot;&lt;span class=&#39;label label-danger&#39;&gt;山东省&lt;/span&gt;&quot;&gt;山东省&lt;/option&gt;                        
+&lt;/select&gt;
+</code></pre>
+<p>默认样式选择</p>
+<pre><code>&lt;select class=&quot;selectpicker&quot; data-style=&quot;btn-primary&quot;&gt;
+  ...
+&lt;/select&gt;
+
+&lt;select class=&quot;selectpicker&quot; data-style=&quot;btn-info&quot;&gt;
+  ...
+&lt;/select&gt;
+
+&lt;select class=&quot;selectpicker&quot; data-style=&quot;btn-success&quot;&gt;
+  ...
+&lt;/select&gt;
+
+&lt;select class=&quot;selectpicker&quot; data-style=&quot;btn-warning&quot;&gt;
+  ...
+&lt;/select&gt;
+
+&lt;select class=&quot;selectpicker&quot; data-style=&quot;btn-danger&quot;&gt;
+  ...
+&lt;/select&gt;
+</code></pre>
+<p><img src="https://img-blog.csdnimg.cn/20190725112647363.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80Mzk5Njk5OQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><strong>3、组件取值赋值</strong></p>
+<p>上面都是组件的初始化的一些东西，一般情况下，我们需要对组件进行取值和赋值，我们应该如何操作呢。</p>
+<blockquote>
+<p>3.1、组件取值</p>
+</blockquote>
+<p>关于组件取值保持原生的jquery方法，比如 <strong>var value = $(‘#sel’).val();</strong> 这样是不是很简单，需要注意的是，如果是多选，这里得到的value变量是一个数组变量，形如 [‘1’,’2’,’3’]。</p>
+<blockquote>
+<p>3.2、组件赋值</p>
+</blockquote>
+<p>组件赋值就需要稍微变换一下了，如果你直接 <strong>$(‘#sel’).val(‘1’);</strong> 这样赋值将会无效，正确的赋值方法为：</p>
+<blockquote>
+<p>$(‘.selectpicker’).selectpicker(‘val’, ‘1’);</p>
+</blockquote>
+<p>在一些级联选择的使用场景中，经常需要在赋值的时候顺便触发一下组件的change事件，我们可以这么做。</p>
+<blockquote>
+<p>$(‘.selectpicker’).selectpicker(‘val’, ‘1’).trigger(“change”);</p>
+</blockquote>
+<p>如果是多选的赋值，也是一样</p>
+<blockquote>
+<p>$(‘.selectpicker’).selectpicker(‘val’, [‘1’,’2’,’3’]).trigger(“change”);</p>
+</blockquote>
+<p><strong>4、组件其他用法</strong></p>
+<blockquote>
+<p>全选： $(‘.selectpicker’).selectpicker(‘selectAll’);<br>反选： $(‘.selectpicker’).selectpicker(‘deselectAll’);<br>适应手机模式： $(‘.selectpicker’).selectpicker(‘mobile’); </p>
+</blockquote>
+<p>组件禁用：</p>
+<blockquote>
+<p>$(‘.disable-example’).prop(‘disabled’, true);<br>$(‘.disable-example’).selectpicker(‘refresh’);</p>
+</blockquote>
+<p>组件启用：</p>
+<blockquote>
+<p>$(‘.disable-example’).prop(‘disabled’, false);<br>$(‘.disable-example’).selectpicker(‘refresh’);</p>
+</blockquote>
+<p>组件销毁：</p>
+<blockquote>
+<p>$(‘.selectpicker’).selectpicker(‘destroy’);</p>
+</blockquote>
+<p><strong>5、组件封装</strong></p>
+<blockquote>
+<p>上面关于组件的初始化介绍了那么多，都是通过class=’selectpicker’去做初始化的，很多情况下，我们的select的option都是动态获取，然后再初始化的，于是乎博主仔细寻找api，看里面是否有远程获取数据，很遗憾，组件没有支持这种远程获取数据的方法。没关系，我们自己封装一个ajax请求，然后动态构造option又有多难呢？这里又得提一下原来那篇封装js组件的文章了，我们按照那篇文章的思路封装一个不就好了。以下给出一个参考。</p>
+</blockquote>
+<pre><code>(function ($) &#123;
+    //1.定义jquery的扩展方法bootstrapSelect
+   $.fn.bootstrapSelect = function (options, param) &#123;
+       if (typeof options == &#39;string&#39;) &#123;
+           return $.fn.bootstrapSelect.methods[options](this, param);
+       &#125;
+       //2.将调用时候传过来的参数和default参数合并
+       options = $.extend(&#123;&#125;, $.fn.bootstrapSelect.defaults, options || &#123;&#125;);
+       //3.添加默认值
+       var target = $(this);
+       if (!target.hasClass(&quot;selectpicker&quot;)) target.addClass(&quot;selectpicker&quot;);
+       target.attr(&#39;valuefield&#39;, options.valueField);
+       target.attr(&#39;textfield&#39;, options.textField);
+       target.empty();
+       var option = $(&#39;&lt;option&gt;&lt;/option&gt;&#39;);
+       option.attr(&#39;value&#39;, &#39;&#39;);
+       option.text(options.placeholder);
+       target.append(option);
+       //4.判断用户传过来的参数列表里面是否包含数据data数据集，如果包含，不用发ajax从后台取，否则否送ajax从后台取数据
+       if (options.data) &#123;
+           init(target, options.data);
+       &#125;
+       else &#123;
+           //var param = &#123;&#125;;
+           options.onBeforeLoad.call(target, options.param);
+           if (!options.url) return;
+           $.getJSON(options.url, options.param, function (data) &#123;
+               init(target, data);
+           &#125;);
+       &#125;
+       function init(target, data) &#123;
+           $.each(data, function (i, item) &#123;
+               var option = $(&#39;&lt;option&gt;&lt;/option&gt;&#39;);
+               option.attr(&#39;value&#39;, item[options.valueField]);
+               option.text(item[options.textField]);
+               target.append(option);
+           &#125;);
+           options.onLoadSuccess.call(target);
+       &#125;
+       target.unbind(&quot;change&quot;);
+       target.on(&quot;change&quot;, function (e) &#123;
+           if (options.onChange)
+               return options.onChange(target.val());
+       &#125;);
+   &#125;
+
+   //5.如果传过来的是字符串，代表调用方法。
+   $.fn.bootstrapSelect.methods = &#123;
+       getValue: function (jq) &#123;
+           return jq.val();
+       &#125;,
+       setValue: function (jq, param) &#123;
+           jq.val(param);
+       &#125;,
+       load: function (jq, url) &#123;
+           $.getJSON(url, function (data) &#123;
+               jq.empty();
+               var option = $(&#39;&lt;option&gt;&lt;/option&gt;&#39;);
+               option.attr(&#39;value&#39;, &#39;&#39;);
+               option.text(&#39;请选择&#39;);
+               jq.append(option);
+               $.each(data, function (i, item) &#123;
+                   var option = $(&#39;&lt;option&gt;&lt;/option&gt;&#39;);
+                   option.attr(&#39;value&#39;, item[jq.attr(&#39;valuefield&#39;)]);
+                   option.text(item[jq.attr(&#39;textfield&#39;)]);
+                   jq.append(option);
+               &#125;);
+           &#125;);
+       &#125;
+   &#125;;
+
+   //6.默认参数列表
+   $.fn.bootstrapSelect.defaults = &#123;
+       url: null,
+       param: null,
+       data: null,
+       valueField: &#39;value&#39;,
+       textField: &#39;text&#39;,
+       placeholder: &#39;请选择&#39;,
+       
+   &#125;;
+
+   //初始化
+   $(&quot;.selectpicker&quot;).each(function () &#123;
+    var target = $(this);
+    target.attr(&quot;title&quot;, $.fn.select.defaults.placeholder);
+    target.selectpicker();
+&#125;);
+&#125;)(jQuery);
+</code></pre>
+<p> 这样封装之后，我们直接使用如下代码即可初始化组件。</p>
+<pre><code>$(&#39;#sel&#39;).bootstrapSelect(&#123;
+    url:&#39;/a/b&#39;,
+    data: &#123;&#125;,
+    valueField: &#39;value&#39;,
+    textField: &#39;text&#39;,
+&#125;);
+</code></pre>
+<p><strong>四、总结</strong></p>
+<blockquote>
+<p>至此，本文结束，多个bootstrap的select组件，纵观所有，还是这个稍微好用一些，不管是兼容性还是实现效果都还不错，有兴趣的可以用起来试试</p>
+</blockquote>
+<p><strong>六、遇到的问题</strong></p>
+<blockquote>
+<p><strong>1</strong>.在项目中使用这个控件遇到的问题一：在tab页签里使用，初始化第一个页签有下拉框，其他页签并没有<br>原因：因为元素id只有一个，而每个页签下都有一个下拉框元素，id是唯一的，所以初始化的时候，选不到后面的元素<br>解决方法：给不同的id或给class，初始化： $(‘#selectContacts0’).selectpicker();<br><img src="https://img-blog.csdnimg.cn/20190815105135704.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80Mzk5Njk5OQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><strong>2</strong>.在项目中使用这个空间遇到的问题二：点击每个页签时，总是保留上个页签选中的状态<br>原因：点击每个页签时，需要把当前页签下的多选框清空并初始化<br>解决方法：点击每个页签时，执行：<br>$(“.selectpicker”).selectpicker(‘val’, ‘’);//回到初始状态<br>$(“.selectpicker).selectpicker(‘refresh’);<br><strong>3</strong>.在项目中使用这个空间遇到的问题三：一键全选和一键反选(自带功能显示是英文，可以自己手动换中文);<br>解决方法：在多选框上加data-actions-box=”true”属性，就是反选功能,用jquery选中反选元素手动赋值为中文<br><img src="https://img-blog.csdnimg.cn/20190815105424499.png" alt="在这里插入图片描述"></p>
+</blockquote>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                        
+                            <li title="1" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="false"
+        data-ae="false"
+        data-ci=""
+        data-cs=""
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>

@@ -1,0 +1,194 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>window系统配置nvm管理工具 - R•K</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="WangRenKe的个人博客,"> 
+    <meta name="description" content="路要一步一步走，坑要一个一个填！—— from WangRenKe的博客,
+参考：https://www.cnblogs.com/jing-tian/p/11225123.html
+
+建议为了方便以后开发过程中，兼容新旧项目的node版本，直接装上nvm环境再装node，,"> 
+    <meta name="author" content="WangRenKe"> 
+    <link rel="alternative" href="atom.xml" title="R•K" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="window系统配置nvm管理工具 - R•K"/>
+    <meta name="twitter:description" content="路要一步一步走，坑要一个一个填！—— from WangRenKe的博客,
+参考：https://www.cnblogs.com/jing-tian/p/11225123.html
+
+建议为了方便以后开发过程中，兼容新旧项目的node版本，直接装上nvm环境再装node，,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="R•K"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="window系统配置nvm管理工具 - R•K"/>
+    <meta property="og:description" content="路要一步一步走，坑要一个一个填！—— from WangRenKe的博客,
+参考：https://www.cnblogs.com/jing-tian/p/11225123.html
+
+建议为了方便以后开发过程中，兼容新旧项目的node版本，直接装上nvm环境再装node，,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">R•K</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://example.com"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">window系统配置nvm管理工具</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">window系统配置nvm管理工具</h1>
+        <div class="stuff">
+            <span>二月 14, 2020</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/nvm%E5%AE%89%E8%A3%85/" rel="tag">nvm安装</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" rel="tag">环境配置</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <blockquote>
+<p>参考：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/jing-tian/p/11225123.html">https://www.cnblogs.com/jing-tian/p/11225123.html</a></p>
+</blockquote>
+<h4 id="建议为了方便以后开发过程中，兼容新旧项目的node版本，直接装上nvm环境再装node，如果电脑中本来就装了node环境也不要紧。不会冲突"><a href="#建议为了方便以后开发过程中，兼容新旧项目的node版本，直接装上nvm环境再装node，如果电脑中本来就装了node环境也不要紧。不会冲突" class="headerlink" title="建议为了方便以后开发过程中，兼容新旧项目的node版本，直接装上nvm环境再装node，如果电脑中本来就装了node环境也不要紧。不会冲突"></a>建议为了方便以后开发过程中，兼容新旧项目的node版本，直接装上nvm环境再装node，如果电脑中本来就装了node环境也不要紧。不会冲突</h4><ol>
+<li>nvm-windows 最新下载地址：<code>https://github.com/coreybutler/nvm-windows/releases</code><br>可以看到这里又有四个可下载的文件。<br>nvm-noinstall.zip： 这个是绿色免安装版本，但是使用之前需要配置<br>nvm-setup.zip：这是一个安装包，下载之后点击安装，无需配置就可以使用，方便。<br>Source code(zip)：zip压缩的源码<br>Sourc code(tar.gz)：tar.gz的源码，一般用于*nix系统<br>我对这个目前只是简单使用，为了方便，所以下载了nvm-set.zip文件。<br><img src="https://img-blog.csdnimg.cn/20200214011343676.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80Mzk5Njk5OQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></li>
+<li>下载好解压缩包点击进行安装<br>第一个安装目录：这里没有使用默认的安装目录，修改安装目录为 D:\system\nvm；读者可自行决定安装目录<br><img src="https://img-blog.csdnimg.cn/2020021401154595.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80Mzk5Njk5OQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>第二个安装目录：添加 node.js 的安装目录<br>==注意：<br>这里用 “添加 node.js 的安装目录” 的说法其实不太准确，准确的说法应该是配置 node.js 的安装目录<br>默认会使用 C:\Program Files\nodejs 目录，C:\Program Files\nodejs 目录也是 node.js 默认的安装目录<br>如果读者在安装 nvm 前就已经安装了 node.js，且修改了 node.js 的安装目录，那么此处的目录要修改为 node.js 的安装目录<br>如果读者在安装 nvm 前没有安装 node.js，那么此处的目录可自行定义==<br><img src="https://img-blog.csdnimg.cn/20200214011721421.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80Mzk5Njk5OQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></li>
+</ol>
+<p>– 笔者这里由于已经安装了node，且安装路径为D:\system\nodejs，所以需要在此处修改<br>笔者的 node 的安装目录是 D:\system\nodejs<br>– 点击安装，在安装过程中会弹出：由于已经安装了 node，所以此时提示“你希望nvm管理已经安装的 node 版本吗”，点击 是，待安装完成后测试是否安装成功；命令：<code>nvm -v</code><br>– 如果出现nvm版本号和一系列帮助指令，则说明nvm安装成功。<br>否则，可能会提示nvm: command not found<br>3. 命令使用<br>nvm for windows是一个命令行工具，在控制台输入nvm,就可以看到它的命令用法。基本命令有：<br><code>nvm arch [32|64] ： </code>显示node是运行在32位还是64位模式。指定32或64来覆盖默认体系结构。<br><code>nvm install &lt;version&gt; [arch]：</code> 该可以是node.js版本或最新稳定版本latest。（可选[arch]）指定安装32位或64位版本（默认为系统arch）。设置[arch]为all以安装32和64位版本。在命令后面添加–insecure ，可以绕过远端下载服务器的SSL验证。<br><code>nvm list [available]： </code>列出已经安装的node.js版本。可选的available，显示可下载版本的部分列表。这个命令可以简写为nvm ls [available]。<br><code>nvm on： </code>启用node.js版本管理。<br><code>nvm off： </code>禁用node.js版本管理(不卸载任何东西)<br><code>nvm proxy [url]： </code>设置用于下载的代理。留[url]空白，以查看当前的代理。设置[url]为none删除代理。<br><code>nvm node_mirror [url]：</code>设置node镜像，默认为<a target="_blank" rel="noopener" href="https://nodejs.org/dist/.%E3%80%82%E6%88%91%E5%BB%BA%E8%AE%AE%E8%AE%BE%E7%BD%AE%E4%B8%BA%E6%B7%98%E5%AE%9D%E7%9A%84%E9%95%9C%E5%83%8Fhttps://npm.taobao.org/mirrors/node/">https://nodejs.org/dist/.。我建议设置为淘宝的镜像https://npm.taobao.org/mirrors/node/</a><br><code>nvm npm_mirror [url]：</code>设置npm镜像，默认为<a target="_blank" rel="noopener" href="https://github.com/npm/npm/archive/%E3%80%82%E6%88%91%E5%BB%BA%E8%AE%AE%E8%AE%BE%E7%BD%AE%E4%B8%BA%E6%B7%98%E5%AE%9D%E7%9A%84%E9%95%9C%E5%83%8Fhttps://npm.taobao.org/mirrors/npm/">https://github.com/npm/npm/archive/。我建议设置为淘宝的镜像https://npm.taobao.org/mirrors/npm/</a><br><code>nvm uninstall &lt;version&gt;： </code>卸载指定版本的nodejs。<br><code>nvm use [version] [arch]： </code>切换到使用指定的nodejs版本。可以指定32/64位[arch]。nvm use <arch>将继续使用所选版本，但根据提供的值切换到32/64位模式的<arch><br><code>nvm root [path]： </code>设置 nvm 存储node.js不同版本的目录 ,如果未设置，将使用当前目录。<br><code>nvm version： </code>显示当前运行的nvm版本，可以简写为nvm v<br>4. 常用实例<br><code>nvm list</code>　　//查看目前已经安装的版本<br><code>nvm list available</code> //显示可下载版本的部分列表<br><code>nvm install 10.15.0</code> //安装指定的版本的nodejs<br><code>nvm use 10.15.0</code> //使用指定版本的nodejs<br><code>npm install -g cnpm --registry=https://registry.npm.taobao.org</code>  //使用淘宝镜像</p>
+<h5 id="注：将npm镜像改为淘宝的镜像，可以提高下载速度。"><a href="#注：将npm镜像改为淘宝的镜像，可以提高下载速度。" class="headerlink" title="注：将npm镜像改为淘宝的镜像，可以提高下载速度。"></a>注：将npm镜像改为淘宝的镜像，可以提高下载速度。</h5><h5 id="注：nvm和nodejs安装路径不可以有中文或空格，否则切换版本会报错、乱码"><a href="#注：nvm和nodejs安装路径不可以有中文或空格，否则切换版本会报错、乱码" class="headerlink" title="注：nvm和nodejs安装路径不可以有中文或空格，否则切换版本会报错、乱码"></a>注：nvm和nodejs安装路径不可以有中文或空格，否则切换版本会报错、乱码</h5>
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                        
+                            <li title="1" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="false"
+        data-ae="false"
+        data-ci=""
+        data-cs=""
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>

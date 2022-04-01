@@ -1,0 +1,573 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Angularjs拦截器 - R•K</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="WangRenKe的个人博客,"> 
+    <meta name="description" content="路要一步一步走，坑要一个一个填！—— from WangRenKe的博客,本篇文章参考自：https://my.oschina.net/ilivebox/blog/290881
+前言：
+
+今天在公司项目中碰到了拦截器这个东西，顾名思义，拦截器就是为了拦截某个东西，项目中的,"> 
+    <meta name="author" content="WangRenKe"> 
+    <link rel="alternative" href="atom.xml" title="R•K" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="Angularjs拦截器 - R•K"/>
+    <meta name="twitter:description" content="路要一步一步走，坑要一个一个填！—— from WangRenKe的博客,本篇文章参考自：https://my.oschina.net/ilivebox/blog/290881
+前言：
+
+今天在公司项目中碰到了拦截器这个东西，顾名思义，拦截器就是为了拦截某个东西，项目中的,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="R•K"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="Angularjs拦截器 - R•K"/>
+    <meta property="og:description" content="路要一步一步走，坑要一个一个填！—— from WangRenKe的博客,本篇文章参考自：https://my.oschina.net/ilivebox/blog/290881
+前言：
+
+今天在公司项目中碰到了拦截器这个东西，顾名思义，拦截器就是为了拦截某个东西，项目中的,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">R•K</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://example.com"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">Angularjs拦截器</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">Angularjs拦截器</h1>
+        <div class="stuff">
+            <span>七月 11, 2019</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/angular%E6%8B%A6%E6%88%AA%E5%99%A8/" rel="tag">angular拦截器</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <p><strong>本篇文章参考自：<a target="_blank" rel="noopener" href="https://my.oschina.net/ilivebox/blog/290881">https://my.oschina.net/ilivebox/blog/290881</a></strong></p>
+<p><strong>前言：</strong></p>
+<blockquote>
+<p>今天在公司项目中碰到了拦截器这个东西，顾名思义，拦截器就是为了拦截某个东西，项目中的拦截器都是组长封装好的，自己也不懂，所以就问了问度娘，结合网上的讲解，在此总结一下</p>
+</blockquote>
+<p><strong>什么是拦截器？</strong></p>
+<blockquote>
+<p>顾名思义，拦截器就是为了拦截某一个东西~~~<br>    $httpAngularJS 的 $http 服务允许我们通过发送 HTTP 请求方式与后台进行通信。在某些情况下，我们希望可以俘获所有的请求，并且在将其发送到服务端之前进行操作。还有一些情况是，我们希望俘获响应，并且在完成完成调用之前处理它。一个很好例子就是处理全局 http 异常(在本公司的项目中也是捕捉响应，处理全局http异常，在后面会张贴代码)。拦截器(Interceptors)应运而生。本文将介绍 AngularJS 的拦截器，并且给几个有用的例子。</p>
+</blockquote>
+<p><strong>$httpProvider 中有一个 interceptors 数组，而所谓拦截器只是一个简单的注册到了该数组中的常规服务工厂。下面的例子告诉你怎么创建一个拦截器:</strong></p>
+<pre><code>module.factory(&#39;myInterceptor&#39;,[&#39;$log&#39;,function($log)&#123;   // 就是一个服务
+    $log.debug(&#39;$log在这里向您展示这是一个常规的注入工厂&#39;);
+    var myInterceptor=&#123;&#125;;
+    ...
+    ...
+    return myInterceptor;
+&#125;])
+</code></pre>
+<blockquote>
+<p>然后通过它的名字添加到 $httpProvider.interceptors 数组;</p>
+</blockquote>
+<pre><code>&lt;!-- lang: js --&gt;
+module.config([&#39;$httpProvider&#39;, function($httpProvider) &#123; // config是配置服务的
+    $httpProvider.interceptors.push(&#39;myInterceptor&#39;);
+&#125;]);
+</code></pre>
+<p><strong>拦截器允许我们做哪些操作，有什么作用</strong></p>
+<blockquote>
+<p>通过实现 request 方法拦截请求: 该方法会在 $http 发送请求道后台之前执行，因此你可以修改配置或做其他的操作。该方法接收请求配置对象(request configuration object)作为参数，然后必须返回配置对象或者 promise 。如果返回无效的配置对象或者 promise 则会被拒绝，导致 $http 调用失败。</p>
+</blockquote>
+<blockquote>
+<p>通过实现 response 方法拦截响应: 该方法会在 $http 接收到从后台过来的响应之后执行，因此你可以修改响应或做其他操作。该方法接收响应对象(response object)作为参数，然后必须返回响应对象或者 promise。响应对象包括了请求配置(request configuration)，头(headers)，状态(status)和从后台过来的数据(data)。如果返回无效的响应对象或者 promise 会被拒绝，导致 $http 调用失败。</p>
+</blockquote>
+<blockquote>
+<p>通过实现 requestError 方法拦截请求异常: 有时候一个请求发送失败或者被拦截器拒绝了。请求异常拦截器会俘获那些被上一个请求拦截器中断的请求。它可以用来恢复请求或者有时可以用来撤销请求之前所做的配置，比如说关闭进度条，激活按钮和输入框什么之类的。</p>
+</blockquote>
+<blockquote>
+<p>通过实现 responseError 方法拦截响应异常: 有时候我们后台调用失败了。也有可能它被一个请求拦截器拒绝了，或者被上一个响应拦截器中断了。在这种情况下，响应异常拦截器可以帮助我们恢复后台调用。</p>
+</blockquote>
+<p><strong>异步操作(并没有理解透)</strong></p>
+<blockquote>
+<p>有时候需要在拦截器中做一些异步操作。幸运的是， AngularJS 允许我们返回一个 promise 延后处理。它将会在请求拦截器中延迟发送请求或者在响应拦截器中推迟响应。</p>
+</blockquote>
+<pre><code>&lt;!-- lang: js --&gt;
+module.factory(&#39;myInterceptor&#39;, [&#39;$q&#39;, &#39;someAsyncService&#39;, function($q, someAsyncService) &#123;
+    var requestInterceptor = &#123;
+        request: function(config) &#123;
+            var deferred = $q.defer();  // 创建一个异步对象;
+            someAsyncService.doAsyncOperation().then(function() &#123;
+                // Asynchronous operation succeeded, modify config accordingly
+                ...
+                deferred.resolve(config);
+            &#125;, function() &#123;
+                // Asynchronous operation failed, modify config accordingly
+                ...
+                deferred.resolve(config);
+            &#125;);
+            return deferred.promise;
+        &#125;
+    &#125;;
+    return requestInterceptor;
+&#125;]);
+</code></pre>
+<blockquote>
+<p>上面这个例子中，请求拦截器使用了一个异步操作，根据结果来更新配置。然后它用更新后的配置继续执行操作。如果 deferred 被拒绝，http 请求则会失败。<br>响应拦截器的例子和上面的一样.<br>只有当 deferred 被解析，请求才算成功，如果 deferred 被拒绝，请求将会失败。</p>
+</blockquote>
+<p><strong>例子</strong></p>
+<blockquote>
+<p>本节中我将提供一些 AngularJS 拦截器的例子，以便让你更好的理解它们是如何使用的，并且可以展示一下它们能怎样帮助你。不过请记住，我这里提供的解决案不一定是最好或者最准确的解决案。</p>
+</blockquote>
+<p><strong>###Session拦截，请求拦截</strong></p>
+<blockquote>
+<p>这里有两种方式来实现服务端的认证。第一种是传统的 Cookie-Based 验证。通过服务端的 cookies 来对每个请求的用户进行认证。另一种方式是 Token-Based 验证。当用户登录时，他会从后台拿到一个 sessionToken。sessionToken 在服务端标识了每个用户，并且会包含在发送到服务端的每个请求中。</p>
+</blockquote>
+<blockquote>
+<p>下面的 sessionInjector 为每个被俘获的请求添加了 x-session-token 头 (如果当前用户已登录):</p>
+</blockquote>
+<pre><code>&lt;!-- lang: js --&gt;
+module.factory(&#39;sessionInjector&#39;, [&#39;SessionService&#39;, function(SessionService) &#123;
+    var sessionInjector = &#123;
+        request: function(config) &#123;
+            if (!SessionService.isAnonymus) &#123;
+                config.headers[&#39;x-session-token&#39;] = SessionService.token;
+            &#125;
+            return config;
+        &#125;
+    &#125;;
+    return sessionInjector;
+&#125;]);
+module.config([&#39;$httpProvider&#39;, function($httpProvider) &#123;
+    $httpProvider.interceptors.push(&#39;sessionInjector&#39;); //放到拦截器中
+&#125;]);
+</code></pre>
+<blockquote>
+<p>然后创建一个请求</p>
+</blockquote>
+<pre><code>&lt;!-- lang: js --&gt;
+$http.get(&#39;https://api.github.com/users/naorye/repos&#39;);
+</code></pre>
+<blockquote>
+<p>被 sessionInjector 拦截之前的配置对象是这样的:</p>
+</blockquote>
+<pre><code>&lt;!-- lang: js --&gt;
+&#123;
+    &quot;transformRequest&quot;: [
+        null
+    ],
+    &quot;transformResponse&quot;: [
+        null
+    ],
+    &quot;method&quot;: &quot;GET&quot;,
+    &quot;url&quot;: &quot;https://api.github.com/users/naorye/repos&quot;,
+    &quot;headers&quot;: &#123;
+        &quot;Accept&quot;: &quot;application/json, text/plain, */*&quot;
+    &#125;
+&#125;
+</code></pre>
+<blockquote>
+<p>被 sessionInjector 拦截之后的配置对象是这样的: 将token加到了请求头</p>
+</blockquote>
+<pre><code>&lt;!-- lang: js --&gt;
+&#123;
+    &quot;transformRequest&quot;: [
+        null
+    ],
+    &quot;transformResponse&quot;: [
+        null
+    ],
+    &quot;method&quot;: &quot;GET&quot;,
+    &quot;url&quot;: &quot;https://api.github.com/users/naorye/repos&quot;,
+    &quot;headers&quot;: &#123;
+        &quot;Accept&quot;: &quot;application/json, text/plain, */*&quot;,
+        &quot;x-session-token&quot;: 415954427904
+    &#125;
+&#125;
+</code></pre>
+<p><strong>##时间戳(请求和响应拦截器)</strong></p>
+<blockquote>
+<p>让我们用拦截器来测一下从后台返回响应需要多少时间。可以通过给每个请求和响应加上时间戳。</p>
+</blockquote>
+<pre><code>&lt;!-- lang: js --&gt;
+module.factory(&#39;timestampMarker&#39;, [function() &#123;
+    var timestampMarker = &#123;
+        request: function(config) &#123;
+            config.requestTimestamp = new Date().getTime();
+            return config;
+        &#125;,
+        response: function(response) &#123;
+            response.config.responseTimestamp = new Date().getTime();
+            return response;
+        &#125;
+    &#125;;
+    return timestampMarker;
+&#125;]);
+module.config([&#39;$httpProvider&#39;, function($httpProvider) &#123; // 注册拦截器
+    $httpProvider.interceptors.push(&#39;timestampMarker&#39;);
+&#125;]);
+</code></pre>
+<blockquote>
+<p>以上，在请求和响应时拦截，在config.requestTimestamp和config.responseTimestamp赋上当前的时间。</p>
+</blockquote>
+<pre><code>&lt;!-- lang: js --&gt;  调用接口看看从发送请求到响应需要多长时间
+$http.get(&#39;https://api.github.com/users/naorye/repos&#39;).then(function(response) &#123;
+    var time = response.config.responseTimestamp - response.config.requestTimestamp;
+    console.log(&#39;The request took &#39; + (time / 1000) + &#39; seconds.&#39;);
+&#125;);
+</code></pre>
+<blockquote>
+<p>下面是时间戳(请求和响应拦截器)的完整代码</p>
+</blockquote>
+<pre><code>&lt;!doctype html&gt;
+&lt;html&gt;
+    &lt;head&gt; 
+        &lt;title&gt;Timestamp Marker Example&lt;/title&gt;
+        &lt;script src=&quot;../../angularjs/angular-1.5.8/angular.js&quot;&gt;&lt;/script&gt;
+    &lt;/head&gt;
+
+    &lt;body ng-app=&quot;timestamp-marker-example&quot;&gt;
+        &lt;div ng-controller=&quot;ExampleController&quot;&gt;
+            The request took &lt;span ng-bind=&quot;requestTime&quot;&gt;&lt;/span&gt; seconds.
+        &lt;/div&gt;
+
+        &lt;script type=&quot;text/javascript&quot;&gt;
+        var module = angular.module(&#39;timestamp-marker-example&#39;, []);
+        module.factory(&#39;timestampMarker&#39;, [function() &#123;
+            var timestampMarker = &#123;
+                request: function(config) &#123;
+                    config.requestTimestamp = new Date().getTime();
+                    return config;
+                &#125;,
+                response: function(response) &#123;
+                    response.config.responseTimestamp = new Date().getTime();
+                    return response;
+                &#125;
+            &#125;;
+            return timestampMarker;
+        &#125;]);
+        module.config([&#39;$httpProvider&#39;, function($httpProvider) &#123;
+            $httpProvider.interceptors.push(&#39;timestampMarker&#39;); 
+        &#125;]);
+
+        module.controller(&#39;ExampleController&#39;, [&#39;$scope&#39;, &#39;$http&#39;, function($scope, $http) &#123;
+            $scope.requestTime = &#39;[waiting]&#39;;
+            $http.get(&#39;https://api.github.com/users/naorye/repos&#39;).then(function(response) &#123;
+                var time = response.config.responseTimestamp - response.config.requestTimestamp;
+                $scope.requestTime = (time / 1000);
+            &#125;);
+        &#125;]);
+        &lt;/script&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p><strong>##请求恢复 (请求异常拦截)</strong></p>
+<blockquote>
+<p>为了演示请求异常拦截，我们需要模拟前一个拦截器拒绝了请求这种情况。我们的请求异常拦截器会拿到被拒绝的原因以及恢复请求。</p>
+</blockquote>
+<blockquote>
+<p>让我们来创建两个拦截器: requestRejector 和 requestRecoverer。</p>
+</blockquote>
+<pre><code>&lt;!-- lang: js --&gt;
+module.factory(&#39;requestRejector&#39;, [&#39;$q&#39;, function($q) &#123;
+    var requestRejector = &#123;
+        request: function(config) &#123;
+            return $q.reject(&#39;requestRejector&#39;);
+        &#125;
+    &#125;;
+    return requestRejector;
+&#125;]);
+module.factory(&#39;requestRecoverer&#39;, [&#39;$q&#39;, function($q) &#123;
+    var requestRecoverer = &#123;
+        requestError: function(rejectReason) &#123;
+            if (rejectReason === &#39;requestRejector&#39;) &#123;
+                // Recover the request
+                return &#123;
+                    transformRequest: [],
+                    transformResponse: [],
+                    method: &#39;GET&#39;,
+                    url: &#39;https://api.github.com/users/naorye/repos&#39;,
+                    headers: &#123;
+                        Accept: &#39;application/json, text/plain, */*&#39;
+                    &#125;
+                &#125;;
+            &#125; else &#123;
+                return $q.reject(rejectReason);
+            &#125;
+        &#125;
+    &#125;;
+    return requestRecoverer;
+&#125;]);
+module.config([&#39;$httpProvider&#39;, function($httpProvider) &#123;
+    $httpProvider.interceptors.push(&#39;requestRejector&#39;);
+    // Removing &#39;requestRecoverer&#39; will result to failed request
+    $httpProvider.interceptors.push(&#39;requestRecoverer&#39;);
+&#125;]);
+</code></pre>
+<blockquote>
+<p>然后，如果你像下面这样请求，我们会在 log 中看到 success，虽然 requestRejector 拒绝了请求。</p>
+</blockquote>
+<pre><code>&lt;!-- lang: js --&gt;
+$http.get(&#39;https://api.github.com/users/naorye/repos&#39;).then(function() &#123;
+    console.log(&#39;success&#39;);
+&#125;, function(rejectReason) &#123;
+    console.log(&#39;failure&#39;);
+&#125;);
+</code></pre>
+<blockquote>
+<p>完整代码: <a target="_blank" rel="noopener" href="http://www.webdeveasy.com/code/interceptors-in-angularjs-and-useful-examples/request-recover.html">http://www.webdeveasy.com/code/interceptors-in-angularjs-and-useful-examples/request-recover.html</a></p>
+</blockquote>
+<p><strong>##Session 恢复 (响应异常拦截器)</strong></p>
+<blockquote>
+<p>有时候，我们的单页面应用中，会发生丢失 session 情况。这种情况可能由于 session 过期了或者服务器异常。我们来创建一个拦截器，用于恢复 session 然后自动重新发送原始请求(假设 session 过期的情况)。<br>为了演示目的，我们来假设发生了 session 过期返回 http 状态码 419。</p>
+</blockquote>
+<pre><code>&lt;!-- lang: js --&gt;
+module.factory(&#39;sessionRecoverer&#39;, [&#39;$q&#39;, &#39;$injector&#39;, function($q, $injector) &#123;
+    var sessionRecoverer = &#123;
+        responseError: function(response) &#123;
+            // Session has expired
+            if (response.status == 419)&#123;
+                var SessionService = $injector.get(&#39;SessionService&#39;);
+                var $http = $injector.get(&#39;$http&#39;); // 获取注入
+                var deferred = $q.defer();
+
+                // Create a new session (recover the session)
+                // We use login method that logs the user in using the current credentials and
+                // returns a promise
+                SessionService.login().then(deferred.resolve, deferred.reject);
+
+                // When the session recovered, make the same backend call again and chain the request
+                return deferred.promise.then(function() &#123;
+                    return $http(response.config);
+                &#125;);
+            &#125;
+            return $q.reject(response);
+        &#125;
+    &#125;;
+    return sessionRecoverer;
+&#125;]);
+module.config([&#39;$httpProvider&#39;, function($httpProvider) &#123;
+    $httpProvider.interceptors.push(&#39;sessionRecoverer&#39;);
+&#125;]);
+</code></pre>
+<blockquote>
+<p>以这种方式，如果后台调用失败引起 session 过期，sessionRecoverer 会创建一个新的 session 然后重新调用后台。</p>
+</blockquote>
+<p><strong>总结</strong></p>
+<blockquote>
+<p>在这篇文章里我解释了关于 AngularJS 的拦截器的知识，我介绍了 request, response, requestError 和 responseError拦截器，以及讲解了如何/何时使用它们。我也提供了一些现实的有用的例子，你可以用在你的开发中。</p>
+</blockquote>
+<p><strong>最后，把在项目中用到的拦截器写在下面</strong></p>
+<blockquote>
+<p>首先创建一个拦截器（在appService.js中,后面写项目结构的组成的时候会写到）；</p>
+</blockquote>
+<pre><code>//发送请求统一带上token
+app.factory(&#39;authInterceptor&#39;, [&quot;$rootScope&quot;, &quot;$cookies&quot;, &quot;$injector&quot;, &quot;$q&quot;, &quot;$location&quot;, function ($rootScope, $cookies, $injector, $q, $location) &#123;
+    return &#123;
+        request: function (config) &#123;
+            config.headers = config.headers || &#123;&#125;;
+            var headerName = &#39;Authorization&#39;;
+            var cookieName = &#39;XSRF-TOKEN&#39;;
+            //检查cookie是否存在
+            if ($cookies.get(cookieName) == undefined || $cookies.get(cookieName) == &#39;&#39;) &#123;
+                $location.path(&#39;/Index&#39;);
+            &#125;
+            else &#123;
+                config.headers[headerName] = &#39;Bearer &#39; + $cookies.get(cookieName);
+            &#125;
+
+            //设置不缓存
+            config.headers[&quot;X-Requested-With&quot;] = &#39;XMLHttpRequest&#39;;
+            config.headers[&quot;Cache-Control&quot;] = &quot;no-cache&quot;;
+            config.headers[&#39;Pragma&#39;] = &#39;no-cache&#39;;
+
+            return config;
+        &#125;,
+        responseError: function (response) &#123;
+            abp.ui.clearBusy(&quot;#mianBody&quot;);
+            abp.ui.clearBusy($(&#39;.modal-content&#39;));//清除Modal遮罩层
+            //401服务端返回授权失败
+            if (response.status == 401) &#123;
+                var msg = &quot;您访问的接口未授权，请联系管理员&quot;;// response.data.error.message || 
+                abp.message.warn(msg, &quot;提示&quot;);
+            &#125; else if (response.status == 400) &#123;
+                abp.message.warn(&quot;您输入的参数不符合规范，请重新核对&quot;, &quot;提示&quot;);
+            &#125; else if (response.status == 403) &#123;
+                abp.message.warn(&quot;您没有接口访问权限，请联系管理员&quot;, &quot;提示&quot;);
+            &#125; else if (response.status == 500 &amp;&amp; response.data.error.code == 200)//code为200需要提示到界面的错误信息
+            &#123;
+                abp.message.warn(response.data.error.message, &quot;提示&quot;);
+            &#125;
+            else &#123;
+                var errorData = &quot;&lt;div&gt;&lt;p&gt;&quot; + response.status + &quot;:&quot; + response.statusText + &quot;&lt;/p&gt;&quot; +
+                    &quot;&lt;p&gt;请求接口为：&quot; + response.config.url + &quot;&lt;/p&gt;&quot;
+                    + &quot;&lt;/div&gt;&quot;
+
+                if (response.data.error &amp;&amp; response.data.error.message) &#123;
+                    errorData += &quot;&lt;p&gt;&quot; + response.data.error.message + &quot;&lt;p&gt;&quot;;
+                &#125;
+
+                var topMenuId = $location.search().topMenuId;
+                $location.path(&quot;/error&quot;).search(&#123; topMenuId: topMenuId, errorData: errorData &#125;);
+                return $q.reject(response);
+            &#125;
+
+            //else
+            //    if (response.status === 404) &#123;
+            //    $location.path(&#39;/Index&#39;);
+            //    return $q.reject(response);
+            //&#125;
+        &#125;,
+        response: function (response) &#123;
+            return response;
+        &#125;
+    &#125;;
+&#125;]);
+</code></pre>
+<blockquote>
+<p>运用拦截器<br>写在app.js里(app.js是配置服务的,后面写项目架构组成的时候会写到)；</p>
+</blockquote>
+<pre><code>app.config([
+    &#39;$httpProvider&#39;,function($httpProvider)&#123;
+        $httpProvider.interceptors.push(&#39;authInterceptor&#39;);
+    &#125;
+])
+</code></pre>
+<blockquote>
+<p>这样一来就会把拦截器里的请求前，请求后，以及全局异常处理都会用到接口上。大大提高了效率。</p>
+</blockquote>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                        
+                            <li title="1" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="false"
+        data-ae="false"
+        data-ci=""
+        data-cs=""
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>

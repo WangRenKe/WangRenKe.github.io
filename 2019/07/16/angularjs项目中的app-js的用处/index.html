@@ -1,0 +1,511 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>angularjs项目中的app.js的用处 - R•K</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="WangRenKe的个人博客,"> 
+    <meta name="description" content="路要一步一步走，坑要一个一个填！—— from WangRenKe的博客,
+1.公司中angular的项目，app.js是一个自加载函数，包含了angular的路由信息和angular程序启动时最先加载的代码(app.run(),当angular的程序启动时，最先执行ru,"> 
+    <meta name="author" content="WangRenKe"> 
+    <link rel="alternative" href="atom.xml" title="R•K" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="angularjs项目中的app.js的用处 - R•K"/>
+    <meta name="twitter:description" content="路要一步一步走，坑要一个一个填！—— from WangRenKe的博客,
+1.公司中angular的项目，app.js是一个自加载函数，包含了angular的路由信息和angular程序启动时最先加载的代码(app.run(),当angular的程序启动时，最先执行ru,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="R•K"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="angularjs项目中的app.js的用处 - R•K"/>
+    <meta property="og:description" content="路要一步一步走，坑要一个一个填！—— from WangRenKe的博客,
+1.公司中angular的项目，app.js是一个自加载函数，包含了angular的路由信息和angular程序启动时最先加载的代码(app.run(),当angular的程序启动时，最先执行ru,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">R•K</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://example.com"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">angularjs项目中的app.js的用处</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">angularjs项目中的app.js的用处</h1>
+        <div class="stuff">
+            <span>七月 16, 2019</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/angular/" rel="tag">angular</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <blockquote>
+<p>1.公司中angular的项目，app.js是一个自加载函数，包含了angular的路由信息和angular程序启动时最先加载的代码(app.run(),当angular的程序启动时，最先执行run方法里的代码)<br>2.就目前来讲，包含了angular的路由信息和angular程序启动时最先加载的代码；下面代码体现</p>
+</blockquote>
+<pre><code>(function () &#123;
+    &#39;use strict&#39;;   // 严格模式
+
+    //Configuration for Angular UI routing.
+    app.config([
+        &#39;$stateProvider&#39;, // 基于ui-router的服务
+        &#39;$urlRouterProvider&#39;,  // 路由操作
+        &#39;$locationProvider&#39;, //   路由跳转
+        &#39;$qProvider&#39;, 
+        &#39;$httpProvider&#39;,   $http配置
+        function ($stateProvider, $urlRouterProvider, $locationProvider, $qProvider, $httpProvider) &#123;
+            $locationProvider.hashPrefix(&#39;&#39;);
+            $urlRouterProvider.otherwise(&#39;/&#39;);//路径没有匹配的路由的时候，跳转到一个默认的路径
+            $qProvider.errorOnUnhandledRejections(false);
+            //注入拦截器
+            $httpProvider.interceptors.push(&#39;authInterceptor&#39;);
+
+            $stateProvider
+                .state(&quot;error&quot;, &#123;
+                    url: &quot;/error&quot;,
+                    templateUrl: &quot;/App/views/error.html&quot;,
+                    controller: &quot;errorCtr&quot;
+                &#125;)
+                .state(&#39;home&#39;, &#123;
+                    url: &#39;/&#39;,
+                    templateUrl: &#39;/App/views/index.html&#39;,
+                    controller: &#39;indexCtr&#39;
+                &#125;).state(&quot;index&quot;, &#123;
+                    url: &quot;/index&quot;,
+                    templateUrl: &#39;/App/views/index.html&#39;,
+                    controller: &quot;indexCtr&quot;
+                &#125;)
+                .state(&#39;userManager&#39;, &#123;
+                    url: &#39;/userManager&#39;,
+                    templateUrl: &#39;/App/views/system/userManager.html&#39;,
+                    controller: &#39;app.views.system.user&#39;
+                &#125;)
+                .state(&#39;roleManager&#39;, &#123;
+                    url: &#39;/roleManager&#39;,
+                    templateUrl: &#39;/App/views/system/roleManager.html&#39;,
+                    controller: &#39;app.views.system.role&#39;
+                &#125;)
+                .state(&#39;logManager&#39;, &#123;
+                    url: &#39;/logManager&#39;,
+                    templateUrl: &#39;/App/views/system/logManager.html&#39;,
+                    controller: &#39;app.views.system.log&#39;
+                &#125;)
+                .state(&#39;dataDic&#39;, &#123;
+                    url: &#39;/dataDic&#39;,
+                    templateUrl: &#39;/App/views/system/dataDic.html&#39;,
+                    controller: &#39;app.views.system.data&#39;
+                &#125;).state(&#39;menuManager&#39;, &#123;
+                    url: &#39;/menuManager&#39;,
+                    templateUrl: &#39;/App/views/system/menuManager.html&#39;,
+                    controller: &#39;app.views.system.menu&#39;
+                &#125;).state(&#39;deptAreaManager&#39;, &#123;
+                    url: &#39;/deptAreaManager&#39;,
+                    templateUrl: &#39;/App/views/system/deptAreaManager.html&#39;,
+                    controller: &#39;app.views.system.deptArea&#39;
+                &#125;).state(&#39;workPlanManager&#39;, &#123;
+                    url: &#39;/workPlanManager&#39;,
+                    templateUrl: &#39;/App/views/setTemplate/workPlanTemplate.html&#39;,
+                    controller: &#39;app.views.setTemplate.workPlan&#39;
+                &#125;).state(&#39;serviceProductManage&#39;, &#123;
+                    url: &#39;/serviceProductManage&#39;,
+                    templateUrl: &#39;/App/views/setServiceManage/serviceProductManage.html&#39;,
+                    controller: &#39;app.views.setServiceManage.serviceProductManage&#39;
+                &#125;).state(&#39;serviceItemManage&#39;, &#123;
+                    url: &#39;/serviceItemManage&#39;,
+                    templateUrl: &#39;/App/views/setServiceManage/serviceItemManage.html&#39;,
+                    controller: &#39;app.views.setServiceManage.serviceItemManage&#39;
+                &#125;).state(&#39;workProjectMnage&#39;, &#123;
+                    url: &#39;/workProjectMnage&#39;,
+                    templateUrl: &#39;/App/views/setServiceManage/workProjectMnage.html&#39;,
+                    controller: &#39;app.views.setServiceManage.workProjectMnage&#39;
+                &#125;).state(&#39;servicePackManage&#39;, &#123;
+                    url: &#39;/servicePackManage&#39;,
+                    templateUrl: &#39;/App/views/setServiceManage/servicePackManage.html&#39;,
+                    controller: &#39;app.views.setServiceManage.servicePackManage&#39;
+                &#125;).state(&#39;demandTemplate&#39;, &#123;
+                    url: &#39;/demandTemplate&#39;,
+                    templateUrl: &#39;/App/views/setTemplate/demandTemplate.html&#39;,
+                    controller: &#39;app.views.setTemplate.demandTemplate&#39;
+                &#125;).state(&#39;createInnerProject&#39;, &#123;
+                    url: &#39;/createInnerProject&#39;,
+                    templateUrl: &#39;/App/views/platProjectManage/createInnerProject.html&#39;,
+                    controller: &#39;app.views.platProjectManage.createInnerProject&#39;
+                &#125;).state(&#39;lookRequisitionForm&#39;, &#123;
+                    url: &#39;/lookRequisitionForm&#39;,
+                    templateUrl: &#39;/App/views/platServiceRequestForm/lookRequisitionForm.html&#39;,
+                    controller: &#39;app.views.platServiceRequestForm.lookRequisitionForm&#39;
+                &#125;).state(&#39;createRequestForm&#39;, &#123;
+                    url: &#39;/createRequestForm/:source&#39;,
+                    templateUrl: &#39;/App/views/platServiceRequestForm/createRequestForm.html&#39;,
+                    controller: &#39;app.views.platServiceRequestForm.createRequestForm&#39;
+                &#125;).state(&#39;icon&#39;, &#123;
+                    url: &#39;/icon&#39;,
+                    templateUrl: &#39;/App/views/system/icon.html&#39;,
+                    controller: &#39;&#39;
+                &#125;).state(&#39;projectList&#39;, &#123;
+                    url: &#39;/projectList&#39;,
+                    templateUrl: &#39;/App/views/platProjectManage/projectList.html&#39;,
+                    controller: &#39;app.views.platProjectManage.projectList&#39;
+                &#125;).state(&#39;projectDocumentManage&#39;, &#123;
+                    url: &#39;/projectDocumentManage&#39;,
+                    templateUrl: &#39;/App/views/platProjectManage/projectDocumentManage.html&#39;,
+                    controller: &#39;app.views.platProjectManage.projectDocumentManage&#39;
+                &#125;).state(&#39;deliverablesAudit&#39;, &#123;
+                    url: &#39;/deliverablesAudit&#39;,
+                    templateUrl: &#39;/App/views/platProjectManage/deliverablesAudit.html&#39;,
+                    controller: &#39;app.views.platProjectManage.deliverablesAudit&#39;
+                &#125;)
+                .state(&#39;assignRequirement&#39;, &#123;
+                    url: &#39;/assignRequirement&#39;,
+                    templateUrl: &#39;/App/views/dispatchManagement/assignRequirement.html&#39;,
+                    controller: &#39;app.views.dispatchManagement.assignRequirement&#39;
+                &#125;)
+                .state(&#39;planOrderSearch&#39;, &#123;
+                    url: &#39;/planOrderSearch&#39;,
+                    templateUrl: &#39;/App/views/dispatchManagement/planOrderSearch.html&#39;,
+                    controller: &#39;app.views.dispatchManagement.planOrderSearch&#39;
+                &#125;)
+                .state(&#39;task&#39;, &#123;
+                    url: &#39;/task/:typeid&#39;,
+                    templateUrl: &#39;/App/views/platMyProject/taskToDo.html&#39;,
+                    controller: &#39;app.views.platMyProject.taskToDo&#39;
+                &#125;).state(&#39;transSupport&#39;, &#123;
+                    url: &#39;/transSupport&#39;,
+                    templateUrl: &#39;/App/views/dispatchManagement/transSupport.html&#39;,
+                    controller: &#39;app.views.dispatchManagement.transSupport&#39;
+                &#125;).state(&#39;myWorkOrder&#39;, &#123;
+                    url: &#39;/myWorkOrder&#39;,
+                    templateUrl: &#39;/App/views/platMyWorkOrder/myWorkOrder.html&#39;,
+                    controller: &#39;app.views.platMyWorkOrder.myWorkOrder&#39;
+                &#125;).state(&#39;workOrderInquire&#39;, &#123;
+                    url: &#39;/workOrderInquire&#39;,
+                    templateUrl: &#39;/App/views/dispatchManagement/workOrderInquire.html&#39;,
+                    controller: &#39;app.views.dispatchManagement.workOrderInquire&#39;
+                &#125;).state(&#39;staffSchedule&#39;, &#123;
+                    url: &#39;/staffSchedule&#39;,
+                    templateUrl: &#39;/App/views/dispatchManagement/staffSchedule.html&#39;,
+                    controller: &#39;app.views.dispatchManagement.staffSchedule&#39;
+                &#125;).state(&#39;synthesizeInquire&#39;, &#123;
+                    url: &#39;/synthesizeInquire&#39;,
+                    templateUrl: &#39;/App/views/platComprehensiveInquiry/synthesizeInquire.html&#39;,
+                    controller: &#39;app.views.platComprehensiveInquiry.synthesizeInquire&#39;
+                &#125;).state(&#39;resourceApplication&#39;, &#123;
+                    url: &#39;/resourceApplication&#39;,
+                    templateUrl: &#39;/App/views/platMyProject/resourceApplication.html&#39;,
+                    controller: &#39;app.views.platMyProject.resourceApplication&#39;
+                &#125;).state(&#39;assignWorkOrder&#39;, &#123;
+                    url: &#39;/assignWorkOrder&#39;,
+                    templateUrl: &#39;/App/views/dispatchManagement/assignWorkOrder.html&#39;,
+                    controller: &#39;app.views.dispatchManagement.assignWorkOrder&#39;
+                &#125;).state(&#39;specWhAccount&#39;, &#123;
+                    url: &#39;/specWhAccount&#39;,
+                    templateUrl: &#39;/App/views/setServiceManage/specWorkHoursAccount.html&#39;,
+                    controller: &#39;app.views.setServiceManage.specWorkHoursAccount&#39;
+                &#125;).state(&#39;importErpData&#39;, &#123;
+                    url: &#39;/importErpData&#39;,
+                    templateUrl: &#39;/App/views/system/importErpData.html&#39;,
+                    controller: &#39;app.views.system.importErpData&#39;
+                &#125;).state(&#39;workHourRate&#39;, &#123;
+                    url: &#39;/workHourRate&#39;,
+                    templateUrl: &#39;/App/views/setServiceManage/workHourRateManage.html&#39;,
+                    controller: &#39;app.views.setServiceManage.workHourRate&#39;
+                &#125;);
+        &#125;
+    ]);
+    //程序启动时，获取用户信息
+    app.run([&quot;$rootScope&quot;, &quot;$cookies&quot;, &quot;serverDomain&quot;, &quot;httpService&quot;, &quot;$location&quot;, function ($rootScope, $cookies, serverDomain, httpService, $location) &#123;
+        //首先判断sessionStorage中是否已经有user，有的话则不再请求
+        if (sessionStorage.getItem(&quot;user&quot;) &amp;&amp; sessionStorage.getItem(&quot;pId&quot;)) &#123;
+            API.log(&quot;已登陆系统&quot;);
+            if (!$rootScope.user) &#123;
+                API.log(&quot;重新写入rootScope&quot;);
+                $rootScope.user = JSON.parse(sessionStorage.getItem(&quot;user&quot;));
+            &#125;
+
+            //获取数据字典
+            getDicData();
+
+            //获得工程线下所有组织架构
+            getOrgTreeProjectLine();
+            return;
+        &#125;
+
+        var user = &#123;
+            employeeNumber: &quot;&quot;,//员工工号
+            name: &quot;&quot;,//用户姓名
+            passportId: &quot;&quot;,//84380281-EA1D-4774-BA80-472349367725
+            passportName: &quot;&quot;,//用户It编码
+            organizationId: 0,//所在部门id
+            organizationName: &quot;&quot;,//所在部门名称
+            organizationIdPath: &quot;&quot;//所在部门，部门ID全路径
+        &#125;
+
+        var cookieName = &#39;XSRF-PASSPORTNAME&#39;;
+        var passport_Name = &#39;&#39;;
+        //检查cookie是否存在
+        if ($cookies.get(cookieName) == undefined || $cookies.get(cookieName) == &#39;&#39;) &#123;
+            $location.path(&#39;/index&#39;);
+        &#125;
+        else &#123;
+            passport_Name = $cookies.get(cookieName);
+        &#125;
+        var paramData = &#123; passportName: passport_Name &#125;;
+        var url = serverDomain + &quot;api/services/app/SbpUser/GetUserInfoByPassportName&quot;;
+        httpService.Get(url, paramData, function (data) &#123;
+            if (data.success) &#123;
+                user.employeeNumber = data.result.employeeNumber;
+                user.name = data.result.name;
+                user.passportId = data.result.passportId;
+                user.passportName = data.result.passportName;
+                user.organizationId = data.result.organizationId;
+                user.organizationName = data.result.organizationName;
+                user.organizationIdPath = data.result.organizationIdPath;
+                user.organizationIdPathArray = data.result.organizationIdPath.split(&quot;/&quot;);
+                user.roles = data.result.roles;
+                user.position = data.result.position;
+
+                //写sessionStorage
+                sessionStorage.setItem(&quot;user&quot;, JSON.stringify(user));
+                sessionStorage.setItem(&quot;pId&quot;, user.passportId);
+
+                //写$rootScope
+                $rootScope.user = user;
+
+                //获取数据字典
+                getDicData();
+
+                //获得工程线下所有组织架构
+                getOrgTreeProjectLine();
+
+            &#125;
+        &#125;, function (data) &#123;
+            console.error(data);
+        &#125;);
+
+        //获取数据字典
+        function getDicData() &#123;
+            var dics = localStorage.getItem(&quot;dictionary&quot;);
+            if (dics &amp;&amp; dics !== &quot;undefined&quot;) &#123;
+                dics = JSON.parse(dics);
+                if (!$rootScope.dictionary) &#123;
+                    $rootScope.dictionary = dics;
+                &#125;
+                return;
+            &#125;
+
+            var getDicUrl = serverDomain + &quot;api/services/app/DictionaryType/GetDictionaryTypeList&quot;;
+            httpService.Get(getDicUrl, &#123;&#125;, function (rst) &#123;
+                if (rst.success) &#123;
+                    var dicArr = rst.result || [];
+                    var dicJson = &#123;&#125;;
+                    dicArr.forEach(function (item, index) &#123;
+                        //字典项列表统一按照sort的值升序排序
+                        item.dictionaries = item.dictionaries.sort(function (first, two) &#123;
+                            if (first.sort &lt; two.sort) &#123;
+                                return -1;
+                            &#125;
+                            if (first.sort &gt; two.sort) &#123;
+                                return 1;
+                            &#125;
+                            return 0;
+                        &#125;);
+                        dicJson[item.typeCode] = &#123; id: item.id, typeName: item.typeName, remark: item.remark, dictionaries: item.dictionaries &#125;;
+
+                    &#125;);
+
+                    localStorage.setItem(&quot;dictionary&quot;, JSON.stringify(dicJson));
+                    $rootScope.dictionary = dicJson;
+                &#125;
+            &#125;)
+
+        &#125;
+
+        //获得工程线下所有组织架构
+        function getOrgTreeProjectLine() &#123;
+            var orgs = localStorage.getItem(&quot;organization&quot;);
+            if (orgs &amp;&amp; orgs !== &quot;undefined&quot;) &#123;
+                orgs = JSON.parse(orgs);
+                if (!$rootScope.organization) &#123;
+                    $rootScope.organization = orgs;
+                &#125;
+                return;
+            &#125;
+            //获取工程线下（oaOrgId为5）组织树的数据
+            var url = serverDomain + &quot;api/services/app/SbpOrg/GetOrgTree&quot;;
+            var data = &#123; oaOrgId: 5 &#125;;
+            httpService.Get(url, data, function (data) &#123;
+                if (data.success) &#123;
+                    localStorage.setItem(&quot;organization&quot;, JSON.stringify(data.result.children));
+                    //不显示root节点
+                    $rootScope.organization = data.result.children;
+                &#125;
+            &#125;, function (err) &#123; &#125;);
+        &#125;
+
+        //统一配置math.js
+        math.config(&#123;
+            number: &#39;BigNumber&#39;,
+            // &#39;number&#39; (default), 
+            precision: 20
+        &#125;);
+
+        //路由监听事件  
+        $rootScope.$on(&#39;$stateChangeStart&#39;,
+            function (event, toState, toParams, fromState, fromParams) &#123;
+                API.log(&quot;Router change&quot;);
+                //API.log(&quot;fromParams:&quot;, fromParams);
+                //API.log($stateParams.type);
+            &#125;)
+        //当模板解析完成后触发  
+        $rootScope.$on(&#39;$stateChangeSuccess&#39;, function (event, toState, toParams, fromState, fromParams) &#123;
+            API.log(&quot;Router changed&quot;);
+            window.scrollTo(0,0);
+            abp.ui.clearBusy($(&#39;#mianBody&#39;));//清除loading
+        &#125;)
+
+        // $stateChangeError  当模板解析过程中发生错误时触发  
+        $rootScope.$on(&#39;$stateChangeError&#39;, function (event, toState, toParams, fromState, fromParams, error) &#123;
+
+        &#125;)
+
+    &#125;])
+&#125;)();
+</code></pre>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                        
+                            <li title="1" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="false"
+        data-ae="false"
+        data-ci=""
+        data-cs=""
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>

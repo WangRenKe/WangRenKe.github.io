@@ -1,0 +1,478 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>NodeJs基础 - R•K</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="WangRenKe的个人博客,"> 
+    <meta name="description" content="路要一步一步走，坑要一个一个填！—— from WangRenKe的博客,Nodejs（所有的知识点都可以去nodejs官网查看详细文档）！一. Nodejs可以用来做什么？
+具有复杂逻辑的动态网站
+WebSocket服务器
+命令行工具
+带有图形界面的本地应用程序二. 终,"> 
+    <meta name="author" content="WangRenKe"> 
+    <link rel="alternative" href="atom.xml" title="R•K" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="NodeJs基础 - R•K"/>
+    <meta name="twitter:description" content="路要一步一步走，坑要一个一个填！—— from WangRenKe的博客,Nodejs（所有的知识点都可以去nodejs官网查看详细文档）！一. Nodejs可以用来做什么？
+具有复杂逻辑的动态网站
+WebSocket服务器
+命令行工具
+带有图形界面的本地应用程序二. 终,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="R•K"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="NodeJs基础 - R•K"/>
+    <meta property="og:description" content="路要一步一步走，坑要一个一个填！—— from WangRenKe的博客,Nodejs（所有的知识点都可以去nodejs官网查看详细文档）！一. Nodejs可以用来做什么？
+具有复杂逻辑的动态网站
+WebSocket服务器
+命令行工具
+带有图形界面的本地应用程序二. 终,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">R•K</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://example.com"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">NodeJs基础</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">NodeJs基础</h1>
+        <div class="stuff">
+            <span>四月 01, 2021</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/Nodejs/" rel="tag">Nodejs</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <h2 id="Nodejs（所有的知识点都可以去nodejs官网查看详细文档）！"><a href="#Nodejs（所有的知识点都可以去nodejs官网查看详细文档）！" class="headerlink" title="Nodejs（所有的知识点都可以去nodejs官网查看详细文档）！"></a>Nodejs（所有的知识点都可以去nodejs官网查看详细文档）！</h2><h3 id="一-Nodejs可以用来做什么？"><a href="#一-Nodejs可以用来做什么？" class="headerlink" title="一. Nodejs可以用来做什么？"></a>一. Nodejs可以用来做什么？</h3><ol>
+<li>具有复杂逻辑的动态网站</li>
+<li>WebSocket服务器</li>
+<li>命令行工具</li>
+<li>带有图形界面的本地应用程序<h3 id="二-终端基本使用"><a href="#二-终端基本使用" class="headerlink" title="二. 终端基本使用"></a>二. 终端基本使用</h3></li>
+<li>打开应用<br>notepad打开记事本<br>mspaint打开画图<br>calc打开计算机<br>write写字板<br>sysdm.cpl打开环境变量设置窗口</li>
+<li>常用命令<br>md创建目录<br>rmdir(rd)删除目录，目录内没有文档<br>echo on a.txt创建空文件夹<br>del删除文件<br>rm 文件名 –&gt;删除文件<br>cat 文件名 —&gt;查看文件内容<br>cat &gt; 文件名 –&gt;向文件中写上内容<h3 id="三-Nodejs开发环境准备"><a href="#三-Nodejs开发环境准备" class="headerlink" title="三. Nodejs开发环境准备"></a>三. Nodejs开发环境准备</h3></li>
+<li>普通安装方式–&gt;官方网站</li>
+<li>多版本安装方式<br>卸载已有的nodejs<br>下载nvm<br>在C盘创建目录dev，并且把nvm包解压进去<br>配置nvm环境变量<br>配置nodejs环境变量<h3 id="三-nvm常用的命令"><a href="#三-nvm常用的命令" class="headerlink" title="三. nvm常用的命令"></a>三. nvm常用的命令</h3>nvm list 查看当前安装的Nodejs所有版本<br>nvm install 版本号 安装指定版本的Nodejs<br>nvm uninstall 版本号 卸载指定版本的Nodejs<br>nvm use 版本号 选择指定版本的Nodejs<h3 id="四-Nodejs之Hello-World"><a href="#四-Nodejs之Hello-World" class="headerlink" title="四. Nodejs之Hello World"></a>四. Nodejs之Hello World</h3></li>
+<li>命令行方式REPL</li>
+</ol>
+<p>– REPL read-eval-print-loop 读取代码-执行-打印结果-循环这个过程<br>– 在REPL环境中，_表示最后一次执行结果<br>–退出REPL环境：.exit<br>2. 运行文件方式<br>3. 全局对象概览</p>
+<h3 id="五-模块化"><a href="#五-模块化" class="headerlink" title="五. 模块化"></a>五. 模块化</h3><pre><code>模块化开发
+传统非模块化开发有如下缺点
+1. 命名冲突（变量的冲突，人多提交时会被覆盖）
+2. 文件依赖
+
+前端-标准的模块化规范
+1. AMD - requirejs  (国外用的比较多)
+2. CMD - seajs      (国产的，阿里巴巴的)
+
+服务器端(后端)-模块化规范
+1. CommonJs - Node.js
+
+模块化相关的规则：
+1. 如何定义模块：一个js文件就是一个模块，模块与模块内部的成员都是相互独立的
+2. 模块成员的导出和引入
+</code></pre>
+<p><img src="https://img-blog.csdnimg.cn/20191108163312345.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80Mzk5Njk5OQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/2019110816334160.png" alt="在这里插入图片描述"><img src="https://img-blog.csdnimg.cn/20191108163357244.png" alt="在这里插入图片描述"></p>
+<h3 id="六-ES6语法-后续加上"><a href="#六-ES6语法-后续加上" class="headerlink" title="六. ES6语法(后续加上)"></a>六. ES6语法(后续加上)</h3><h3 id="七-核心模块API"><a href="#七-核心模块API" class="headerlink" title="七. 核心模块API"></a>七. 核心模块API</h3><ol>
+<li>路径操作</li>
+</ol>
+<p>– 路径基本操作API（==详情看github上nodejs_express/02_day/02.js==）<br>2. 文件操作<br>– 文件信息获取（==通过fs.stat() || fs.statSync()==）</p>
+<pre><code>    /* 文件操作(查看文件信息)*/
+    // console.log(1);
+    // const fs = require(&#39;fs&#39;);
+    // fs.stat(&#39;./data.txt&#39;,(err,stats)=&gt;&#123;
+    //     // 一般回调函数的第一个参数是错误对象。如果err为null，表示没有错误，否则表示报错，应该终止进程
+    //     if(err) return;
+    //     // console.log(stats);
+    //     /*
+    //         atime  文件访问时间
+    //         ctime  文件修改时间（文件的状态信息发生变化的时间，比如：文件的权限）
+    //         mtime  文件数据发生变化的时间
+    //         birthtime  文件创建的时间
+    //     */
+    //     if(stats.isFile())&#123;
+    //         console.log(&#39;文件&#39;);
+    //     &#125; else if(stats.isDirectory()) &#123;
+    //         console.log(&#39;目录&#39;);
+    //     &#125;
+    //     console.log(2);
+    // &#125;)
+    // console.log(3);
+    // 同步操作（API）
+    // console.log(1);
+    // let ret = fs.statSync(&#39;./data.txt&#39;);
+    // console.log(ret);
+    // console.log(2);
+-- 读文件操作
+
+    /*读文件操作(读取文件) */
+    const fs = require(&#39;fs&#39;);
+    const path = require(&#39;path&#39;);
+    let strpath = path.join(__dirname,&#39;data.txt&#39;);
+    fs.readFile(strpath,(err,data)=&gt;&#123;
+        if(err) return;
+        console.log(data.toString());
+    &#125;)
+    // 另一种简便的方式
+    // 第二个参数加上格式。就不需要用.toString()这个方法来转换了
+    // 如果没有第二个参数，那么得到的就是一个Buffer实例对象
+    fs.readFile(strpath,&#39;utf8&#39;,(err,data)=&gt;&#123;  
+        if(err) return;
+        console.log(data);
+    &#125;)
+    // 同步操作
+    let ret = fs.readFileSync(strpath,&#39;utf8&#39;);
+    console.log(ret);
+-- 写文件操作
+
+    /* 写文件操作 */
+    const fs = require(&#39;fs&#39;);
+    const path = require(&#39;path&#39;);
+    
+    let strpath = path.join(__dirname,&#39;./data.txt&#39;);
+    
+    // fs.writeFile(strpath,&#39;哈哈哈哈哈我写完了！&#39;,&#39;utf8&#39;,(err)=&gt;&#123;
+    //     if(!err) &#123;
+    //         console.log(&#39;写入成功！&#39;);
+    //     &#125;;
+    // &#125;)
+    
+    // let str=Buffer.from(&#39;hi!&#39;);
+    // fs.writeFile(strpath,str,&#39;utf8&#39;,(err)=&gt;&#123;
+    //     if(!err) &#123;
+    //         console.log(&#39;写入成功！&#39;);
+    //     &#125;;
+    // &#125;)
+    
+    // 同步操作
+    fs.writeFileSync(strpath,&#39;tom and jerry&#39;);
+-- 大文件操作
+
+    /* 大文件操作（流式操作） */
+    let fs = require(&#39;fs&#39;);
+    let path = require(&#39;path&#39;);
+    
+    let spath = path.join(__dirname,&#39;./JsMath.zip&#39;);
+    let dpath = path.join(__dirname,&#39;./temp&#39;,&#39;JsMath.zip&#39;);
+    
+    // let readStream = fs.createReadStream(spath);
+    // let writeStream = fs.createWriteStream(dpath);
+    
+    // 基于事件的处理
+    // let num = 1;
+    // readStream.on(&#39;data&#39;,(chunk)=&gt;&#123;  // 文件读取的时候会触发
+    //     num++;
+    //     writeStream.write(chunk);
+    // &#125;)
+    
+    // readStream.on(&#39;end&#39;,()=&gt;&#123;   // 文件处理完毕事件
+    //     console.log(&#39;文件处理完成&#39;+num);
+    // &#125;)
+    // --------------------------------------------------------------
+    // 另一种方式---&gt;pipe()的作用直接链接输入流和输出流
+    // readStream.pipe(writeStream)
+    fs.createReadStream(spath).pipe(fs.createWriteStream(dpath));
+-- 目录操作
+
+        /**
+     * 目录操作
+     * 1. 创建目录
+     * fs.mkdir(path[,mode],callback)
+     * fs.mkdirSync(path[,mode])
+     * 2. 读取目录
+     * fs.readdir(path[,options],callback)
+     * fs.readdirSync(path[,options])
+     * 3. 删除目录
+     * fs.rmdir(path,callback)
+     * fs.rmdirSync(path)
+     */
+    let fs = require(&#39;fs&#39;);
+    let path = require(&#39;path&#39;);
+    
+    // fs.mkdir(path.join(__dirname,&#39;./temp/abc&#39;),(err)=&gt;&#123;  // 创建目录abc
+    //     console.log(err);
+    // &#125;)
+    // fs.mkdirSync(path.join(__dirname,&#39;./temp/bcd&#39;));  // 同步方式
+    // --------------------------------------------------------------------
+    // 读取目录
+    // fs.readdir(path.join(__dirname),(err,files)=&gt;&#123;
+    //     // console.log(files);
+    //     files.forEach((item)=&gt;&#123;
+    //         fs.stat(path.join(__dirname,item),(err,stat)=&gt;&#123;
+    //             if(stat.isFile())&#123;
+    //                 console.log(item,&#39;----------文件&#39;);
+    //             &#125;else if(stat.isDirectory())&#123;
+    //                 console.log(item,&#39;----------目录&#39;);
+    //             &#125;
+    //         &#125;)
+    //     &#125;)
+    // &#125;)
+    // 同步方式（不建议使用）
+    // let files = fs.readdirSync(__dirname);
+    // files.forEach((item)=&gt;&#123;
+    //     fs.stat(path.join(__dirname,item),(err,stat)=&gt;&#123;
+    //         if(stat.isFile())&#123;
+    //             console.log(item,&#39;----------文件&#39;);
+    //         &#125;else if(stat.isDirectory())&#123;
+    //             console.log(item,&#39;----------目录&#39;);
+    //         &#125;
+    //     &#125;)
+    // &#125;)
+    // --------------------------------------------------------------
+    // 删除目录
+    // fs.rmdir(path.join(__dirname,&#39;./temp/bcd&#39;),(err)=&gt;&#123;
+    //     console.log(err);
+    // &#125;);
+    fs.rmdirSync(path.join(__dirname,&#39;./temp/abc&#39;));
+</code></pre>
+<ol start="3">
+<li><p>文件操作案例</p>
+<pre><code> /* 文件操作案例（初始化目录结构）*/
+ const path=require(&#39;path&#39;);  // 模块
+ const fs=require(&#39;fs&#39;);   // 模块
+ 
+  let root=&#39;F:\\demo\\nodejs_express\\01_day&#39;;   // 初始化目录
+  let fileContent = `&lt;!DOCTYPE html&gt;
+  &lt;html lang=&quot;en&quot;&gt;
+  &lt;head&gt;
+      &lt;meta charset=&quot;UTF-8&quot;&gt;
+      &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+      &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;ie=edge&quot;&gt;
+      &lt;title&gt;Document&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+      &lt;div&gt;hello world!&lt;/div&gt;
+  &lt;/body&gt;
+  &lt;/html&gt;`;
+  // 初始化数据
+  let initData = &#123;
+      projectName:&#39;mydemo&#39;,
+      data:[&#123;
+          name:&#39;img&#39;,
+          type:&#39;dir&#39;
+      &#125;,&#123;
+         name:&#39;js&#39;,
+         type:&#39;dir&#39;
+     &#125;,&#123;
+         name:&#39;css&#39;,
+         type:&#39;dir&#39;
+     &#125;,&#123;
+         name:&#39;index.html&#39;,
+         type:&#39;file&#39;
+     &#125;]
+ 
+  &#125;
+ 
+  // 创建项目根路径----path.join(root,initData.projectName);在root根目录下创建initData.projectName
+  fs.mkdir(path.join(root,initData.projectName),(err)=&gt;&#123;
+      if(err) return;  // 如果报错，直接终结
+      // 创建子目录
+      initData.data.forEach((item)=&gt;&#123;
+          if(item.type == &#39;dir&#39;)&#123;
+             // 创建子目录
+             fs.mkdirSync(path.join(root,initData.projectName,item.name))
+          &#125;else if(item.type == &#39;file&#39;)&#123;
+             // 创建文件并写入内容
+             fs.writeFileSync(path.join(root,initData.projectName,item.name),fileContent);
+          &#125;
+      &#125;)
+  &#125;)
+</code></pre>
+<h3 id="八-Buffer基本操作-Buffer不是模块，是一个全局成员–-gt-02-day-01-js"><a href="#八-Buffer基本操作-Buffer不是模块，是一个全局成员–-gt-02-day-01-js" class="headerlink" title="八. Buffer基本操作(Buffer不是模块，是一个全局成员–&gt;02_day/01.js)"></a>八. Buffer基本操作(Buffer不是模块，是一个全局成员–&gt;02_day/01.js)</h3></li>
+<li><p>Buffer对象是node处理二进制数据的一个接口，==它是node原生提供的全局对象，可以直接使用，不需要require(‘Buffer’)==</p>
+</li>
+<li><p>实例化：</p>
+</li>
+</ol>
+<p>– Buffer.from(array)<br>– Buffer.alloc(size)<br>3. 功能方法：<br>– Buffer.isEncodeing() 判断是否支持该编码<br>– Buffer.isBuffer() 判断是否为Buffer<br>– Buffer.byteLength() 返回指定编码的字节长度，默认uft8<br>– Buffer.concat() 将一组Buffer对象合并为一个Buffer对象<br>4. 实例方法<br>– write() 向Buffer对象中写入内容<br>– slice() 截取新的Buffer对象<br>– toString() 把Buffer对象转成字符串<br>– toJson() 把Buffer对象转成json形式的字符串(不需要显式调用，当调用JSON.stringify时，会自动调用toJSON方法)</p>
+<h3 id="九-Node-js基础-异步编程概念分析"><a href="#九-Node-js基础-异步编程概念分析" class="headerlink" title="九. Node.js基础-异步编程概念分析"></a>九. Node.js基础-异步编程概念分析</h3><h5 id="异步处理（-node当中叫-异步I-O-input-output-）"><a href="#异步处理（-node当中叫-异步I-O-input-output-）" class="headerlink" title="异步处理（==node当中叫 异步I/O input/output==）"></a>异步处理（==node当中叫 异步I/O input/output==）</h5><ol>
+<li>文件操作 （查看文件信息、读取文件、写入文件）</li>
+<li>网络操作<h6 id="在浏览器中也存在异步操作"><a href="#在浏览器中也存在异步操作" class="headerlink" title="在浏览器中也存在异步操作"></a>在浏览器中也存在异步操作</h6></li>
+<li>定时任务</li>
+<li>事件处理</li>
+<li>ajax回调处理</li>
+</ol>
+<h6 id="js的运行是单线程的（node当中也是一样）"><a href="#js的运行是单线程的（node当中也是一样）" class="headerlink" title="js的运行是单线程的（node当中也是一样）"></a>js的运行是单线程的（node当中也是一样）</h6><ol>
+<li>解决的办法：引入事件队列机制<h6 id="Node-js中的事件模型与浏览器中的事件明模型类似"><a href="#Node-js中的事件模型与浏览器中的事件明模型类似" class="headerlink" title="Node.js中的事件模型与浏览器中的事件明模型类似"></a>Node.js中的事件模型与浏览器中的事件明模型类似</h6></li>
+<li>都是采用单线程+事件队列<h6 id="Node-js中异步执行的任务："><a href="#Node-js中异步执行的任务：" class="headerlink" title="Node.js中异步执行的任务："></a>Node.js中异步执行的任务：</h6></li>
+<li>文件I/O</li>
+<li>网络I/O<h6 id="基于回调函数的编码风格"><a href="#基于回调函数的编码风格" class="headerlink" title="基于回调函数的编码风格"></a>基于回调函数的编码风格</h6><h3 id="十-包"><a href="#十-包" class="headerlink" title="十. 包"></a>十. 包</h3></li>
+<li>npm</li>
+<li>npm安装方式</li>
+</ol>
+<p>– 本地安装<br>– 全局安装</p>
+<pre><code>    /**
+     * 全局安装  -g
+     * 本地安装
+     * npm常用的命令
+     * 1. 安装包：npm install -g 包名称  （全局安装）
+     *           npm install 包名称  （本地安装）
+     * 2. 卸载包：npm uninstall -g 包名称 （全局卸载）
+     *           npm uninstall 包名称     （本地卸载）
+     * 3. 更新包：npm update -g 包名称 （会更新到最新的版本）
+     * 
+     * 开发环境（开发的时候用的环境）   --save-dev    添加到了devDependencies
+     * 生产环境（项目部署上线到服务器的环境）  --save  添加到了dependencies
+     */
+</code></pre>
+<h3 id="十一-yarn工具的基本使用"><a href="#十一-yarn工具的基本使用" class="headerlink" title="十一. yarn工具的基本使用"></a>十一. yarn工具的基本使用</h3><pre><code>/**
+ * yarn工具的基本使用
+ * 安装yarn工具：npm install -g yarn
+ * 1. 初始化包：npm init -y--------yarn init
+ * 2. 安装包(生产环境)：npm install xxx -S---------yarn add xxx
+ * 3. 卸载包：npm uninstall xxx----------yarn remove xxx
+ * 4. 更新包：npm update xxx-------------yarn upgrade xxx
+ * 5. 安装包(开发环境)：npm install xxx -D---------yarn add xxx --dev
+ * 6. 全局安装：npm install -g xxx----------------yarn global add xxx
+ * 7. 设置下载镜像：npm config set registry url ------- yarn config set registry url
+ * 8. 安装依赖：npm install -------- yarn install
+ * 9. 执行包：npm run ------- yarn run
+ */
+</code></pre>
+<h3 id="十二-自定义包"><a href="#十二-自定义包" class="headerlink" title="十二. 自定义包"></a>十二. 自定义包</h3><ol>
+<li>包的规范</li>
+</ol>
+<p>– package.json 必须在包的顶层目录下<br>– 二进制文件应该在bin目录下<br>– javascript代码应该在lib目录下<br>– 文档应该doc目录下<br>– 单元测试应该在test目录下<br>2. package.json字段分析<br><img src="https://img-blog.csdnimg.cn/20191113173535189.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80Mzk5Njk5OQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                        
+                            <li title="1" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="false"
+        data-ae="false"
+        data-ci=""
+        data-cs=""
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>

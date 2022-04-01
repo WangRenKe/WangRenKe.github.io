@@ -1,0 +1,826 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>利用基于angularjs的angular-file-upload.min.js控件实现上传文件 - R•K</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="WangRenKe的个人博客,"> 
+    <meta name="description" content="路要一步一步走，坑要一个一个填！—— from WangRenKe的博客,参考博客: https://blog.csdn.net/zcl_love_wx/article/details/51692819
+
+相关网址:官网：http://www.bootcdn.cn/ang,"> 
+    <meta name="author" content="WangRenKe"> 
+    <link rel="alternative" href="atom.xml" title="R•K" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="利用基于angularjs的angular-file-upload.min.js控件实现上传文件 - R•K"/>
+    <meta name="twitter:description" content="路要一步一步走，坑要一个一个填！—— from WangRenKe的博客,参考博客: https://blog.csdn.net/zcl_love_wx/article/details/51692819
+
+相关网址:官网：http://www.bootcdn.cn/ang,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="R•K"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="利用基于angularjs的angular-file-upload.min.js控件实现上传文件 - R•K"/>
+    <meta property="og:description" content="路要一步一步走，坑要一个一个填！—— from WangRenKe的博客,参考博客: https://blog.csdn.net/zcl_love_wx/article/details/51692819
+
+相关网址:官网：http://www.bootcdn.cn/ang,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">R•K</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://example.com"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">利用基于angularjs的angular-file-upload.min.js控件实现上传文件</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">利用基于angularjs的angular-file-upload.min.js控件实现上传文件</h1>
+        <div class="stuff">
+            <span>七月 10, 2019</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/angular-file-upload/" rel="tag">angular-file-upload</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/" rel="tag">文件上传</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <p><strong>参考博客: <a target="_blank" rel="noopener" href="https://blog.csdn.net/zcl_love_wx/article/details/51692819">https://blog.csdn.net/zcl_love_wx/article/details/51692819</a></strong></p>
+<blockquote>
+<p>相关网址:<br>官网：<a target="_blank" rel="noopener" href="http://www.bootcdn.cn/angular-file-upload/readme/">http://www.bootcdn.cn/angular-file-upload/readme/</a><br>API ： <a target="_blank" rel="noopener" href="https://github.com/nervgh/angular-file-upload/wiki/Module-API">https://github.com/nervgh/angular-file-upload/wiki/Module-API</a><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000016113163?utm_source=tag-newest">https://segmentfault.com/a/1190000016113163?utm_source=tag-newest</a><br>插件：<br>示例：<a target="_blank" rel="noopener" href="http://nervgh.github.io/pages/angular-file-upload/examples/simple/">http://nervgh.github.io/pages/angular-file-upload/examples/simple/</a></p>
+</blockquote>
+<p><strong>个人总结</strong></p>
+<blockquote>
+<p>今天跟大家分享的是一个依赖于angular的上传控件。angular-file-upload.min.js,结合公司的项目和我这段时间的查看文档案例,在这里总结一下;<br>项目angular项目中用到的上传文件控件，大概需要实现的样式是这样子的，如下：</p>
+</blockquote>
+<p><strong>配置步骤</strong></p>
+<blockquote>
+<p>1.首先引入angular.js<br>2.引入angular-file-upload.min.js控件<br>3.声明angular实例时;需要注入angularFileUpload依赖<br>&nbsp;&nbsp;&nbsp;例如: var app=angular.module(‘app’,[‘angularFileUpload’]);<br>4.在用到的controller中注入依赖服务FileUploader;<br>&nbsp;&nbsp;&nbsp;例如:app.controller(‘appController’,[‘$scope,’FileUploader’,function..<br>以上是准备工作,一般项目中都是封装成指令来做,最后会有案例体现.</p>
+</blockquote>
+<p><strong>指令—-nv-file-drop</strong></p>
+<pre><code>&lt;!--简单的使用--&gt;
+&lt;element nv-file-drop uploader=&quot;&#123;FileUploader&#125;&quot;&gt;&lt;/element&gt;
+&lt;!-- 有更多配置的情形 --&gt;
+&lt;element nv-file-drop uploader=&quot;&#123;FileUploader&#125;&quot; options=&quot;&#123;Object&#125;&quot; filters=&quot;&#123;String&#125;&quot;&gt;&lt;/element&gt;
+</code></pre>
+<blockquote>
+<p>uploader 属性必须是FileUploader的实例<br>options 属性可以是FileItem选项，也可以是自定义属性<br>filters 属性可以是用逗号隔开的过滤器名字组成的字符串，如：’filterName1, filterName2’，这些过滤器的名字必须事先定义好：</p>
+</blockquote>
+<pre><code>uploader.filters.push(&#123;name:&#39;filterName1&#39;, fn:function() &#123;/* your code here */&#125;&#125;);
+uploader.filters.push(&#123;name:&#39;filterName2&#39;, fn:function() &#123;/* your code here */&#125;&#125;);
+</code></pre>
+<p><strong>指令—-nv-file-select</strong></p>
+<pre><code>&lt;!-- 简单的使用 --&gt;
+&lt;input type=&quot;file&quot; nv-file-select uploader=&quot;&#123;FileUploader&#125;&quot;/&gt;
+&lt;!-- 有更多配置的情形 --&gt;
+&lt;input type=&quot;file&quot; nv-file-select uploader=&quot;&#123;FileUploader&#125;&quot; options=&quot;&#123;Object&#125;&quot; filters=&quot;&#123;String&#125;&quot;/&gt;
+</code></pre>
+<p><strong>指令—-nv-file-over</strong></p>
+<pre><code>&lt;!-- 简单的使用 --&gt;
+&lt;element nv-file-over uploader=&quot;&#123;FileUploader&#125;&quot;&gt;&lt;/element&gt;
+&lt;!-- 有更多配置的情形 --&gt;
+&lt;element nv-file-over uploader=&quot;&#123;FileUploader&#125;&quot; over-class=&quot;&#123;String&#125;&quot;&gt;&lt;/element&gt;
+</code></pre>
+<p><strong>服务: 控件服务</strong></p>
+<blockquote>
+<p>FileUploader</p>
+</blockquote>
+<p><strong>内容讲解: 涉及到的属性,方法,回调等</strong></p>
+<blockquote>
+<p><strong>一 :FileUploader</strong></p>
+</blockquote>
+<p>————————————————<strong>属性如下</strong>——————————————————<br><img src="https://img-blog.csdnimg.cn/20190710194227187.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80Mzk5Njk5OQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>——————————————————–<strong>方法</strong>—————————————————-<br><img src="https://img-blog.csdnimg.cn/20190710194730540.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80Mzk5Njk5OQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/20190710194759410.jpg" alt="在这里插入图片描述"><br>————————————————–<strong>回调</strong>———————————————————-</p>
+<blockquote>
+<p>二: FileItem</p>
+</blockquote>
+<p>————————————————<strong>属性如下</strong>——————————————————<br><img src="https://img-blog.csdnimg.cn/20190710195057285.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80Mzk5Njk5OQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>——————————————————–<strong>方法</strong>—————————————————-<br><img src="https://img-blog.csdnimg.cn/20190710195156905.jpg" alt="在这里插入图片描述"><br>————————————————–<strong>回调</strong>———————————————————-<br><img src="https://img-blog.csdnimg.cn/20190710195250563.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80Mzk5Njk5OQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<blockquote>
+<p>三: Filters———注入过滤器的两种方式:</p>
+</blockquote>
+<pre><code>var uploader = new FileUploader(&#123;
+    filters: [&#123;
+        name: &#39;yourName1&#39;,
+        // 自定义的过滤器
+        fn: function(item) &#123;
+            return true;
+        &#125;
+    &#125;]
+&#125;);
+
+// 另一种方式加入自定义过滤器
+uploader.filters.push(&#123;
+    name: &#39;yourName2&#39;,
+    fn: function(item) &#123;
+        return true;
+    &#125;
+&#125;);
+</code></pre>
+<blockquote>
+<p>四: 已经定义好的过滤器<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;folder<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;queueLimit</p>
+</blockquote>
+<p><strong>实例</strong></p>
+<blockquote>
+<p>html页面</p>
+</blockquote>
+<pre><code>&lt;!-- multiple属性支持一次性选择多个文件 --&gt;
+&lt;input type=&quot;file&quot; nv-file-select=&quot;&quot; uploader=&quot;uploader&quot; multiple=&quot;&quot;&gt;
+</code></pre>
+<blockquote>
+<p>js代码</p>
+</blockquote>
+<pre><code>&#39;use strict&#39;;
+angular
+    .module(&#39;app&#39;, [&#39;angularFileUpload&#39;])
+    .controller(&#39;AppController&#39;, [&#39;$scope&#39;, &#39;FileUploader&#39;, function($scope, FileUploader) &#123;
+        //选择文件并创建文件对象有
+        var uploader = $scope.uploader = new FileUploader(&#123;
+            url: &#39;upload.php&#39;
+        &#125;);
+
+    // 过滤器
+    uploader.filters.push(&#123;
+        name: &#39;customFilter&#39;,
+        fn: function(item /*&#123;File|FileLikeObject&#125;*/, options) &#123;
+            return this.queue.length &lt; 10;
+        &#125;
+    &#125;);
+
+    // 回调
+    uploader.onWhenAddingFileFailed = function(item /*&#123;File|FileLikeObject&#125;*/, filter, options) &#123;
+        console.info(&#39;onWhenAddingFileFailed&#39;, item, filter, options);
+    &#125;;
+    uploader.onAfterAddingFile = function(fileItem) &#123;
+        console.info(&#39;onAfterAddingFile&#39;, fileItem);
+    &#125;;
+    uploader.onAfterAddingAll = function(addedFileItems) &#123;
+        console.info(&#39;onAfterAddingAll&#39;, addedFileItems);
+    &#125;;
+    uploader.onBeforeUploadItem = function(item) &#123;
+        console.info(&#39;onBeforeUploadItem&#39;, item);
+    &#125;;
+    uploader.onProgressItem = function(fileItem, progress) &#123;
+        console.info(&#39;onProgressItem&#39;, fileItem, progress);
+    &#125;;
+    uploader.onProgressAll = function(progress) &#123;
+        console.info(&#39;onProgressAll&#39;, progress);
+    &#125;;
+    uploader.onSuccessItem = function(fileItem, response, status, headers) &#123;
+        console.info(&#39;onSuccessItem&#39;, fileItem, response, status, headers);
+    &#125;;
+    uploader.onErrorItem = function(fileItem, response, status, headers) &#123;
+        console.info(&#39;onErrorItem&#39;, fileItem, response, status, headers);
+    &#125;;
+    uploader.onCancelItem = function(fileItem, response, status, headers) &#123;
+        console.info(&#39;onCancelItem&#39;, fileItem, response, status, headers);
+    &#125;;
+    uploader.onCompleteItem = function(fileItem, response, status, headers) &#123;
+        console.info(&#39;onCompleteItem&#39;, fileItem, response, status, headers);
+    &#125;;
+    uploader.onCompleteAll = function() &#123;
+        console.info(&#39;onCompleteAll&#39;);
+    &#125;;
+
+    console.info(&#39;uploader&#39;, uploader);
+&#125;]);
+</code></pre>
+<p><strong>只能上传图片的过滤器</strong></p>
+<pre><code>uploader.filters.push(&#123;
+     name: &#39;imageFilter&#39;,
+      fn: function(item /*&#123;File|FileLikeObject&#125;*/, options) &#123;
+          var type = &#39;|&#39; + item.type.slice(item.type.lastIndexOf(&#39;/&#39;) + 1) + &#39;|&#39;;
+          return &#39;|jpg|png|jpeg|bmp|gif|&#39;.indexOf(type) !== -1;
+      &#125;
+  &#125;);
+  
+</code></pre>
+<p><strong>案例一: 非常简单的一个小dome,用到的东西很少</strong></p>
+<blockquote>
+<p>html代码</p>
+</blockquote>
+<pre><code>&lt;div ng-controller=&quot;firstController&quot; class=&quot;container&quot;&gt;
+    &lt;!-- multiple属性支持一次性选择多个文件 --&gt;
+    &lt;input type=&quot;file&quot; nv-file-select=&quot;&quot; uploader=&quot;uploader&quot; multiple=&quot;&quot;&gt;
+    &lt;span ng-repeat=&#39;item in uploader.queue&#39;&gt;&#123;&#123;item.file.name&#125;&#125;&lt;/span&gt;
+&lt;/div&gt;
+</code></pre>
+<blockquote>
+<p>js代码</p>
+</blockquote>
+<pre><code>var app=angular.module(&#39;App&#39;,[&#39;angularFileUpload&#39;]);
+app.controller(&#39;firstController&#39;,[&#39;$scope&#39;,&#39;FileUploader&#39;,function($scope,FileUploader)&#123;
+    //选择文件并创建文件对象有
+    var uploader = $scope.uploader = new FileUploader(&#123;
+        url: &#39;upload.php&#39;
+    &#125;);
+
+    // 过滤器
+    uploader.filters.push(&#123;
+        name: &#39;customFilter&#39;,
+        fn: function(item /*&#123;File|FileLikeObject&#125;*/, options) &#123;
+            return this.queue.length &lt; 10;
+        &#125;
+    &#125;);
+
+    // 回调
+    uploader.onWhenAddingFileFailed = function(item /*&#123;File|FileLikeObject&#125;*/, filter, options) &#123;
+        console.info(&#39;onWhenAddingFileFailed&#39;, item, filter, options);
+    &#125;;
+    uploader.onAfterAddingFile = function(fileItem) &#123;
+        console.info(&#39;onAfterAddingFile&#39;, fileItem);
+    &#125;;
+    uploader.onAfterAddingAll = function(addedFileItems) &#123;
+        console.info(&#39;onAfterAddingAll&#39;, addedFileItems);
+    &#125;;
+    uploader.onBeforeUploadItem = function(item) &#123;
+        console.info(&#39;onBeforeUploadItem&#39;, item);
+    &#125;;
+    uploader.onProgressItem = function(fileItem, progress) &#123;
+        console.info(&#39;onProgressItem&#39;, fileItem, progress);
+    &#125;;
+    uploader.onProgressAll = function(progress) &#123;
+        console.info(&#39;onProgressAll&#39;, progress);
+    &#125;;
+    uploader.onSuccessItem = function(fileItem, response, status, headers) &#123;
+        console.info(&#39;onSuccessItem&#39;, fileItem, response, status, headers);
+    &#125;;
+    uploader.onErrorItem = function(fileItem, response, status, headers) &#123;
+        console.info(&#39;onErrorItem&#39;, fileItem, response, status, headers);
+    &#125;;
+    uploader.onCancelItem = function(fileItem, response, status, headers) &#123;
+        console.info(&#39;onCancelItem&#39;, fileItem, response, status, headers);
+    &#125;;
+    uploader.onCompleteItem = function(fileItem, response, status, headers) &#123;
+        console.info(&#39;onCompleteItem&#39;, fileItem, response, status, headers);
+    &#125;;
+    uploader.onCompleteAll = function() &#123;
+        console.info(&#39;onCompleteAll&#39;);
+    &#125;;
+
+    console.info(&#39;uploader&#39;, uploader);
+&#125;]);
+</code></pre>
+<p><strong>案例二: 项目中用到的单文件多文件上传,并且可以限制格式,封装成了指令,比较复杂</strong></p>
+<blockquote>
+<p>使用指令的html页面</p>
+</blockquote>
+<pre><code>&lt;div ng-controller=&quot;firstController&quot; class=&quot;container&quot;&gt;
+    &lt;!--封装的指令--&gt;
+    &lt;upload-files style=&quot;display:inline-block&quot; special-param=&quot;taskNameObj.taskName&quot; special-flag=&quot;1&quot; file-type-exp=&quot;zip|xlsx|xls&quot; ng-if=&quot;isShowBtnTab(btnTabLinkUrl.uploading)&quot; not-delete-from-service=&quot;true&quot; text=&quot;上传清单和交付物&quot; url=&quot;api/services/app/Project_Deliverable/ImportDeliverablesFromExcel&quot; success-call-back=&quot;getPlanIdAdd&quot;&gt;&lt;/upload-files&gt;
+&lt;/div&gt;
+</code></pre>
+<blockquote>
+<p>指令的模板html页面</p>
+</blockquote>
+<pre><code>&lt;div&gt;
+&lt;style&gt;
+    .errorMsg &#123;
+        text-align: left;
+        line-height: 30px;
+        border: 1px solid;
+        color: #ff0000;
+        width: 100%;
+        padding-left: 10px;
+        margin-top:20px;
+    &#125;
+
+    /*.closeDetai &#123;
+        font-size: 20px;
+        cursor: pointer;
+    &#125;*/
+&lt;/style&gt;
+&lt;span class=&quot;btn btn-default&quot; ng-click=&quot;openUpload()&quot;&gt;&#123;&#123;text&#125;&#125;&lt;/span&gt;
+
+&lt;div class=&quot;modal fade uploadModal&quot; tabindex=&quot;-1&quot; role=&quot;dialog&quot;&gt;
+    &lt;div class=&quot;modal-dialog modal-lg&quot; role=&quot;document&quot;&gt;
+        &lt;div class=&quot;modal-content&quot;&gt;
+            &lt;div class=&quot;main-tlt&quot;&gt;&lt;div class=&quot;cn&quot;&gt;&lt;i class=&quot;glyphicon glyphicon-record&quot;&gt;&lt;/i&gt;文件上传&lt;/div&gt;&lt;/div&gt;
+
+            &lt;div class=&quot;modal-body&quot;&gt;
+                &lt;div style=&quot;color:#98989a;font-size: 10px;margin-top: -20px;margin-bottom: 20px;&quot;&gt;提示：1，文件大小不超过&#123;&#123;fileSize&#125;&#125;M。 2，文件类型支持的后缀名有&#123;&#123;fileType&#125;&#125;。&lt;/div&gt;
+                
+                &lt;input type=&quot;file&quot; multiple nv-file-select uploader=&quot;uploader&quot; &#123;&#123;uploader.isUploading?disabled:&#125;&#125; /&gt;
+                &lt;table class=&quot;table&quot; style=&quot;margin-top:20px&quot;&gt;
+                    &lt;thead&gt;
+                        &lt;tr&gt;
+                            &lt;th width=&quot;40%&quot;&gt;文件名&lt;/th&gt;
+                            &lt;th ng-show=&quot;uploader.isHTML5&quot;&gt;大小&lt;/th&gt;
+                            &lt;th width=&quot;20%&quot; ng-show=&quot;uploader.isHTML5&quot;&gt;上传进度&lt;/th&gt;
+                            &lt;th&gt;状态&lt;/th&gt;
+                            &lt;th&gt;操作&lt;/th&gt;
+                        &lt;/tr&gt;
+                    &lt;/thead&gt;
+                    &lt;tbody&gt;
+                        &lt;tr ng-repeat=&quot;item in uploader.queue&quot;&gt;
+                            &lt;td&gt;&lt;strong&gt;&#123;&#123; item.file.name &#125;&#125;&lt;/strong&gt;&lt;/td&gt;
+                            &lt;td ng-show=&quot;uploader.isHTML5&quot; nowrap&gt;&#123;&#123; item.file.size/1024/1024|number:2 &#125;&#125; MB&lt;/td&gt;
+                            &lt;td ng-show=&quot;uploader.isHTML5&quot;&gt;
+                                &lt;div class=&quot;progress&quot; style=&quot;margin-bottom: 0;&quot;&gt;
+                                    &lt;div class=&quot;progress-bar&quot; role=&quot;progressbar&quot; ng-style=&quot;&#123; &#39;width&#39;: item.progress + &#39;%&#39; &#125;&quot;&gt;&lt;/div&gt;
+                                &lt;/div&gt;
+                            &lt;/td&gt;
+                            &lt;td class=&quot;text-center&quot;&gt;
+                                &lt;span ng-show=&quot;item.isSuccess&quot;&gt;&lt;i class=&quot;glyphicon glyphicon-ok&quot;&gt;&lt;/i&gt;&lt;/span&gt;
+                                &lt;span ng-show=&quot;item.isCancel&quot;&gt;&lt;i class=&quot;glyphicon glyphicon-ban-circle&quot;&gt;&lt;/i&gt;&lt;/span&gt;
+                                &lt;span ng-show=&quot;item.isError&quot;&gt;&lt;i class=&quot;glyphicon glyphicon-remove&quot;&gt;&lt;/i&gt;&lt;/span&gt;
+                            &lt;/td&gt;
+                            &lt;td nowrap&gt;
+                                &lt;button type=&quot;button&quot; class=&quot;btn btn-success btn-xs&quot; ng-click=&quot;item.upload()&quot; ng-disabled=&quot;item.isReady || item.isUploading || item.isSuccess || specialFlag==&#39;1&#39;&quot;&gt;
+                                    &lt;span class=&quot;glyphicon glyphicon-upload&quot;&gt;&lt;/span&gt; 上传
+                                &lt;/button&gt;
+
+                                &lt;button type=&quot;button&quot; class=&quot;btn btn-warning btn-xs&quot; ng-click=&quot;item.cancel()&quot; ng-disabled=&quot;!item.isUploading&quot;&gt;
+                                    &lt;span class=&quot;glyphicon glyphicon-ban-circle&quot;&gt;&lt;/span&gt; 取消
+                                &lt;/button&gt;
+                                &lt;button type=&quot;button&quot; class=&quot;btn btn-danger btn-xs&quot; ng-click=&quot;removeItem(item)&quot;&gt;
+                                    &lt;span class=&quot;glyphicon glyphicon-trash&quot;&gt;&lt;/span&gt; 删除
+                                &lt;/button&gt;
+                            &lt;/td&gt;
+                        &lt;/tr&gt;
+                        &lt;tr&gt;
+                            &lt;td colspan=&quot;5&quot; ng-show=&quot;uploader.queue.length==0&quot;&gt;请选择文件...&lt;/td&gt;
+                        &lt;/tr&gt;
+                    &lt;/tbody&gt;
+                &lt;/table&gt;
+                &lt;div&gt;
+                    &lt;div&gt;
+                        上传进度 :
+                        &lt;div class=&quot;progress&quot; style=&quot;&quot;&gt;
+                            &lt;div class=&quot;progress-bar&quot; role=&quot;progressbar&quot; ng-style=&quot;&#123; &#39;width&#39;: uploader.progress + &#39;%&#39; &#125;&quot;&gt;&lt;/div&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                    &lt;!-- uploader.uploadAll() --&gt;
+                    &lt;button type=&quot;button&quot; class=&quot;btn btn-success btn-s&quot; ng-click=&quot;allTheUpload()&quot; ng-disabled=&quot;!uploader.getNotUploadedItems().length&quot;&gt;
+                        &lt;span class=&quot;glyphicon glyphicon-upload&quot;&gt;&lt;/span&gt; 全部上传
+                    &lt;/button&gt;
+                    &lt;button type=&quot;button&quot; class=&quot;btn btn-warning btn-s&quot; ng-click=&quot;uploader.cancelAll()&quot; ng-disabled=&quot;!uploader.isUploading&quot;&gt;
+                        &lt;span class=&quot;glyphicon glyphicon-ban-circle&quot;&gt;&lt;/span&gt; 全部取消
+                    &lt;/button&gt;
+                    &lt;button type=&quot;button&quot; class=&quot;btn btn-danger btn-s&quot; ng-click=&quot;removeAll()&quot; ng-disabled=&quot;!uploader.queue.length&quot;&gt;
+                        &lt;span class=&quot;glyphicon glyphicon-trash&quot;&gt;&lt;/span&gt; 全部删除
+                    &lt;/button&gt;
+                &lt;/div&gt;
+                &lt;div class=&quot;errorMsg&quot; ng-bind-html=&quot;errMsg&quot; ng-show=&quot;errMsg!==&#39;&#39;&quot;&gt;&lt;/div&gt;
+                &lt;div class=&quot;loading-more&quot; ng-show=&quot;uploader.isUploading&quot;&gt;&lt;div class=&quot;cn&quot;&gt;&lt;div class=&quot;tlt&quot;&gt;&lt;i&gt;&lt;/i&gt;正在上传，请稍后...&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;
+            &lt;/div&gt;
+            &lt;div class=&quot;modal-footer&quot;&gt;
+                &lt;span class=&quot;btn btn-default&quot; data-dismiss=&quot;modal&quot;&gt;关闭&lt;/span&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<blockquote>
+<p>js代码,directive指令的代码和controller</p>
+</blockquote>
+<pre><code>(function () &#123;
+    var app = angular.module(&quot;app&quot;);
+    app.directive(&quot;uploadFiles&quot;, [&#39;serverDomain&#39;, &#39;httpService&#39;, &#39;FileUploader&#39;, &#39;$uibModal&#39;, &#39;$cookies&#39;, function (serverDomain, httpService, FileUploader, $uibModal, $cookies) &#123;
+        return &#123;
+            restrict: &quot;E&quot;,
+            scope: &#123;
+                successCallBack: &quot;&amp;&quot;,
+                inmodal: &quot;@?&quot;,//在modal中调用的时候设置为true
+                notDeleteFromService: &quot;@?&quot;,
+                fileTypeExp: &quot;@?&quot;,
+                specialFlag: &#39;@?&#39;,    // 特殊情况下的标识符
+                specialParam: &#39;=?&#39;    // 特殊情况下的参数
+            &#125;,
+            //require: &quot;ngModel&quot;,
+            controller: function ($scope, $element, $attrs) &#123;
+
+                var uploadUrl = $attrs.url;
+                var type = $attrs.type;
+                var specialparam = $scope.specialParam;
+                if (!uploadUrl || uploadUrl === &quot;&quot;) &#123;
+                    console.error(&quot;导入控件需要url属性，目前url缺失或不正确，不能进行导入操作&quot;);
+                &#125;
+
+                $scope.openUpload = function () &#123;
+                    if ($scope.specialFlag == &#39;1&#39;) &#123;
+                        if ($scope.specialParam == &#39;&#39;) &#123;
+                            abp.message.error(&#39;请先选择任务名称!&#39;);
+                        &#125; else &#123;
+                            $element.find(&quot;.uploadModal&quot;).modal(&#123;
+                                backdrop: &#39;static&#39;, keyboard: false
+                            &#125;);
+                        &#125;
+                    &#125; else &#123;
+                        $element.find(&quot;.uploadModal&quot;).modal(&#123;
+                            backdrop: &#39;static&#39;, keyboard: false
+                        &#125;);
+                    &#125;
+                &#125;
+
+                //重新打开模态框，提示信息清空
+                $element.find(&quot;.uploadModal&quot;).on(&quot;show.bs.modal&quot;, function () &#123;
+                    $scope.errMsg = &quot;&quot;;
+                &#125;);
+
+                // 关闭modal框的时候
+                $element.find(&quot;.uploadModal&quot;).on(&#39;hidden.bs.modal&#39;, function () &#123;
+                    //如果inmodal为true就设置body的样式
+                    if ($scope.inmodal) &#123;
+                        //当modal套modal的形式弹出的时候，子modal关闭会自动删掉body上的modal-open，导致父modal内容过多的时候不能上下滚动
+                        if (!$(&quot;body&quot;).hasClass(&quot;modal-open&quot;)) &#123;
+                            $(&quot;body&quot;).addClass(&quot;modal-open&quot;);
+                        &#125;
+                    &#125;
+                &#125;);
+
+                var confirmMsg = $scope.notDeleteFromService === &quot;true&quot; ? &quot;即将从上传队列中删除&quot; : &quot;如文件已上传，则会删除服务器上的源文件&quot;;
+
+                //删除单个文件
+                $scope.removeItem = function (item) &#123;
+                    abp.message.confirm(confirmMsg, &quot;确定删除吗？&quot;, function (result) &#123;
+                        if (result) &#123;
+                            var msg = &quot;&quot;;
+                            if (!$scope.notDeleteFromService || $scope.notDeleteFromService !== &quot;true&quot;) &#123;
+                                if (item.isUploaded) &#123;
+
+                                    var url = serverDomain + &quot;api/services/app/UploadFile/DeleteOneFile?fileId=&quot; + item.fileId;
+                                    httpService.Delete(url, function (rst) &#123;
+                                        if (!rst.success) &#123;
+                                            msg = &quot;文件：&quot; + item.file.name + &quot; 从服务器上删除失败&quot;;
+                                        &#125;
+                                    &#125;);
+                                &#125;
+
+                                var idx = -1;//要删除的索引
+                                $scope.responseResult.forEach(function (val, index) &#123;
+                                    if (val.id === item.id) &#123;
+                                        idx = index;
+                                        return;
+                                    &#125;
+                                &#125;);
+                                $scope.responseResult.splice(idx, 1);//回显列表中删除 
+                            &#125;
+
+                            item.remove();//上传列表中删除
+
+                            if ($scope.successCallBack()) &#123;
+                                $scope.successCallBack()($scope.responseResult);
+                            &#125;
+
+                            $scope.errMsg = msg != &quot;&quot; ? msg : &quot;删除成功&quot;;
+                            $scope.$apply();
+                        &#125;
+                    &#125;);
+                &#125;;
+
+                $scope.removeAll = function () &#123;
+                    abp.message.confirm(confirmMsg, &quot;确定删除吗？&quot;, function (result) &#123;
+                        if (result) &#123;
+                            var msg = &quot;&quot;;
+                            if (!$scope.notDeleteFromService || $scope.notDeleteFromService === &quot;true&quot;) &#123;
+                                uploader.queue.forEach(function (item, index) &#123;
+                                    if (item.isUploaded &amp;&amp; item.id) &#123;
+                                        var url = serverDomain + &quot;api/services/app/UploadFile/DeleteOneFile?fileId=&quot; + item.fileId;
+                                        httpService.Delete(url, function (rst) &#123;
+                                            if (!rst.success) &#123;
+                                                msg += &quot;文件：&quot; + item.file.name + &quot; 从服务器上删除失败&quot;;
+
+                                            &#125;
+                                        &#125;);
+                                    &#125;
+                                &#125;);
+
+                                $scope.responseResult = [];//回显列表中删除 
+                            &#125;
+
+                            if ($scope.successCallBack()) &#123;
+                                $scope.successCallBack()($scope.responseResult);
+                            &#125;
+
+                            $scope.uploader.clearQueue();
+                            $scope.errMsg = msg != &quot;&quot; ? msg : &quot;删除成功&quot; + &quot;&lt;br/&gt;&quot;;
+                            $scope.$apply();
+                        &#125;
+                    &#125;);
+
+                &#125;;
+
+                $scope.errMsg = &quot;&quot;;
+
+                $scope.responseResult = [];
+
+                var uploader = $scope.uploader = new FileUploader(&#123;
+                    url: serverDomain + uploadUrl,
+                    removeAfterUpload: false,
+                    alias: &quot;file&quot;,//后台接口文件参数名称
+                    formData: [&#123;
+                        type: type,
+                        pid: sessionStorage.getItem(&quot;pId&quot;),
+                        taskName: specialparam
+                    &#125;],
+                    headers: &#123;
+                        &quot;Authorization&quot;: &#39;Bearer &#39; + $cookies.get(&quot;XSRF-TOKEN&quot;)
+                    &#125;
+
+                &#125;);
+
+                $scope.fileSize = 20;
+                var exp = &quot;jpg|png|gif|bmp|jpeg|tif|pdf|zip|rar|docx|doc|xlsx|xls&quot;;//默认允许的文件格式
+                if ($scope.fileTypeExp) &#123;
+                    exp = $scope.fileTypeExp;
+                &#125;
+
+                $scope.fileType = exp.split(&quot;|&quot;).join(&quot;、&quot;);
+
+                $element.find(&quot;input[type=file]&quot;).change(function (e) &#123;
+                    $scope.errMsg = &quot;&quot;;
+                &#125;);
+
+                // a sync filter
+                uploader.filters.push(&#123;
+                    name: &#39;syncfilter&#39;,
+                    fn: function (file /*&#123;file|filelikeobject&#125;*/, options) &#123;
+                        var size = file.size / 1024 / 1024;
+                        var name = file.name;
+
+                        if (size &gt; $scope.fileSize) &#123;
+                            $scope.errMsg += name + &quot;文件大小已超过20M ；&lt;br/&gt;&quot;;
+                            return false;
+                        &#125;
+
+                        var reg = new RegExp(&quot;\.(&quot; + exp + &quot;)$&quot;, &quot;gi&quot;);
+                        if (!reg.test(name)) &#123;
+                            $scope.errMsg += name + &quot; 文件类型不允许；&lt;br/&gt;&quot;;
+                            return false
+                        &#125;
+                        if ($scope.specialFlag == &#39;1&#39;) &#123;
+                            var len = $scope.uploader.queue.length;
+                            if (len == 2) &#123;
+                                $scope.errMsg = &quot;选择错误，最多选择两个文件！&quot;;
+                                return false;
+                            &#125; else if (len == 0) &#123;
+                                if (file.name.substr(-3, 3) != &#39;zip&#39;) &#123;
+                                    $scope.errMsg = &quot;选择错误，第一个文件请选择zip格式！&quot;;
+                                    return false;
+                                &#125;
+                            &#125;
+                        &#125;
+
+                        $scope.errMsg = &quot;&quot;;
+                        return true;
+
+                    &#125;
+                &#125;);
+
+                // 项目文档管理 特殊情况下的校验(全部上传click)
+                $scope.allTheUpload = function () &#123;
+                    if ($scope.specialFlag == &#39;1&#39;) &#123;
+                        var zipFlag = 0;
+                        var xlsFlag = 0;
+                        if ($scope.uploader.queue.length &lt; 2) &#123;
+                            $scope.errMsg = &quot;选择错误，请选择一项zip文件、xlsx或xls文件！&quot;;
+                        &#125; else &#123;
+                            angular.forEach($scope.uploader.queue, function (v, i) &#123;
+                                let str = v.file.name.substr(-3, 3);
+                                if (i == 0) &#123;
+                                    if (v.file.name.substr(-3, 3) != &#39;zip&#39;) &#123;
+                                        $scope.errMsg = &quot;选择错误，第一个文件请选择zip格式！&quot;;
+                                        return false;
+                                    &#125;
+                                &#125;
+                                if (str == &#39;zip&#39;) &#123;
+                                    zipFlag += 1;
+                                &#125; else &#123;
+                                    xlsFlag += 1;
+                                &#125;
+                            &#125;)
+
+                            if (zipFlag == 2) &#123;
+                                $scope.errMsg = &quot;选择错误，请选择一项zip文件、xlsx或xls文件！&quot;;
+                            &#125; else if (xlsFlag == 2) &#123;
+                                $scope.errMsg = &quot;选择错误，请选择一项zip文件、xlsx或xls文件！&quot;;
+                            &#125; else &#123;
+                                $scope.uploader.uploadAll();
+                            &#125;
+                        &#125;
+                    &#125; else &#123;
+                        $scope.uploader.uploadAll();   // 如果不是特殊情况，直接调接口
+                    &#125;
+                &#125;
+
+                // CALLBACKS
+
+                uploader.onWhenAddingFileFailed = function (item /*&#123;File|FileLikeObject&#125;*/, filter, options) &#123;
+                    API.log(&quot;用户选择了一个错误文件：&quot;, item)
+                &#125;;
+                uploader.onAfterAddingFile = function (fileItem) &#123;
+                    console.log(&quot;onAfterAddingFile&quot;, fileItem)
+                &#125;;
+                uploader.onAfterAddingAll = function (addedFileItems) &#123;
+                    console.info(&#39;onAfterAddingAll&#39;, addedFileItems);
+                &#125;;
+                uploader.onBeforeUploadItem = function (item) &#123;
+                    API.log(&#39;onBeforeUploadItem&#39;, item);
+                &#125;;
+                //uploader.onProgressItem = function (fileItem, progress) &#123;
+                //    console.info(&#39;onProgressItem&#39;, fileItem, progress);
+                //&#125;;
+                //uploader.onProgressAll = function (progress) &#123;
+                //    console.info(&#39;onProgressAll&#39;, progress);
+                //&#125;;
+                uploader.onSuccessItem = function (fileItem, response, status, headers) &#123;
+                    if (response.success) &#123;
+                        $scope.errMsg += &quot;文件：&quot; + fileItem.file.name + &quot; 上传成功&quot; + &quot;&lt;br/&gt;&quot;;
+                        $scope.responseResult.push(response.result);
+
+                        if (response.result) &#123;
+                            fileItem.id = response.result.id;//上传成功赋上id，以便删除时候使用
+                            fileItem.fileId = response.result.fileId;//上传成功赋上fileId，以便删除时候使用
+                        &#125;
+
+                        if ($scope.successCallBack()) &#123;
+                            $scope.successCallBack()($scope.responseResult);
+                        &#125;
+                    &#125;
+                    else &#123;
+                        $scope.errMsg += &quot;文件：&quot; + fileItem.file.name + &quot;上传出错&quot;
+                        if (response &amp;&amp; response.error) &#123;
+                            $scope.errMsg += &quot;：&quot; + response.error.message;
+                        &#125;
+                    &#125;
+                    console.info(&#39;onSuccessItem&#39;, fileItem, response, status, headers);
+                &#125;;
+                uploader.onErrorItem = function (fileItem, response, status, headers) &#123;
+                    $scope.errMsg += &quot;文件：&quot; + fileItem.file.name + &quot;上传出错&quot;;
+                    if (response &amp;&amp; response.error) &#123;
+                        $scope.errMsg += &quot;：&quot; + response.error.message;
+                    &#125;
+
+                    console.info(&#39;onErrorItem&#39;, fileItem, response, status, headers);
+                &#125;;
+                uploader.onCancelItem = function (fileItem, response, status, headers) &#123;
+                    $scope.errMsg += &quot;文件：&quot; + fileItem.file.name + &quot;取消上传&quot;;
+                    console.info(&#39;onCancelItem&#39;, fileItem, response, status, headers);
+                &#125;;
+                //uploader.onCompleteItem = function (fileItem, response, status, headers) &#123;
+                //    console.info(&#39;onCompleteItem&#39;, fileItem, response,status, headers);
+
+                //&#125;;
+                uploader.onCompleteAll = function () &#123;
+                    //$scope.errMsg = &quot;上传成功&quot;;
+                    console.info(&#39;onCompleteAll&#39;);
+                &#125;;
+
+                //console.info(&#39;uploader&#39;, uploader);
+
+            &#125;,
+            link: function (scope, element, attr, ngModelCtrl) &#123;
+                scope.text = attr.text || &quot;导入&quot;;
+            &#125;,
+            replace: true,
+            templateUrl: &quot;../App/views/template/uploadFiles.html&quot;,
+
+        &#125;;
+    &#125;]);
+&#125;)()
+</code></pre>
+<p><strong>插件代码,如果没下载到插件，可复制 里的代码</strong></p>
+<pre><code>/*
+ angular-file-upload v2.1.3
+ https://github.com/nervgh/angular-file-upload
+*/
+
+!function(e,t)&#123;&quot;object&quot;==typeof exports&amp;&amp;&quot;object&quot;==typeof module?module.exports=t():&quot;function&quot;==typeof define&amp;&amp;define.amd?define(t):&quot;object&quot;==typeof exports?exports[&quot;angular-file-upload&quot;]=t():e[&quot;angular-file-upload&quot;]=t()&#125;(this,function()&#123;return function(e)&#123;function t(r)&#123;if(n[r])return n[r].exports;var i=n[r]=&#123;exports:&#123;&#125;,id:r,loaded:!1&#125;;return e[r].call(i.exports,i,i.exports,t),i.loaded=!0,i.exports&#125;var n=&#123;&#125;;return t.m=e,t.c=n,t.p=&quot;&quot;,t(0)&#125;([function(e,t,n)&#123;&quot;use strict&quot;;var r=function(e)&#123;return e&amp;&amp;e.__esModule?e[&quot;default&quot;]:e&#125;,i=r(n(2)),o=r(n(3)),s=r(n(4)),a=r(n(5)),u=r(n(6)),l=r(n(7)),c=r(n(1)),f=r(n(8)),p=r(n(9)),d=r(n(10)),v=r(n(11)),h=r(n(12));angular.module(i.name,[]).value(&quot;fileUploaderOptions&quot;,o).factory(&quot;FileUploader&quot;,s).factory(&quot;FileLikeObject&quot;,a).factory(&quot;FileItem&quot;,u).factory(&quot;FileDirective&quot;,l).factory(&quot;FileSelect&quot;,c).factory(&quot;FileDrop&quot;,f).factory(&quot;FileOver&quot;,p).directive(&quot;nvFileSelect&quot;,d).directive(&quot;nvFileDrop&quot;,v).directive(&quot;nvFileOver&quot;,h).run([&quot;FileUploader&quot;,&quot;FileLikeObject&quot;,&quot;FileItem&quot;,&quot;FileDirective&quot;,&quot;FileSelect&quot;,&quot;FileDrop&quot;,&quot;FileOver&quot;,function(e,t,n,r,i,o,s)&#123;e.FileLikeObject=t,e.FileItem=n,e.FileDirective=r,e.FileSelect=i,e.FileDrop=o,e.FileOver=s&#125;])&#125;,function(e,t,n)&#123;&quot;use strict&quot;;var r=function(e)&#123;return e&amp;&amp;e.__esModule?e[&quot;default&quot;]:e&#125;,i=function()&#123;function e(e,t)&#123;for(var n in t)&#123;var r=t[n];r.configurable=!0,r.value&amp;&amp;(r.writable=!0)&#125;Object.defineProperties(e,t)&#125;return function(t,n,r)&#123;return n&amp;&amp;e(t.prototype,n),r&amp;&amp;e(t,r),t&#125;&#125;(),o=function l(e,t,n)&#123;var r=Object.getOwnPropertyDescriptor(e,t);if(void 0===r)&#123;var i=Object.getPrototypeOf(e);return null===i?void 0:l(i,t,n)&#125;if(&quot;value&quot;in r&amp;&amp;r.writable)return r.value;var o=r.get;return void 0===o?void 0:o.call(n)&#125;,s=function(e,t)&#123;if(&quot;function&quot;!=typeof t&amp;&amp;null!==t)throw new TypeError(&quot;Super expression must either be null or a function, not &quot;+typeof t);e.prototype=Object.create(t&amp;&amp;t.prototype,&#123;constructor:&#123;value:e,enumerable:!1,writable:!0,configurable:!0&#125;&#125;),t&amp;&amp;(e.__proto__=t)&#125;,a=function(e,t)&#123;if(!(e instanceof t))throw new TypeError(&quot;Cannot call a class as a function&quot;)&#125;,u=(r(n(2)),angular.extend);e.exports=function(e)&#123;var t=function(e)&#123;function t(e)&#123;a(this,t);var n=u(e,&#123;events:&#123;$destroy:&quot;destroy&quot;,change:&quot;onChange&quot;&#125;,prop:&quot;select&quot;&#125;);o(Object.getPrototypeOf(t.prototype),&quot;constructor&quot;,this).call(this,n),this.uploader.isHTML5||this.element.removeAttr(&quot;multiple&quot;),this.element.prop(&quot;value&quot;,null)&#125;return s(t,e),i(t,&#123;getOptions:&#123;value:function()&#123;&#125;&#125;,getFilters:&#123;value:function()&#123;&#125;&#125;,isEmptyAfterSelection:&#123;value:function()&#123;return!!this.element.attr(&quot;multiple&quot;)&#125;&#125;,onChange:&#123;value:function()&#123;var e=this.uploader.isHTML5?this.element[0].files:this.element[0],t=this.getOptions(),n=this.getFilters();this.uploader.isHTML5||this.destroy(),this.uploader.addToQueue(e,t,n),this.isEmptyAfterSelection()&amp;&amp;this.element.prop(&quot;value&quot;,null)&#125;&#125;&#125;),t&#125;(e);return t&#125;,e.exports.$inject=[&quot;FileDirective&quot;]&#125;,function(e,t)&#123;e.exports=&#123;name:&quot;angularFileUpload&quot;&#125;&#125;,function(e,t)&#123;&quot;use strict&quot;;e.exports=&#123;url:&quot;/&quot;,alias:&quot;file&quot;,headers:&#123;&#125;,queue:[],progress:0,autoUpload:!1,removeAfterUpload:!1,method:&quot;POST&quot;,filters:[],formData:[],queueLimit:Number.MAX_VALUE,withCredentials:!1&#125;&#125;,function(e,t,n)&#123;&quot;use strict&quot;;var r=function(e)&#123;return e&amp;&amp;e.__esModule?e[&quot;default&quot;]:e&#125;,i=function()&#123;function e(e,t)&#123;for(var n in t)&#123;var r=t[n];r.configurable=!0,r.value&amp;&amp;(r.writable=!0)&#125;Object.defineProperties(e,t)&#125;return function(t,n,r)&#123;return n&amp;&amp;e(t.prototype,n),r&amp;&amp;e(t,r),t&#125;&#125;(),o=function(e,t)&#123;if(!(e instanceof t))throw new TypeError(&quot;Cannot call a class as a function&quot;)&#125;,s=(r(n(2)),angular.copy),a=angular.extend,u=angular.forEach,l=angular.isObject,c=angular.isNumber,f=angular.isDefined,p=angular.isArray,d=angular.element;e.exports=function(e,t,n,r,v,h)&#123;var m=r.File,g=r.FormData,_=function()&#123;function r(t)&#123;o(this,r);var n=s(e);a(this,n,t,&#123;isUploading:!1,_nextIndex:0,_failFilterIndex:-1,_directives:&#123;select:[],drop:[],over:[]&#125;&#125;),this.filters.unshift(&#123;name:&quot;queueLimit&quot;,fn:this._queueLimitFilter&#125;),this.filters.unshift(&#123;name:&quot;folder&quot;,fn:this._folderFilter&#125;)&#125;return i(r,&#123;addToQueue:&#123;value:function(e,t,n)&#123;var r=this,i=this.isArrayLikeObject(e)?e:[e],o=this._getFilters(n),s=this.queue.length,a=[];u(i,function(e)&#123;var n=new v(e);if(r._isValidFile(n,o,t))&#123;var i=new h(r,e,t);a.push(i),r.queue.push(i),r._onAfterAddingFile(i)&#125;else&#123;var s=o[r._failFilterIndex];r._onWhenAddingFileFailed(n,s,t)&#125;&#125;),this.queue.length!==s&amp;&amp;(this._onAfterAddingAll(a),this.progress=this._getTotalProgress()),this._render(),this.autoUpload&amp;&amp;this.uploadAll()&#125;&#125;,removeFromQueue:&#123;value:function(e)&#123;var t=this.getIndexOfItem(e),n=this.queue[t];n.isUploading&amp;&amp;n.cancel(),this.queue.splice(t,1),n._destroy(),this.progress=this._getTotalProgress()&#125;&#125;,clearQueue:&#123;value:function()&#123;for(;this.queue.length;)this.queue[0].remove();this.progress=0&#125;&#125;,uploadItem:&#123;value:function(e)&#123;var t=this.getIndexOfItem(e),n=this.queue[t],r=this.isHTML5?&quot;_xhrTransport&quot;:&quot;_iframeTransport&quot;;n._prepareToUploading(),this.isUploading||(this.isUploading=!0,this[r](n))&#125;&#125;,cancelItem:&#123;value:function(e)&#123;var t=this.getIndexOfItem(e),n=this.queue[t],r=this.isHTML5?&quot;_xhr&quot;:&quot;_form&quot;;n&amp;&amp;n.isUploading&amp;&amp;n[r].abort()&#125;&#125;,uploadAll:&#123;value:function()&#123;var e=this.getNotUploadedItems().filter(function(e)&#123;return!e.isUploading&#125;);e.length&amp;&amp;(u(e,function(e)&#123;return e._prepareToUploading()&#125;),e[0].upload())&#125;&#125;,cancelAll:&#123;value:function()&#123;var e=this.getNotUploadedItems();u(e,function(e)&#123;return e.cancel()&#125;)&#125;&#125;,isFile:&#123;value:function(e)&#123;return this.constructor.isFile(e)&#125;&#125;,isFileLikeObject:&#123;value:function(e)&#123;return this.constructor.isFileLikeObject(e)&#125;&#125;,isArrayLikeObject:&#123;value:function(e)&#123;return this.constructor.isArrayLikeObject(e)&#125;&#125;,getIndexOfItem:&#123;value:function(e)&#123;return c(e)?e:this.queue.indexOf(e)&#125;&#125;,getNotUploadedItems:&#123;value:function()&#123;return this.queue.filter(function(e)&#123;return!e.isUploaded&#125;)&#125;&#125;,getReadyItems:&#123;value:function()&#123;return this.queue.filter(function(e)&#123;return e.isReady&amp;&amp;!e.isUploading&#125;).sort(function(e,t)&#123;return e.index-t.index&#125;)&#125;&#125;,destroy:&#123;value:function()&#123;var e=this;u(this._directives,function(t)&#123;u(e._directives[t],function(e)&#123;e.destroy()&#125;)&#125;)&#125;&#125;,onAfterAddingAll:&#123;value:function(e)&#123;&#125;&#125;,onAfterAddingFile:&#123;value:function(e)&#123;&#125;&#125;,onWhenAddingFileFailed:&#123;value:function(e,t,n)&#123;&#125;&#125;,onBeforeUploadItem:&#123;value:function(e)&#123;&#125;&#125;,onProgressItem:&#123;value:function(e,t)&#123;&#125;&#125;,onProgressAll:&#123;value:function(e)&#123;&#125;&#125;,onSuccessItem:&#123;value:function(e,t,n,r)&#123;&#125;&#125;,onErrorItem:&#123;value:function(e,t,n,r)&#123;&#125;&#125;,onCancelItem:&#123;value:function(e,t,n,r)&#123;&#125;&#125;,onCompleteItem:&#123;value:function(e,t,n,r)&#123;&#125;&#125;,onCompleteAll:&#123;value:function()&#123;&#125;&#125;,_getTotalProgress:&#123;value:function(e)&#123;if(this.removeAfterUpload)return e||0;var t=this.getNotUploadedItems().length,n=t?this.queue.length-t:this.queue.length,r=100/this.queue.length,i=(e||0)*r/100;return Math.round(n*r+i)&#125;&#125;,_getFilters:&#123;value:function(e)&#123;if(!e)return this.filters;if(p(e))return e;var t=e.match(/[^\s,]+/g);return this.filters.filter(function(e)&#123;return-1!==t.indexOf(e.name)&#125;)&#125;&#125;,_render:&#123;value:function()&#123;t.$$phase||t.$apply()&#125;&#125;,_folderFilter:&#123;value:function(e)&#123;return!(!e.size&amp;&amp;!e.type)&#125;&#125;,_queueLimitFilter:&#123;value:function()&#123;return this.queue.length&lt;this.queueLimit&#125;&#125;,_isValidFile:&#123;value:function(e,t,n)&#123;var r=this;return this._failFilterIndex=-1,t.length?t.every(function(t)&#123;return r._failFilterIndex++,t.fn.call(r,e,n)&#125;):!0&#125;&#125;,_isSuccessCode:&#123;value:function(e)&#123;return e&gt;=200&amp;&amp;300&gt;e||304===e&#125;&#125;,_transformResponse:&#123;value:function(e,t)&#123;var r=this._headersGetter(t);return u(n.defaults.transformResponse,function(t)&#123;e=t(e,r)&#125;),e&#125;&#125;,_parseHeaders:&#123;value:function(e)&#123;var t,n,r,i=&#123;&#125;;return e?(u(e.split(&quot;\n&quot;),function(e)&#123;r=e.indexOf(&quot;:&quot;),t=e.slice(0,r).trim().toLowerCase(),n=e.slice(r+1).trim(),t&amp;&amp;(i[t]=i[t]?i[t]+&quot;, &quot;+n:n)&#125;),i):i&#125;&#125;,_headersGetter:&#123;value:function(e)&#123;return function(t)&#123;return t?e[t.toLowerCase()]||null:e&#125;&#125;&#125;,_xhrTransport:&#123;value:function(e)&#123;var t=this,n=e._xhr=new XMLHttpRequest,r=new g;if(this._onBeforeUploadItem(e),u(e.formData,function(e)&#123;u(e,function(e,t)&#123;r.append(t,e)&#125;)&#125;),&quot;number&quot;!=typeof e._file.size)throw new TypeError(&quot;The file specified is no longer valid&quot;);r.append(e.alias,e._file,e.file.name),n.upload.onprogress=function(n)&#123;var r=Math.round(n.lengthComputable?100*n.loaded/n.total:0);t._onProgressItem(e,r)&#125;,n.onload=function()&#123;var r=t._parseHeaders(n.getAllResponseHeaders()),i=t._transformResponse(n.response,r),o=t._isSuccessCode(n.status)?&quot;Success&quot;:&quot;Error&quot;,s=&quot;_on&quot;+o+&quot;Item&quot;;t[s](e,i,n.status,r),t._onCompleteItem(e,i,n.status,r)&#125;,n.onerror=function()&#123;var r=t._parseHeaders(n.getAllResponseHeaders()),i=t._transformResponse(n.response,r);t._onErrorItem(e,i,n.status,r),t._onCompleteItem(e,i,n.status,r)&#125;,n.onabort=function()&#123;var r=t._parseHeaders(n.getAllResponseHeaders()),i=t._transformResponse(n.response,r);t._onCancelItem(e,i,n.status,r),t._onCompleteItem(e,i,n.status,r)&#125;,n.open(e.method,e.url,!0),n.withCredentials=e.withCredentials,u(e.headers,function(e,t)&#123;n.setRequestHeader(t,e)&#125;),n.send(r),this._render()&#125;&#125;,_iframeTransport:&#123;value:function(e)&#123;var t=this,n=d(&#39;&lt;form style=&quot;display: none;&quot; /&gt;&#39;),r=d(&#39;&lt;iframe name=&quot;iframeTransport&#39;+Date.now()+&#39;&quot;&gt;&#39;),i=e._input;e._form&amp;&amp;e._form.replaceWith(i),e._form=n,this._onBeforeUploadItem(e),i.prop(&quot;name&quot;,e.alias),u(e.formData,function(e)&#123;u(e,function(e,t)&#123;var r=d(&#39;&lt;input type=&quot;hidden&quot; name=&quot;&#39;+t+&#39;&quot; /&gt;&#39;);r.val(e),n.append(r)&#125;)&#125;),n.prop(&#123;action:e.url,method:&quot;POST&quot;,target:r.prop(&quot;name&quot;),enctype:&quot;multipart/form-data&quot;,encoding:&quot;multipart/form-data&quot;&#125;),r.bind(&quot;load&quot;,function()&#123;var n=&quot;&quot;,i=200;try&#123;n=r[0].contentDocument.body.innerHTML&#125;catch(o)&#123;i=500&#125;var s=&#123;response:n,status:i,dummy:!0&#125;,a=&#123;&#125;,u=t._transformResponse(s.response,a);t._onSuccessItem(e,u,s.status,a),t._onCompleteItem(e,u,s.status,a)&#125;),n.abort=function()&#123;var o,s=&#123;status:0,dummy:!0&#125;,a=&#123;&#125;;r.unbind(&quot;load&quot;).prop(&quot;src&quot;,&quot;javascript:false;&quot;),n.replaceWith(i),t._onCancelItem(e,o,s.status,a),t._onCompleteItem(e,o,s.status,a)&#125;,i.after(n),n.append(i).append(r),n[0].submit(),this._render()&#125;&#125;,_onWhenAddingFileFailed:&#123;value:function(e,t,n)&#123;this.onWhenAddingFileFailed(e,t,n)&#125;&#125;,_onAfterAddingFile:&#123;value:function(e)&#123;this.onAfterAddingFile(e)&#125;&#125;,_onAfterAddingAll:&#123;value:function(e)&#123;this.onAfterAddingAll(e)&#125;&#125;,_onBeforeUploadItem:&#123;value:function(e)&#123;e._onBeforeUpload(),this.onBeforeUploadItem(e)&#125;&#125;,_onProgressItem:&#123;value:function(e,t)&#123;var n=this._getTotalProgress(t);this.progress=n,e._onProgress(t),this.onProgressItem(e,t),this.onProgressAll(n),this._render()&#125;&#125;,_onSuccessItem:&#123;value:function(e,t,n,r)&#123;e._onSuccess(t,n,r),this.onSuccessItem(e,t,n,r)&#125;&#125;,_onErrorItem:&#123;value:function(e,t,n,r)&#123;e._onError(t,n,r),this.onErrorItem(e,t,n,r)&#125;&#125;,_onCancelItem:&#123;value:function(e,t,n,r)&#123;e._onCancel(t,n,r),this.onCancelItem(e,t,n,r)&#125;&#125;,_onCompleteItem:&#123;value:function(e,t,n,r)&#123;e._onComplete(t,n,r),this.onCompleteItem(e,t,n,r);var i=this.getReadyItems()[0];return this.isUploading=!1,f(i)?void i.upload():(this.onCompleteAll(),this.progress=this._getTotalProgress(),void this._render())&#125;&#125;&#125;,&#123;isFile:&#123;value:function(e)&#123;return m&amp;&amp;e instanceof m&#125;&#125;,isFileLikeObject:&#123;value:function(e)&#123;return e instanceof v&#125;&#125;,isArrayLikeObject:&#123;value:function(e)&#123;return l(e)&amp;&amp;&quot;length&quot;in e&#125;&#125;,inherit:&#123;value:function(e,t)&#123;e.prototype=Object.create(t.prototype),e.prototype.constructor=e,e.super_=t&#125;&#125;&#125;),r&#125;();return _.prototype.isHTML5=!(!m||!g),_.isHTML5=_.prototype.isHTML5,_&#125;,e.exports.$inject=[&quot;fileUploaderOptions&quot;,&quot;$rootScope&quot;,&quot;$http&quot;,&quot;$window&quot;,&quot;FileLikeObject&quot;,&quot;FileItem&quot;]&#125;,function(e,t,n)&#123;&quot;use strict&quot;;var r=function(e)&#123;return e&amp;&amp;e.__esModule?e[&quot;default&quot;]:e&#125;,i=function()&#123;function e(e,t)&#123;for(var n in t)&#123;var r=t[n];r.configurable=!0,r.value&amp;&amp;(r.writable=!0)&#125;Object.defineProperties(e,t)&#125;return function(t,n,r)&#123;return n&amp;&amp;e(t.prototype,n),r&amp;&amp;e(t,r),t&#125;&#125;(),o=function(e,t)&#123;if(!(e instanceof t))throw new TypeError(&quot;Cannot call a class as a function&quot;)&#125;,s=(r(n(2)),angular.copy),a=angular.isElement,u=angular.isString;e.exports=function()&#123;var e=function()&#123;function e(t)&#123;o(this,e);var n=a(t),r=n?t.value:t,i=u(r)?&quot;FakePath&quot;:&quot;Object&quot;,s=&quot;_createFrom&quot;+i;this[s](r)&#125;return i(e,&#123;_createFromFakePath:&#123;value:function(e)&#123;this.lastModifiedDate=null,this.size=null,this.type=&quot;like/&quot;+e.slice(e.lastIndexOf(&quot;.&quot;)+1).toLowerCase(),this.name=e.slice(e.lastIndexOf(&quot;/&quot;)+e.lastIndexOf(&quot;\\&quot;)+2)&#125;&#125;,_createFromObject:&#123;value:function(e)&#123;this.lastModifiedDate=s(e.lastModifiedDate),this.size=e.size,this.type=e.type,this.name=e.name&#125;&#125;&#125;),e&#125;();return e&#125;,e.exports.$inject=[]&#125;,function(e,t,n)&#123;&quot;use strict&quot;;var r=function(e)&#123;return e&amp;&amp;e.__esModule?e[&quot;default&quot;]:e&#125;,i=function()&#123;function e(e,t)&#123;for(var n in t)&#123;var r=t[n];r.configurable=!0,r.value&amp;&amp;(r.writable=!0)&#125;Object.defineProperties(e,t)&#125;return function(t,n,r)&#123;return n&amp;&amp;e(t.prototype,n),r&amp;&amp;e(t,r),t&#125;&#125;(),o=function(e,t)&#123;if(!(e instanceof t))throw new TypeError(&quot;Cannot call a class as a function&quot;)&#125;,s=(r(n(2)),angular.copy),a=angular.extend,u=angular.element,l=angular.isElement;e.exports=function(e,t)&#123;var n=function()&#123;function n(e,r,i)&#123;o(this,n);var c=l(r),f=c?u(r):null,p=c?null:r;a(this,&#123;url:e.url,alias:e.alias,headers:s(e.headers),formData:s(e.formData),removeAfterUpload:e.removeAfterUpload,withCredentials:e.withCredentials,method:e.method&#125;,i,&#123;uploader:e,file:new t(r),isReady:!1,isUploading:!1,isUploaded:!1,isSuccess:!1,isCancel:!1,isError:!1,progress:0,index:null,_file:p,_input:f&#125;),f&amp;&amp;this._replaceNode(f)&#125;return i(n,&#123;upload:&#123;value:function()&#123;try&#123;this.uploader.uploadItem(this)&#125;catch(e)&#123;this.uploader._onCompleteItem(this,&quot;&quot;,0,[]),this.uploader._onErrorItem(this,&quot;&quot;,0,[])&#125;&#125;&#125;,cancel:&#123;value:function()&#123;this.uploader.cancelItem(this)&#125;&#125;,remove:&#123;value:function()&#123;this.uploader.removeFromQueue(this)&#125;&#125;,onBeforeUpload:&#123;value:function()&#123;&#125;&#125;,onProgress:&#123;value:function(e)&#123;&#125;&#125;,onSuccess:&#123;value:function(e,t,n)&#123;&#125;&#125;,onError:&#123;value:function(e,t,n)&#123;&#125;&#125;,onCancel:&#123;value:function(e,t,n)&#123;&#125;&#125;,onComplete:&#123;value:function(e,t,n)&#123;&#125;&#125;,_onBeforeUpload:&#123;value:function()&#123;this.isReady=!0,this.isUploading=!0,this.isUploaded=!1,this.isSuccess=!1,this.isCancel=!1,this.isError=!1,this.progress=0,this.onBeforeUpload()&#125;&#125;,_onProgress:&#123;value:function(e)&#123;this.progress=e,this.onProgress(e)&#125;&#125;,_onSuccess:&#123;value:function(e,t,n)&#123;this.isReady=!1,this.isUploading=!1,this.isUploaded=!0,this.isSuccess=!0,this.isCancel=!1,this.isError=!1,this.progress=100,this.index=null,this.onSuccess(e,t,n)&#125;&#125;,_onError:&#123;value:function(e,t,n)&#123;this.isReady=!1,this.isUploading=!1,this.isUploaded=!0,this.isSuccess=!1,this.isCancel=!1,this.isError=!0,this.progress=0,this.index=null,this.onError(e,t,n)&#125;&#125;,_onCancel:&#123;value:function(e,t,n)&#123;this.isReady=!1,this.isUploading=!1,this.isUploaded=!1,this.isSuccess=!1,this.isCancel=!0,this.isError=!1,this.progress=0,this.index=null,this.onCancel(e,t,n)&#125;&#125;,_onComplete:&#123;value:function(e,t,n)&#123;this.onComplete(e,t,n),this.removeAfterUpload&amp;&amp;this.remove()&#125;&#125;,_destroy:&#123;value:function()&#123;this._input&amp;&amp;this._input.remove(),this._form&amp;&amp;this._form.remove(),delete this._form,delete this._input&#125;&#125;,_prepareToUploading:&#123;value:function()&#123;this.index=this.index||++this.uploader._nextIndex,this.isReady=!0&#125;&#125;,_replaceNode:&#123;value:function(t)&#123;var n=e(t.clone())(t.scope());n.prop(&quot;value&quot;,null),t.css(&quot;display&quot;,&quot;none&quot;),t.after(n)&#125;&#125;&#125;),n&#125;();return n&#125;,e.exports.$inject=[&quot;$compile&quot;,&quot;FileLikeObject&quot;]&#125;,function(e,t,n)&#123;&quot;use strict&quot;;var r=function(e)&#123;return e&amp;&amp;e.__esModule?e[&quot;default&quot;]:e&#125;,i=function()&#123;function e(e,t)&#123;for(var n in t)&#123;var r=t[n];r.configurable=!0,r.value&amp;&amp;(r.writable=!0)&#125;Object.defineProperties(e,t)&#125;return function(t,n,r)&#123;return n&amp;&amp;e(t.prototype,n),r&amp;&amp;e(t,r),t&#125;&#125;(),o=function(e,t)&#123;if(!(e instanceof t))throw new TypeError(&quot;Cannot call a class as a function&quot;)&#125;,s=(r(n(2)),angular.extend);e.exports=function()&#123;var e=function()&#123;function e(t)&#123;o(this,e),s(this,t),this.uploader._directives[this.prop].push(this),this._saveLinks(),this.bind()&#125;return i(e,&#123;bind:&#123;value:function()&#123;for(var e in this.events)&#123;var t=this.events[e];this.element.bind(e,this[t])&#125;&#125;&#125;,unbind:&#123;value:function()&#123;for(var e in this.events)this.element.unbind(e,this.events[e])&#125;&#125;,destroy:&#123;value:function()&#123;var e=this.uploader._directives[this.prop].indexOf(this);this.uploader._directives[this.prop].splice(e,1),this.unbind()&#125;&#125;,_saveLinks:&#123;value:function()&#123;for(var e in this.events)&#123;var t=this.events[e];this[t]=this[t].bind(this)&#125;&#125;&#125;&#125;),e&#125;();return e.prototype.events=&#123;&#125;,e&#125;,e.exports.$inject=[]&#125;,function(e,t,n)&#123;&quot;use strict&quot;;var r=function(e)&#123;return e&amp;&amp;e.__esModule?e[&quot;default&quot;]:e&#125;,i=function()&#123;function e(e,t)&#123;for(var n in t)&#123;var r=t[n];r.configurable=!0,r.value&amp;&amp;(r.writable=!0)&#125;Object.defineProperties(e,t)&#125;return function(t,n,r)&#123;return n&amp;&amp;e(t.prototype,n),r&amp;&amp;e(t,r),t&#125;&#125;(),o=function c(e,t,n)&#123;var r=Object.getOwnPropertyDescriptor(e,t);if(void 0===r)&#123;var i=Object.getPrototypeOf(e);return null===i?void 0:c(i,t,n)&#125;if(&quot;value&quot;in r&amp;&amp;r.writable)return r.value;var o=r.get;return void 0===o?void 0:o.call(n)&#125;,s=function(e,t)&#123;if(&quot;function&quot;!=typeof t&amp;&amp;null!==t)throw new TypeError(&quot;Super expression must either be null or a function, not &quot;+typeof t);e.prototype=Object.create(t&amp;&amp;t.prototype,&#123;constructor:&#123;value:e,enumerable:!1,writable:!0,configurable:!0&#125;&#125;),t&amp;&amp;(e.__proto__=t)&#125;,a=function(e,t)&#123;if(!(e instanceof t))throw new TypeError(&quot;Cannot call a class as a function&quot;)&#125;,u=(r(n(2)),angular.extend),l=angular.forEach;e.exports=function(e)&#123;var t=function(e)&#123;function t(e)&#123;a(this,t);var n=u(e,&#123;events:&#123;$destroy:&quot;destroy&quot;,drop:&quot;onDrop&quot;,dragover:&quot;onDragOver&quot;,dragleave:&quot;onDragLeave&quot;&#125;,prop:&quot;drop&quot;&#125;);o(Object.getPrototypeOf(t.prototype),&quot;constructor&quot;,this).call(this,n)&#125;return s(t,e),i(t,&#123;getOptions:&#123;value:function()&#123;&#125;&#125;,getFilters:&#123;value:function()&#123;&#125;&#125;,onDrop:&#123;value:function(e)&#123;var t=this._getTransfer(e);if(t)&#123;var n=this.getOptions(),r=this.getFilters();this._preventAndStop(e),l(this.uploader._directives.over,this._removeOverClass,this),this.uploader.addToQueue(t.files,n,r)&#125;&#125;&#125;,onDragOver:&#123;value:function(e)&#123;var t=this._getTransfer(e);this._haveFiles(t.types)&amp;&amp;(t.dropEffect=&quot;copy&quot;,this._preventAndStop(e),l(this.uploader._directives.over,this._addOverClass,this))&#125;&#125;,onDragLeave:&#123;value:function(e)&#123;e.currentTarget!==this.element[0]&amp;&amp;(this._preventAndStop(e),l(this.uploader._directives.over,this._removeOverClass,this))&#125;&#125;,_getTransfer:&#123;value:function(e)&#123;return e.dataTransfer?e.dataTransfer:e.originalEvent.dataTransfer&#125;&#125;,_preventAndStop:&#123;value:function(e)&#123;e.preventDefault(),e.stopPropagation()&#125;&#125;,_haveFiles:&#123;value:function(e)&#123;return e?e.indexOf?-1!==e.indexOf(&quot;Files&quot;):e.contains?e.contains(&quot;Files&quot;):!1:!1&#125;&#125;,_addOverClass:&#123;value:function(e)&#123;e.addOverClass()&#125;&#125;,_removeOverClass:&#123;value:function(e)&#123;e.removeOverClass()&#125;&#125;&#125;),t&#125;(e);return t&#125;,e.exports.$inject=[&quot;FileDirective&quot;]&#125;,function(e,t,n)&#123;&quot;use strict&quot;;var r=function(e)&#123;return e&amp;&amp;e.__esModule?e[&quot;default&quot;]:e&#125;,i=function()&#123;function e(e,t)&#123;for(var n in t)&#123;var r=t[n];r.configurable=!0,r.value&amp;&amp;(r.writable=!0)&#125;Object.defineProperties(e,t)&#125;return function(t,n,r)&#123;return n&amp;&amp;e(t.prototype,n),r&amp;&amp;e(t,r),t&#125;&#125;(),o=function l(e,t,n)&#123;var r=Object.getOwnPropertyDescriptor(e,t);if(void 0===r)&#123;var i=Object.getPrototypeOf(e);return null===i?void 0:l(i,t,n)&#125;if(&quot;value&quot;in r&amp;&amp;r.writable)return r.value;var o=r.get;return void 0===o?void 0:o.call(n)&#125;,s=function(e,t)&#123;if(&quot;function&quot;!=typeof t&amp;&amp;null!==t)throw new TypeError(&quot;Super expression must either be null or a function, not &quot;+typeof t);e.prototype=Object.create(t&amp;&amp;t.prototype,&#123;constructor:&#123;value:e,enumerable:!1,writable:!0,configurable:!0&#125;&#125;),t&amp;&amp;(e.__proto__=t)&#125;,a=function(e,t)&#123;if(!(e instanceof t))throw new TypeError(&quot;Cannot call a class as a function&quot;)&#125;,u=(r(n(2)),angular.extend);e.exports=function(e)&#123;var t=function(e)&#123;function t(e)&#123;a(this,t);var n=u(e,&#123;events:&#123;$destroy:&quot;destroy&quot;&#125;,prop:&quot;over&quot;,overClass:&quot;nv-file-over&quot;&#125;);o(Object.getPrototypeOf(t.prototype),&quot;constructor&quot;,this).call(this,n)&#125;return s(t,e),i(t,&#123;addOverClass:&#123;value:function()&#123;this.element.addClass(this.getOverClass())&#125;&#125;,removeOverClass:&#123;value:function()&#123;this.element.removeClass(this.getOverClass())&#125;&#125;,getOverClass:&#123;value:function()&#123;return this.overClass&#125;&#125;&#125;),t&#125;(e);return t&#125;,e.exports.$inject=[&quot;FileDirective&quot;]&#125;,function(e,t,n)&#123;&quot;use strict&quot;;var r=function(e)&#123;return e&amp;&amp;e.__esModule?e[&quot;default&quot;]:e&#125;;r(n(2));e.exports=function(e,t,n)&#123;return&#123;link:function(r,i,o)&#123;var s=r.$eval(o.uploader);if(!(s instanceof t))throw new TypeError(&#39;&quot;Uploader&quot; must be an instance of FileUploader&#39;);var a=new n(&#123;uploader:s,element:i&#125;);a.getOptions=e(o.options).bind(a,r),a.getFilters=function()&#123;return o.filters&#125;&#125;&#125;&#125;,e.exports.$inject=[&quot;$parse&quot;,&quot;FileUploader&quot;,&quot;FileSelect&quot;]&#125;,function(e,t,n)&#123;&quot;use strict&quot;;var r=function(e)&#123;return e&amp;&amp;e.__esModule?e[&quot;default&quot;]:e&#125;;r(n(2));e.exports=function(e,t,n)&#123;return&#123;link:function(r,i,o)&#123;var s=r.$eval(o.uploader);if(!(s instanceof t))throw new TypeError(&#39;&quot;Uploader&quot; must be an instance of FileUploader&#39;);if(s.isHTML5)&#123;var a=new n(&#123;uploader:s,element:i&#125;);a.getOptions=e(o.options).bind(a,r),a.getFilters=function()&#123;return o.filters&#125;&#125;&#125;&#125;&#125;,e.exports.$inject=[&quot;$parse&quot;,&quot;FileUploader&quot;,&quot;FileDrop&quot;]&#125;,function(e,t,n)&#123;&quot;use strict&quot;;var r=function(e)&#123;return e&amp;&amp;e.__esModule?e[&quot;default&quot;]:e&#125;;r(n(2));e.exports=function(e,t)&#123;return&#123;link:function(n,r,i)&#123;var o=n.$eval(i.uploader);if(!(o instanceof e))throw new TypeError(&#39;&quot;Uploader&quot; must be an instance of FileUploader&#39;);var s=new t(&#123;uploader:o,element:r&#125;);s.getOverClass=function()&#123;return i.overClass||s.overClass&#125;&#125;&#125;&#125;,e.exports.$inject=[&quot;FileUploader&quot;,&quot;FileOver&quot;]&#125;])&#125;);
+//# sourceMappingURL=angular-file-upload.min.js.map
+</code></pre>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                        
+                            <li title="1" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="false"
+        data-ae="false"
+        data-ci=""
+        data-cs=""
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>

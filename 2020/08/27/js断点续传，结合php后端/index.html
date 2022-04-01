@@ -1,0 +1,233 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>js断点续传，结合php后端 - R•K</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="WangRenKe的个人博客,"> 
+    <meta name="description" content="路要一步一步走，坑要一个一个填！—— from WangRenKe的博客,
+网上寻觅到的一个案例，目的是为了解决目前在项目中碰到的上传文件过大失败的问题。可以用断点续传来解决。记录一下，省得以后找不到了；
+
+
+源码地址：https://download.csdn.net/,"> 
+    <meta name="author" content="WangRenKe"> 
+    <link rel="alternative" href="atom.xml" title="R•K" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="js断点续传，结合php后端 - R•K"/>
+    <meta name="twitter:description" content="路要一步一步走，坑要一个一个填！—— from WangRenKe的博客,
+网上寻觅到的一个案例，目的是为了解决目前在项目中碰到的上传文件过大失败的问题。可以用断点续传来解决。记录一下，省得以后找不到了；
+
+
+源码地址：https://download.csdn.net/,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="R•K"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="js断点续传，结合php后端 - R•K"/>
+    <meta property="og:description" content="路要一步一步走，坑要一个一个填！—— from WangRenKe的博客,
+网上寻觅到的一个案例，目的是为了解决目前在项目中碰到的上传文件过大失败的问题。可以用断点续传来解决。记录一下，省得以后找不到了；
+
+
+源码地址：https://download.csdn.net/,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">R•K</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://example.com"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">js断点续传，结合php后端</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">js断点续传，结合php后端</h1>
+        <div class="stuff">
+            <span>八月 27, 2020</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/js/" rel="tag">js</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/php/" rel="tag">php</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <blockquote>
+<p>网上寻觅到的一个案例，目的是为了解决目前在项目中碰到的上传文件过大失败的问题。可以用断点续传来解决。记录一下，省得以后找不到了；</p>
+</blockquote>
+<blockquote>
+<p>源码地址：<code>https://download.csdn.net/download/weixin_43996999/12760387</code></p>
+</blockquote>
+<blockquote>
+<p>下载下来的文件需要配合php环境运行，因为后端的处理方法是php写的，这里推荐使用wampserver,详细使用请看另一篇：<br><code>https://blog.csdn.net/weixin_43996999/article/details/108201663</code></p>
+</blockquote>
+<h2 id="使用JS实现可断点续传的文件上传方案"><a href="#使用JS实现可断点续传的文件上传方案" class="headerlink" title="使用JS实现可断点续传的文件上传方案"></a>使用JS实现可断点续传的文件上传方案</h2><p>刚开始学习前端开发就碰到文件上传问题，还要求可断点续传。查了很多资料，发现H5的file API刚好可以满足我们的需求，也遇到了一些问题，于是记录下来为有同样需求的朋友提供一些帮助。</p>
+<p>一、首先，为了引入文件对象，需要在H5页面上放置一个file类型的输入标签。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;input type=<span class="string">&quot;file&quot;</span> id=<span class="string">&quot;file&quot;</span> onchange=<span class="string">&quot;fileInfo()&quot;</span>&gt;</span><br></pre></td></tr></table></figure>
+<p>当选择文件之后显示文件相关信息：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">fileInfo</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">let</span> fileObj = <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&#x27;file&#x27;</span>).<span class="property">files</span>[<span class="number">0</span>];</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(fileObj);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们获取到的对象本身是一个数组，这里只选择了一个文件，需要选择多个文件可在input标签添加multiple属性。现在我们打开浏览器控制台可以看到输出了文件的最后修改时间、文件大小和文件名等信息：</p>
+<p>二、好了，当我们获取到选择的文件对象之后，现在需要把文件上传到服务器，可以模拟表单事件进行上传，需要引入FormData对象，其次，由于HTTP对文件上传大小的限制，所以要对文件切块上传，在服务器收到文件块之后拼接成一个整体，最后还需要一个进度条去显示上传进度。在理清了思路以后这就动手实现：</p>
+<p>先在H5页面放置一个进度条，同时将选择文件改变的事件更换为上传文件块的函数upload(开始上传字节处)，这里我们从第0个字节开始上传，也就是从头开始传：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;input type=<span class="string">&quot;file&quot;</span> id=<span class="string">&quot;file&quot;</span> onchange=<span class="string">&quot;upload(0)&quot;</span>&gt;</span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">progress</span> <span class="attr">id</span>=<span class="string">&quot;progress&quot;</span> <span class="attr">max</span>=<span class="string">&quot;100&quot;</span> <span class="attr">value</span>=<span class="string">&quot;0&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">progress</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+<p>然后来实现文件块的上传函数：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"> <span class="number">1</span> <span class="comment">// 文件切块大小为1MB</span></span><br><span class="line"> <span class="number">2</span> <span class="keyword">const</span> chunkSize = <span class="number">1024</span> * <span class="number">1024</span>;</span><br><span class="line"> <span class="number">3</span> </span><br><span class="line"> <span class="number">4</span> <span class="comment">// 从start字节处开始上传</span></span><br><span class="line"> <span class="number">5</span> <span class="keyword">function</span> <span class="title function_">upload</span>(<span class="params">start</span>) &#123;</span><br><span class="line"> <span class="number">6</span>     <span class="keyword">let</span> fileObj = <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&#x27;file&#x27;</span>).<span class="property">files</span>[<span class="number">0</span>];</span><br><span class="line"> <span class="number">7</span>     <span class="comment">// 上传完成</span></span><br><span class="line"> <span class="number">8</span>     <span class="keyword">if</span> (start &gt;= fileObj.<span class="property">size</span>) &#123;</span><br><span class="line"> <span class="number">9</span>         <span class="keyword">return</span>;</span><br><span class="line"><span class="number">10</span>     &#125;</span><br><span class="line"><span class="number">11</span>     <span class="comment">// 获取文件块的终止字节</span></span><br><span class="line"><span class="number">12</span>     <span class="keyword">let</span> end = (start + chunkSize &gt; fileObj.<span class="property">size</span>) ? fileObj.<span class="property">size</span> : (start + chunkSize);</span><br><span class="line"><span class="number">13</span>     <span class="comment">// 将文件切块上传</span></span><br><span class="line"><span class="number">14</span>     <span class="keyword">let</span> fd = <span class="keyword">new</span> <span class="title class_">FormData</span>();</span><br><span class="line"><span class="number">15</span>     fd.<span class="title function_">append</span>(<span class="string">&#x27;file&#x27;</span>, fileObj.<span class="title function_">slice</span>(start, end));</span><br><span class="line"><span class="number">16</span>     <span class="comment">// POST表单数据</span></span><br><span class="line"><span class="number">17</span>     <span class="keyword">let</span> xhr = <span class="keyword">new</span> <span class="title class_">XMLHttpRequest</span>();</span><br><span class="line"><span class="number">18</span>     xhr.<span class="title function_">open</span>(<span class="string">&#x27;post&#x27;</span>, <span class="string">&#x27;upload.php&#x27;</span>, <span class="literal">true</span>);</span><br><span class="line"><span class="number">19</span>     xhr.<span class="property">onload</span> = <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line"><span class="number">20</span>         <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="property">readyState</span> == <span class="number">4</span> &amp;&amp; <span class="variable language_">this</span>.<span class="property">status</span> == <span class="number">200</span>) &#123;</span><br><span class="line"><span class="number">21</span>             <span class="comment">// 上传一块完成后修改进度条信息，然后上传下一块</span></span><br><span class="line"><span class="number">22</span>             <span class="keyword">let</span> progress = <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&#x27;progress&#x27;</span>);</span><br><span class="line"><span class="number">23</span>             progress.<span class="property">max</span> = fileObj.<span class="property">size</span>;</span><br><span class="line"><span class="number">24</span>             progress.<span class="property">value</span> = end;</span><br><span class="line"><span class="number">25</span>             <span class="title function_">upload</span>(end);</span><br><span class="line"><span class="number">26</span>         &#125;</span><br><span class="line"><span class="number">27</span>     &#125;</span><br><span class="line"><span class="number">28</span>     xhr.<span class="title function_">send</span>(fd);</span><br><span class="line"><span class="number">29</span> &#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里使用原生的JS向服务器发送请求，将文件切块使用函数slice(开始位置，结束位置)，然后将文件块封装到FormData对象实现模拟表单的文件上传。后台我使用PHP接收数据，也可以使用其他后端语言：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span> &lt;?php</span><br><span class="line"><span class="number">2</span>     <span class="comment">// 追加文件块</span></span><br><span class="line"><span class="number">3</span>     $fileName = $_FILES[<span class="string">&#x27;file&#x27;</span>][<span class="string">&#x27;name&#x27;</span>];</span><br><span class="line"><span class="number">4</span>     <span class="title function_">file_put_contents</span>(<span class="string">&#x27;files/&#x27;</span> . $fileName, <span class="title function_">file_get_contents</span>($_FILES[<span class="string">&#x27;file&#x27;</span>][<span class="string">&#x27;tmp_name&#x27;</span>]), <span class="variable constant_">FILE_APPEND</span>);</span><br><span class="line"><span class="number">5</span> ?&gt;</span><br></pre></td></tr></table></figure>
+
+<p>在这里我新建了一个文件夹files，将上传的文件存放到这里。获取的文件块内容采用追加的形式FILE_APPEND。于是我们打开浏览器上传文件：</p>
+<p>然后查看一下files文件夹下面是否接收到vscode.exe文件：</p>
+<p>三、有了文件上传功能，接下来我们要实现断点续传功能。在上一步文件切块的基础上，断点续传变得非常简单，如果突然断网或者浏览器意外关闭，那么上传的是不完整的文件，我们只需要在选择了文件以后向服务器查询一下服务器上相同文件名的大小，然后将开始上传位置(字节)设置到这个大小即可：</p>
+<p>先定义一个初始化函数当选择文件后向服务器查询已上传文件大小：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span> <span class="comment">// 初始化上传大小</span></span><br><span class="line"> <span class="number">2</span> <span class="keyword">function</span> <span class="title function_">init</span>(<span class="params"></span>) &#123;</span><br><span class="line"> <span class="number">3</span>     <span class="keyword">let</span> fileObj = <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&#x27;file&#x27;</span>).<span class="property">files</span>[<span class="number">0</span>];</span><br><span class="line"> <span class="number">4</span>     <span class="keyword">let</span> xhr = <span class="keyword">new</span> <span class="title class_">XMLHttpRequest</span>();</span><br><span class="line"> <span class="number">5</span>     xhr.<span class="property">onreadystatechange</span> = <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line"> <span class="number">6</span>         <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="property">readyState</span> == <span class="number">4</span> &amp;&amp; <span class="variable language_">this</span>.<span class="property">status</span> == <span class="number">200</span>) &#123;</span><br><span class="line"> <span class="number">7</span>             <span class="comment">// 将字符串转化为整数</span></span><br><span class="line"> <span class="number">8</span>             <span class="keyword">let</span> start = <span class="built_in">parseInt</span>(<span class="variable language_">this</span>.<span class="property">responseText</span>);</span><br><span class="line"> <span class="number">9</span>             <span class="comment">// 设置进度条</span></span><br><span class="line"><span class="number">10</span>             <span class="keyword">let</span> progress = <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&#x27;progress&#x27;</span>);</span><br><span class="line"><span class="number">11</span>             progress.<span class="property">max</span> = fileObj.<span class="property">size</span>;</span><br><span class="line"><span class="number">12</span>             progress.<span class="property">value</span> = start;</span><br><span class="line"><span class="number">13</span>             <span class="comment">// 开始上传</span></span><br><span class="line"><span class="number">14</span>             <span class="title function_">upload</span>(start);</span><br><span class="line"><span class="number">15</span>         &#125;</span><br><span class="line"><span class="number">16</span>     &#125;</span><br><span class="line"><span class="number">17</span>     xhr.<span class="title function_">open</span>(<span class="string">&#x27;post&#x27;</span>, <span class="string">&#x27;fileSize.php&#x27;</span>, <span class="literal">true</span>);</span><br><span class="line"><span class="number">18</span>     <span class="comment">// 向服务器发送文件名查询大小</span></span><br><span class="line"><span class="number">19</span>     xhr.<span class="title function_">send</span>(fileObj.<span class="property">name</span>);</span><br><span class="line"><span class="number">20</span> &#125;</span><br></pre></td></tr></table></figure>
+
+<p>在服务器端使用fileSize.php查询已上传文件大小：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"> <span class="number">1</span> &lt;?php</span><br><span class="line"> <span class="number">2</span>     <span class="comment">// 接收文件名</span></span><br><span class="line"> <span class="number">3</span>     $fileName = $_GET[<span class="string">&#x27;fileName&#x27;</span>] ? $_GET[<span class="string">&#x27;fileName&#x27;</span>] : <span class="string">&#x27;&#x27;</span>;</span><br><span class="line"> <span class="number">4</span>     $fileSize = <span class="number">0</span>;</span><br><span class="line"> <span class="number">5</span>     $path = <span class="string">&#x27;files/&#x27;</span> . $fileName;</span><br><span class="line"> <span class="number">6</span>     <span class="comment">//查询已上传文件大小</span></span><br><span class="line"> <span class="number">7</span>     <span class="keyword">if</span> (<span class="title function_">file_exists</span>($path)) &#123;</span><br><span class="line"> <span class="number">8</span>         $fileSize = <span class="title function_">filesize</span>($path);</span><br><span class="line"> <span class="number">9</span>     &#125;</span><br><span class="line"><span class="number">10</span>     echo $fileSize;</span><br><span class="line"><span class="number">11</span> ?&gt;</span><br></pre></td></tr></table></figure>
+
+<p>最后将H5页面上input标签的onchange事件改为init()：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;input type=<span class="string">&quot;file&quot;</span> id=<span class="string">&quot;file&quot;</span> onchange=<span class="string">&quot;init()&quot;</span>&gt;</span><br></pre></td></tr></table></figure>
+
+<p>同时upload函数也不需要重复设置进度条的最大值，修改为：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span> <span class="comment">// 上传一块完成后修改进度条信息，然后上传下一块</span></span><br><span class="line"><span class="number">2</span> <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&#x27;progress&#x27;</span>).<span class="property">value</span> = end;</span><br><span class="line"><span class="number">3</span> <span class="title function_">upload</span>(end);</span><br></pre></td></tr></table></figure>
+
+<p>然后打开浏览器，在上传过程中故意关闭浏览器下次再选择同一文件时即可从断点位置开始续传。</p>
+<p>四、虽然已经实现了可断点续传的文件上传功能，但是界面还需要美化一下，这里引用bootstrap框架，需要jquery，顺便用jquery的ajax代替原生JS的ajax，需要注意的是$.ajax的processData和contentType属性都要设置成false：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"> <span class="number">1</span> <span class="comment">// POST表单数据</span></span><br><span class="line"> <span class="number">2</span> $.<span class="title function_">ajax</span>(&#123;</span><br><span class="line"> <span class="number">3</span>     <span class="attr">url</span>: <span class="string">&#x27;upload.php&#x27;</span>,</span><br><span class="line"> <span class="number">4</span>     <span class="attr">type</span>: <span class="string">&#x27;post&#x27;</span>,</span><br><span class="line"> <span class="number">5</span>     <span class="attr">data</span>: fd,</span><br><span class="line"> <span class="number">6</span>     <span class="attr">processData</span>: <span class="literal">false</span>,</span><br><span class="line"> <span class="number">7</span>     <span class="attr">contentType</span>: <span class="literal">false</span>,</span><br><span class="line"> <span class="number">8</span>     <span class="attr">success</span>: <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line"> <span class="number">9</span>         <span class="title function_">upload</span>(end);</span><br><span class="line"><span class="number">10</span>     &#125;</span><br><span class="line"><span class="number">11</span> &#125;);</span><br></pre></td></tr></table></figure>
+
+<p>最后美化完成的效果图如下：<br><img src="https://img-blog.csdnimg.cn/20200827142521887.gif#pic_center" alt="在这里插入图片描述"><br>转自：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/viewts/p/10820785.html">https://www.cnblogs.com/viewts/p/10820785.html</a></p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                        
+                            <li title="1" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="false"
+        data-ae="false"
+        data-ci=""
+        data-cs=""
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>

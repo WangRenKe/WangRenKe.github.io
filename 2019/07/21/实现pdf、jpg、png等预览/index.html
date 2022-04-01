@@ -1,0 +1,400 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>实现pdf、jpg、png等预览 - R•K</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="WangRenKe的个人博客,"> 
+    <meta name="description" content="路要一步一步走，坑要一个一个填！—— from WangRenKe的博客,个人总结
+
+这里使用object元素来实现pdf、图片等预览显示效果。
+
+
+预览弹框html页
+
+&amp;lt;div style=&amp;quot;min-height:300px;&amp;quot;&amp;gt;
+  ,"> 
+    <meta name="author" content="WangRenKe"> 
+    <link rel="alternative" href="atom.xml" title="R•K" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="实现pdf、jpg、png等预览 - R•K"/>
+    <meta name="twitter:description" content="路要一步一步走，坑要一个一个填！—— from WangRenKe的博客,个人总结
+
+这里使用object元素来实现pdf、图片等预览显示效果。
+
+
+预览弹框html页
+
+&amp;lt;div style=&amp;quot;min-height:300px;&amp;quot;&amp;gt;
+  ,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="R•K"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="实现pdf、jpg、png等预览 - R•K"/>
+    <meta property="og:description" content="路要一步一步走，坑要一个一个填！—— from WangRenKe的博客,个人总结
+
+这里使用object元素来实现pdf、图片等预览显示效果。
+
+
+预览弹框html页
+
+&amp;lt;div style=&amp;quot;min-height:300px;&amp;quot;&amp;gt;
+  ,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">R•K</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://example.com"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">实现pdf、jpg、png等预览</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">实现pdf、jpg、png等预览</h1>
+        <div class="stuff">
+            <span>七月 21, 2019</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/%E6%96%87%E4%BB%B6%E9%A2%84%E8%A7%88/" rel="tag">文件预览</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <p><strong>个人总结</strong></p>
+<blockquote>
+<p>这里使用object元素来实现pdf、图片等预览显示效果。</p>
+</blockquote>
+<blockquote>
+<p>预览弹框html页</p>
+</blockquote>
+<pre><code>&lt;div style=&quot;min-height:300px;&quot;&gt;
+    &lt;div class=&quot;text-left&quot; ng-hide=&quot;isHideToolBar&quot; style=&quot;width:5%;float:left;&quot;&gt;&lt;span ng-click=&quot;overturnModal()&quot; class=&quot;glyphicon glyphicon-repeat&quot; style=&quot;font-size: 30px;margin: 10px;&quot;&gt;&lt;/span&gt;&lt;/div&gt;
+    &lt;div class=&quot;text-left&quot; ng-hide=&quot;isHideToolBar&quot; style=&quot;width:5%;float:left;&quot;&gt;&lt;span ng-click=&quot;magnifyModal()&quot; class=&quot;glyphicon glyphicon-zoom-in&quot; style=&quot;font-size: 30px;margin: 10px;&quot;&gt;&lt;/span&gt;&lt;/div&gt;
+    &lt;div class=&quot;text-left&quot; ng-hide=&quot;isHideToolBar&quot; style=&quot;width:5%;float:left;&quot;&gt;&lt;span ng-click=&quot;shrinkModal()&quot; class=&quot;glyphicon glyphicon-zoom-out&quot; style=&quot;font-size: 30px;margin: 10px;&quot;&gt;&lt;/span&gt;&lt;/div&gt;
+    &lt;div class=&quot;text-right&quot; style=&quot;width:25%;float:right;&quot;&gt;&lt;span ng-click=&quot;closePdfModal()&quot; class=&quot;glyphicon glyphicon-remove-circle&quot; style=&quot;font-size: 30px;margin: 10px;&quot;&gt;&lt;/span&gt;&lt;/div&gt;
+    &lt;div id=&quot;previewModal&quot; style=&quot;max-height:600px;width:100%;&quot;&gt;&lt;div ng-hide=&quot;content&quot; style=&quot;text-align:center;font-size:25px;&quot;&gt;正在努力请求文档内容，请稍后...&lt;/div&gt;
+    &lt;div ng-show=&quot;content&amp;&amp;isHideToolBar&quot; style=&quot;height: 47px;background-color: #525659; position: fixed;width: 110px; margin-left: 764px;top:51px;z-index:1&quot;&gt;&lt;/div&gt;
+    &lt;object id=&quot;overturn&quot; standby=&quot;正在努力加载文档内容，请稍后...&quot; ng-show=&quot;content&quot; data=&quot;&#123;&#123;content&#125;&#125;&quot; type=&quot;&#39; + mediaTypes + &#39;&quot; style=&quot;width: 100%;&#39; + heightStyle + &#39;&quot;&gt;&lt;/object&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+补充：当前object元素的属性解释
+     standby：请求还在加载的时候显示的文字（text）
+     ng-show：这里不做讲解
+     data：定义引用对象数据的 URL。如果有需要对象处理的数据文件,要用 data 属性来指定这些数据文件。（url）
+     type：定义被规定在 data 属性中指定的文件中出现的数据的 MIME 类型。（MIME_type）当前元素的类型是&quot;application/pdf&quot;
+</code></pre>
+<blockquote>
+<p>封装的服务</p>
+</blockquote>
+<pre><code>(function () &#123;
+    var app = angular.module(&quot;app&quot;);
+    app.factory(&quot;commonService&quot;, [&#39;$http&#39;, &#39;$sce&#39;, &#39;serverDomain&#39;, &#39;httpService&#39;, &quot;$uibModal&quot;, function ($http, $sce, serverDomain, httpService, $uibModal) &#123;
+        var service = &#123;&#125;;
+
+        //预览打印pdf--模态框形式
+        //url :生成文件流的接口
+        //paramData：接口需要的参数
+        //isHideToolBar：是否隐藏工具栏（禁用下载，打印等功能）
+        //type:文件后缀名，可以带点，也可以不带点
+        service.printPdfOnModal = function (url, paramData, isHideToolBar, type) &#123;
+            if (!url) &#123;
+                return;
+            &#125;
+            if (!paramData) &#123; paramData = &#123;&#125;; &#125;
+
+            var mediaTypes = &quot;application/pdf&quot;;
+            var heightStyle = &quot;height:1000px;&quot;;
+
+            var extensions = [&quot;png&quot;, &quot;.png&quot;, &quot;jpg&quot;, &quot;.jpg&quot;, &quot;jpeg&quot;, &quot;.jpeg&quot;];
+            if (extensions.indexOf(type) !== -1) &#123;
+                mediaTypes = &quot;image/png&quot;;
+                heightStyle = &quot;&quot;;
+                isHideToolBar = false;   // 如果是图片，那么导航条不需要显示
+            &#125;
+
+
+            var uibModalOption = &#123;
+                template: &#39;&lt;div style=&quot;min-height:300px;&quot;&gt;&lt;div class=&quot;text-left&quot; ng-hide=&quot;isHideToolBar&quot; style=&quot;width:5%;float:left;&quot;&gt;&lt;span ng-click=&quot;overturnModal()&quot; class=&quot;glyphicon glyphicon-repeat&quot; style=&quot;font-size: 30px;margin: 10px;&quot;&gt;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;text-left&quot; ng-hide=&quot;isHideToolBar&quot; style=&quot;width:5%;float:left;&quot;&gt;&lt;span ng-click=&quot;magnifyModal()&quot; class=&quot;glyphicon glyphicon-zoom-in&quot; style=&quot;font-size: 30px;margin: 10px;&quot;&gt;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;text-left&quot; ng-hide=&quot;isHideToolBar&quot; style=&quot;width:5%;float:left;&quot;&gt;&lt;span ng-click=&quot;shrinkModal()&quot; class=&quot;glyphicon glyphicon-zoom-out&quot; style=&quot;font-size: 30px;margin: 10px;&quot;&gt;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;text-right&quot; style=&quot;width:25%;float:right;&quot;&gt;&lt;span ng-click=&quot;closePdfModal()&quot; class=&quot;glyphicon glyphicon-remove-circle&quot; style=&quot;font-size: 30px;margin: 10px;&quot;&gt;&lt;/span&gt;&lt;/div&gt;&lt;div id=&quot;previewModal&quot; style=&quot;max-height:600px;width:100%;&quot;&gt;&lt;div ng-hide=&quot;content&quot; style=&quot;text-align:center;font-size:25px;&quot;&gt;正在努力请求文档内容，请稍后...&lt;/div&gt;&lt;div ng-show=&quot;content&amp;&amp;isHideToolBar&quot; style=&quot;height: 47px;background-color: #525659; position: fixed;width: 110px; margin-left: 764px;top:51px;z-index:1&quot;&gt;&lt;/div&gt;&lt;object id=&quot;overturn&quot; standby=&quot;正在努力加载文档内容，请稍后...&quot; ng-show=&quot;content&quot; data=&quot;&#123;&#123;content&#125;&#125;&quot; type=&quot;&#39; + mediaTypes + &#39;&quot; style=&quot;width: 100%;&#39; + heightStyle + &#39;&quot;&gt;&lt;/object&gt;&lt;/div&gt;&lt;/div&gt;&#39;,
+                size: &quot;lg&quot;,
+                backdrop: &quot;static&quot;,
+                controller: &quot;app.common.openPdfInBrowser&quot;,
+                resolve: &#123;
+                    url: function () &#123; return url &#125;,
+                    paramData: function () &#123; return paramData &#125;,
+                    isHideToolBar: function () &#123; return isHideToolBar &#125;,
+                    type: function () &#123; return mediaTypes &#125;
+                &#125;
+            &#125;
+            var uibModalInstance = $uibModal.open(uibModalOption);
+        &#125;
+
+        //预览打印pdf--在新的网页
+        service.printPdfOnBlank = function (url, paramData) &#123;
+            if (!url) &#123;
+                return;
+            &#125;
+            if (!paramData) &#123; paramData = &#123;&#125;; &#125;
+
+            abp.ui.setBusy(&quot;#mianBody&quot;);
+
+            $http.get(url,
+                &#123;
+                    responseType: &#39;arraybuffer&#39;,
+                    params: paramData,
+                &#125;)
+                .then(function (msg) &#123;
+                    abp.ui.clearBusy(&quot;#mianBody&quot;);
+                    var file = new Blob([msg.data], &#123; type: &#39;application/pdf&#39; &#125;);
+                    var fileURL = URL.createObjectURL(file);
+                    var data = &#39;&lt;div&gt;&lt;object data=&quot;&#39; + fileURL + &#39;&quot; standby=&quot;正在努力加载内容，请稍后...&quot; type=&quot;application/pdf&quot; style=&quot;width: 100%; height: 1000px;&quot;&gt;&lt;/object&gt;&lt;/div&gt;&#39;;
+                    var myWin = window.open(&quot;&quot;, &quot;订单详情打印&quot;);
+                    myWin.document.write(data);
+                    myWin.focus();
+                &#125;);
+        &#125;
+
+        // 公共封装，pdf，jpg，png预览，其他文件下载
+        // 参数file是传入的单个文件
+        service.previewAndDownload = function (file) &#123;
+            if (file.type == &quot;.pdf&quot; || file.type == &quot;.jpg&quot; || file.type == &quot;.png&quot;) &#123;
+                var url = serverDomain + &quot;api/services/app/UploadFile/GetFileToStream&quot;;  // 预览
+                var data = &#123;
+                    FileType: file.type,
+                    AttacthmentStr: file.fileId
+                &#125;;
+                service.printPdfOnModal(url, data, true, file.type);
+            &#125; else &#123;
+                var url = serverDomain + &quot;api/services/app/UploadFile/GetDownFile&quot;;   // 下载
+                var param = &#123; fileId: file.fileId &#125;;
+                httpService.DownloadFile(url, param);
+            &#125;
+        &#125;
+
+        return service;
+
+    &#125;]);
+&#125;)();
+</code></pre>
+<blockquote>
+<p>对应的controller</p>
+</blockquote>
+<pre><code>(function () &#123;
+    var ctrlId = &quot;app.common.openPdfInBrowser&quot;
+    app.controller(ctrlId, [
+        &#39;$scope&#39;, &#39;$uibModalInstance&#39;, &#39;$http&#39;, &#39;$sce&#39;, &#39;serverDomain&#39;, &#39;httpService&#39;,
+        function ($scope, $uibModalInstance, $http, $sce, serverDomain, httpService) &#123;
+            var url = $scope.$resolve.url;
+            var data = $scope.$resolve.paramData;
+            var type = $scope.$resolve.type;
+            $scope.isHideToolBar = $scope.$resolve.isHideToolBar;//是否隐藏工具栏，true为隐藏，默认false，显示工具栏
+
+            $http.get(url,
+                &#123;
+                    responseType: &#39;arraybuffer&#39;,
+                    params: data,
+                &#125;)
+                .then(function (msg) &#123;
+                    var file = new Blob([msg.data], &#123; type: type &#125;);
+                    var fileURL = URL.createObjectURL(file);
+                    $scope.content = $sce.trustAsResourceUrl(fileURL);
+                &#125;);
+
+            var cont = 0;
+
+            var size = 100;
+
+            // 翻转
+            $scope.overturnModal = function () &#123;   // 翻转功能
+                cont += 90;
+                $(&quot;#overturn&quot;).css(&quot;transform&quot;, &quot;rotate(&quot; + cont + &quot;deg)&quot;);
+            &#125;
+            // 放大
+            $scope.magnifyModal = function () &#123;
+                var overturnHeight = $(&quot;#overturn&quot;).height();  // 获取需要放大的容器高度
+                size += 10;
+                overturnHeight += 50;
+                $(&quot;#previewModal&quot;).css(&quot;overflow&quot;, &quot;auto&quot;);   // 点击放大的时候说明是图片，给图片容器的父元素加上滚动条样式
+                $(&#39;#overturn&#39;).css(&quot;width&quot;, &quot; &quot; + size + &quot;%&quot;);
+                $(&#39;#overturn&#39;).css(&quot;height&quot;, &quot; &quot; + overturnHeight + &quot;px&quot;);
+            &#125;
+            // 放小
+            $scope.shrinkModal = function () &#123;
+                var overturnHeight = $(&quot;#overturn&quot;).height();  // 获取需要放大的容器高度
+                size -= 10;
+                overturnHeight -= 50;
+                $(&quot;#previewModal&quot;).css(&quot;overflow&quot;, &quot;auto&quot;);
+                $(&#39;#overturn&#39;).css(&quot;width&quot;, &quot; &quot; + size + &quot;%&quot;);
+                $(&#39;#overturn&#39;).css(&quot;height&quot;, &quot; &quot; + overturnHeight + &quot;px&quot;);
+            &#125;
+
+            //关闭pdf预览
+            $scope.closePdfModal = function () &#123;
+                $uibModalInstance.dismiss(&quot;cancel&quot;);
+            &#125;
+        &#125;
+    ]);
+
+&#125;)();
+</code></pre>
+<blockquote>
+<p>调用方式</p>
+</blockquote>
+<pre><code>//打印-模态框形式
+        $scope.previewClick = function (item, idx) &#123;
+            //console.log(&#39;eeeeeeeeeeeeeeeee-----&#39;, item);
+            if (item.type == &quot;.pdf&quot; || item.type == &quot;.jpg&quot; || item.type == &quot;.png&quot;) &#123;
+                var url = serverDomain + &quot;api/services/app/UploadFile/GetFileToStream&quot;;  // 预览
+                var data = &#123;
+                    FileType: item.type,
+                    AttacthmentStr: item.fileId
+                &#125;;
+                commonService.printPdfOnModal(url, data, true, item.type);
+            &#125; else &#123;
+                var url = serverDomain + &quot;api/services/app/UploadFile/GetDownFile&quot;;   // 下载
+                var data = &#123; fileId: item.fileId &#125;;
+                httpService.DownloadFile(url, data);
+            &#125;
+        &#125;
+</code></pre>
+<blockquote>
+<p>object属性的详细讲解相关网址：<a target="_blank" rel="noopener" href="https://blog.csdn.net/tanguang_honesty/article/details/8530731">https://blog.csdn.net/tanguang_honesty/article/details/8530731</a><br><a target="_blank" rel="noopener" href="https://segmentfault.com/q/1010000016964789/">https://segmentfault.com/q/1010000016964789/</a></p>
+</blockquote>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                        
+                            <li title="1" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="false"
+        data-ae="false"
+        data-ci=""
+        data-cs=""
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>

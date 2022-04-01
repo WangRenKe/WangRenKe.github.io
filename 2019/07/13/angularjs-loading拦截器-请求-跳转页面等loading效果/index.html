@@ -1,0 +1,299 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>angularjs loading拦截器.请求,跳转页面等loading效果 - R•K</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="WangRenKe的个人博客,"> 
+    <meta name="description" content="路要一步一步走，坑要一个一个填！—— from WangRenKe的博客,个人总结
+
+前言: 今天周末,闲来无事又看了看拦截器,发现不只是截获http请求,同样还可以制作很多好玩的东西,今天来写一个loading案例,请求http或者跳转渲染页面时,会有一定的等待时间,可,"> 
+    <meta name="author" content="WangRenKe"> 
+    <link rel="alternative" href="atom.xml" title="R•K" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="angularjs loading拦截器.请求,跳转页面等loading效果 - R•K"/>
+    <meta name="twitter:description" content="路要一步一步走，坑要一个一个填！—— from WangRenKe的博客,个人总结
+
+前言: 今天周末,闲来无事又看了看拦截器,发现不只是截获http请求,同样还可以制作很多好玩的东西,今天来写一个loading案例,请求http或者跳转渲染页面时,会有一定的等待时间,可,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="R•K"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="angularjs loading拦截器.请求,跳转页面等loading效果 - R•K"/>
+    <meta property="og:description" content="路要一步一步走，坑要一个一个填！—— from WangRenKe的博客,个人总结
+
+前言: 今天周末,闲来无事又看了看拦截器,发现不只是截获http请求,同样还可以制作很多好玩的东西,今天来写一个loading案例,请求http或者跳转渲染页面时,会有一定的等待时间,可,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">R•K</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://example.com"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">angularjs loading拦截器.请求,跳转页面等loading效果</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">angularjs loading拦截器.请求,跳转页面等loading效果</h1>
+        <div class="stuff">
+            <span>七月 13, 2019</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/angular%E6%8B%A6%E6%88%AA%E5%99%A8/" rel="tag">angular拦截器</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <p><strong>个人总结</strong></p>
+<blockquote>
+<p>前言: 今天周末,闲来无事又看了看拦截器,发现不只是截获http请求,同样还可以制作很多好玩的东西,今天来写一个loading案例,请求http或者跳转渲染页面时,会有一定的等待时间,可能一两秒,也可能是十几秒,在等待的过程中,用户是不知道的,所以我们要给用户一个直观的等待效果,让用户知道!</p>
+</blockquote>
+<p><strong>步骤(需要引入的文件)</strong></p>
+<blockquote>
+<p>第一步: 引入bootstrap.css<br>第二步: 引入jquery库<br>第三步: 引入angular.js<br>第四步: 引入angular-ui-router.js<br>第五步: 引入angular-animate.js</p>
+</blockquote>
+<p><strong>下面看代码(需要的直接复制看效果就好!)</strong></p>
+<pre><code>&lt;!DOCTYPE html&gt;
+    &lt;html lang=&quot;zh-CN&quot; ng-app=&quot;myApp&quot;&gt;
+      &lt;head&gt;
+        &lt;meta charset=&quot;utf-8&quot;&gt;
+        &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge&quot;&gt;
+        &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+        &lt;link rel=&quot;stylesheet&quot; href=&quot;../../angularjs/bootstrap-3.3.7-dist/css/bootstrap.min.css&quot;&gt;
+        &lt;style type=&quot;text/css&quot;&gt;
+            .mask-loading .loading-icon &#123;
+                -webkit-animation: rotate 1s linear infinite;
+                -o-animation: rotate 1s linear infinite;
+                animation: rotate 1s linear infinite;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                width: 30px;
+                height: 30px;
+                margin: -20px 0 0 -20px;
+                border-width: 5px;
+                border-style: solid;
+                border-color: #37c3aa #37c3aa #fff #fff;
+                opacity: .9;
+                border-radius: 20px;
+            &#125;
+     
+            @-webkit-keyframes rotate&#123;
+              0% &#123;-webkit-transform:rotate(0)&#125;
+              100% &#123;-webkit-transform:rotate(360deg)&#125;
+            &#125;
+     
+            @keyframes rotate&#123;
+              0% &#123;transform:rotate(0)&#125;
+              100% &#123;transform:rotate(360deg)&#125;
+            &#125;
+     
+            .mask-loading &#123;
+              position:fixed;
+              top:0;
+              right:0;
+              bottom:0;
+              left:0;
+              background:0 0;
+              z-index:9999;
+            &#125;
+        &lt;/style&gt;
+      &lt;/head&gt;
+      &lt;body&gt;
+        &lt;h1&gt;index&lt;/h1&gt;
+        &lt;div id=&quot;mask-loading&quot; class=&quot;mask-loading&quot; ng-if=&quot;loading&quot; style=&quot;background-color: rgba(0, 0, 0, 0.17);&quot;&gt;
+            &lt;div class=&quot;loading-icon&quot;&gt;&lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div ui-view&gt;&lt;/div&gt;
+        &lt;a ui-sref=&quot;a&quot;&gt;go to a.html&lt;/a&gt;
+        &lt;br/&gt;
+        &lt;a ui-sref=&quot;b&quot;&gt;go to b.html&lt;/a&gt;
+        &lt;script src=&quot;../../angularjs/jquery-1.12.4.js&quot;&gt;&lt;/script&gt;
+        &lt;script src=&quot;../../angularjs/angular-1.5.8/angular.min.js&quot;&gt;&lt;/script&gt;
+        &lt;script type=&quot;text/javascript&quot; src=&quot;./angular-animate.js&quot;&gt;&lt;/script&gt;
+        &lt;script type=&quot;text/javascript&quot; src=&quot;./angular-ui-router.js&quot;&gt;&lt;/script&gt;
+        &lt;script type=&quot;text/javascript&quot;&gt;
+          var myApp = angular.module(&#39;myApp&#39;,[&#39;ui.router&#39;, &#39;ngAnimate&#39;]);
+          myApp.config([&quot;$stateProvider&quot;, &quot;$httpProvider&quot;, &#39;$urlRouterProvider&#39;, function ($stateProvider, $httpProvider, $urlRouterProvider) &#123;
+              $stateProvider
+              .state(&#39;a&#39;, &#123;
+                  url: &#39;/a&#39;,
+                  templateUrl: &quot;./a.html&quot;,
+                  controller: &quot;aController&quot;
+              &#125;)
+              .state(&#39;b&#39;, &#123;
+                  url: &#39;/b&#39;,
+                  templateUrl: &quot;./b.html&quot;,
+                  controller: &quot;bController&quot;
+              &#125;);
+              $urlRouterProvider.otherwise(&#39;/&#39;);
+              $httpProvider.interceptors.push(&#39;myInterceptor&#39;);
+          &#125;]);
+           
+          //loading拦截器
+          myApp.factory(&#39;myInterceptor&#39;, [&quot;$rootScope&quot;, function ($rootScope) &#123;
+              var timestampMarker = &#123;
+                  request: function (config) &#123;   //请求前或跳转前或渲染后
+                      $rootScope.loading = true;  // loading特效容器为true 显示
+                      return config;
+                  &#125;,
+                  response: function (response) &#123;   // 请求后或跳转后或渲染后
+                    setTimeout(function()&#123;//由于并没有调接口,所以体现不出来时间差距,为了体现有时间差,这里用到了定时器,
+                        $rootScope.$apply(function()&#123;  //重新脏检查
+                            $rootScope.loading = false;   
+                        &#125;);
+                    &#125;,2000);
+                      return response;
+                  &#125;
+              &#125;;
+              return timestampMarker;
+          &#125;]);
+     
+          myApp.controller(&#39;aController&#39;, function($scope) &#123;
+            $scope.page = &quot;a&quot;;
+          &#125;);
+     
+          myApp.controller(&#39;bController&#39;, function($scope) &#123;
+            $scope.page = &quot;b&quot;;
+          &#125;);
+        &lt;/script&gt;
+      &lt;/body&gt;
+    &lt;/html&gt;
+</code></pre>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                        
+                            <li title="1" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="false"
+        data-ae="false"
+        data-ci=""
+        data-cs=""
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>

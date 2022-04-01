@@ -1,0 +1,205 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>wampserver安装及使用，集成php环境 - R•K</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="WangRenKe的个人博客,"> 
+    <meta name="description" content="路要一步一步走，坑要一个一个填！—— from WangRenKe的博客,
+用到这个工具的原因是，有一个小案例，需要php环境。我是前端开发，不咋会弄php环境，vscode需要指向一个php.exe文件来编译执行php文件，但是我弄了半天也没弄好，所以就用这个了！！！
+,"> 
+    <meta name="author" content="WangRenKe"> 
+    <link rel="alternative" href="atom.xml" title="R•K" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="wampserver安装及使用，集成php环境 - R•K"/>
+    <meta name="twitter:description" content="路要一步一步走，坑要一个一个填！—— from WangRenKe的博客,
+用到这个工具的原因是，有一个小案例，需要php环境。我是前端开发，不咋会弄php环境，vscode需要指向一个php.exe文件来编译执行php文件，但是我弄了半天也没弄好，所以就用这个了！！！
+,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="R•K"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="wampserver安装及使用，集成php环境 - R•K"/>
+    <meta property="og:description" content="路要一步一步走，坑要一个一个填！—— from WangRenKe的博客,
+用到这个工具的原因是，有一个小案例，需要php环境。我是前端开发，不咋会弄php环境，vscode需要指向一个php.exe文件来编译执行php文件，但是我弄了半天也没弄好，所以就用这个了！！！
+,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">R•K</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://example.com"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">wampserver安装及使用，集成php环境</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">wampserver安装及使用，集成php环境</h1>
+        <div class="stuff">
+            <span>八月 24, 2020</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/js/" rel="tag">js</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/php/" rel="tag">php</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <blockquote>
+<p>用到这个工具的原因是，有一个小案例，需要php环境。我是前端开发，不咋会弄php环境，vscode需要指向一个php.exe文件来编译执行php文件，但是我弄了半天也没弄好，所以就用这个了！！！</p>
+</blockquote>
+<blockquote>
+<p>Wamp就是Windos Apache Mysql PHP集成安装环境，即在window下的apache、php和mysql的服务器软件。PHP扩展、Apache模块，开启/关闭鼠标点点就搞定，再 也不用亲自去修改配置文件了，WAMP它会去做。再也不用到处询问php的安装问题了，WAMP一切都搞定了</p>
+</blockquote>
+<blockquote>
+<p>安装包链接：<code>https://download.csdn.net/download/weixin_43996999/12760465</code></p>
+</blockquote>
+<p>直接一步一步安装，小编是直接安装在D盘根目录的<br><img src="https://img-blog.csdnimg.cn/2020082416304810.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80Mzk5Njk5OQ==,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<h5 id="注意：安装路径不允许有中文，否则就算安装成功，服务也启动不起来"><a href="#注意：安装路径不允许有中文，否则就算安装成功，服务也启动不起来" class="headerlink" title="注意：安装路径不允许有中文，否则就算安装成功，服务也启动不起来"></a>注意：安装路径不允许有中文，否则就算安装成功，服务也启动不起来</h5><blockquote>
+<p>安装成功后，双击启动，或安装成功会自启动；— 由红变橙再变绿就表示启动成功了。<br><img src="https://img-blog.csdnimg.cn/20200824162135520.png#pic_center" alt="在这里插入图片描述"></p>
+</blockquote>
+<blockquote>
+<p>启动成功后，打开浏览器在地址栏属于127.0.0.1看一下是否能打开wamp界面，如下图：<br><img src="https://img-blog.csdnimg.cn/20200824162912713.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80Mzk5Njk5OQ==,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+</blockquote>
+<blockquote>
+<p>到这里，就表示我们已经安装成功并启动了，那么下面就是将我们的案例代码或者是项目代码，放进安装目录的www文件里面，在浏览器的目录里会出现你导入到www文件的代码，直接点开启动就可以了，如下图：<br><img src="https://img-blog.csdnimg.cn/20200824163505865.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80Mzk5Njk5OQ==,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+</blockquote>
+<blockquote>
+<p>点击项目就直接启动了，不需要从本地localhost启动<br><img src="https://img-blog.csdnimg.cn/20200824163637925.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80Mzk5Njk5OQ==,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+</blockquote>
+<h3 id="简单的使用，其他的功能可能做后端的更清楚，我只是让大家如果以后碰到了这种问题之后，知道怎么去弄个环境来运行后端的代码。完结"><a href="#简单的使用，其他的功能可能做后端的更清楚，我只是让大家如果以后碰到了这种问题之后，知道怎么去弄个环境来运行后端的代码。完结" class="headerlink" title="简单的使用，其他的功能可能做后端的更清楚，我只是让大家如果以后碰到了这种问题之后，知道怎么去弄个环境来运行后端的代码。完结"></a>简单的使用，其他的功能可能做后端的更清楚，我只是让大家如果以后碰到了这种问题之后，知道怎么去弄个环境来运行后端的代码。完结</h3>
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                        
+                            <li title="1" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="false"
+        data-ae="false"
+        data-ci=""
+        data-cs=""
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>

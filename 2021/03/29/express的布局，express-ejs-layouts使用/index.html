@@ -1,0 +1,202 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>express的布局，express-ejs-layouts使用 - R•K</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="WangRenKe的个人博客,"> 
+    <meta name="description" content="路要一步一步走，坑要一个一个填！—— from WangRenKe的博客,
+node+express的项目中，碰到了这个布局 &amp;lt;%- defineContent(&amp;#39;header&amp;#39;) %&amp;gt;、&amp;lt;%- contentFor(&amp;#39;heade,"> 
+    <meta name="author" content="WangRenKe"> 
+    <link rel="alternative" href="atom.xml" title="R•K" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="express的布局，express-ejs-layouts使用 - R•K"/>
+    <meta name="twitter:description" content="路要一步一步走，坑要一个一个填！—— from WangRenKe的博客,
+node+express的项目中，碰到了这个布局 &amp;lt;%- defineContent(&amp;#39;header&amp;#39;) %&amp;gt;、&amp;lt;%- contentFor(&amp;#39;heade,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="R•K"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="express的布局，express-ejs-layouts使用 - R•K"/>
+    <meta property="og:description" content="路要一步一步走，坑要一个一个填！—— from WangRenKe的博客,
+node+express的项目中，碰到了这个布局 &amp;lt;%- defineContent(&amp;#39;header&amp;#39;) %&amp;gt;、&amp;lt;%- contentFor(&amp;#39;heade,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">R•K</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://example.com"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">express的布局，express-ejs-layouts使用</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">express的布局，express-ejs-layouts使用</h1>
+        <div class="stuff">
+            <span>三月 29, 2021</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/express/" rel="tag">express</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/express-ejs-layouts/" rel="tag">express-ejs-layouts</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <blockquote>
+<p>node+express的项目中，碰到了这个布局<br> <code>&lt;%- defineContent(&#39;header&#39;) %&gt;、&lt;%- contentFor(&#39;header&#39;) %&gt;</code><br> 这两个语法一开始不太懂，后来慢慢的就理解了，记录一下！==下面也会放项目截图用作理解==</p>
+</blockquote>
+<blockquote>
+<p>解释：<br><code>&lt;%- defineContent(&#39;header&#39;) %&gt;</code> 理解： 一般都是写在入口<code>layout.ejs</code>文件的，目的是为了渲染自定义视图，相当于是一个占位符，类似与vue中的 <code>&lt;router-view&gt;&lt;/router-view&gt;</code>组件；<br><code>&lt;%- contentFor(&#39;header&#39;) %&gt;</code> 理解：这个就是一个自定义内容的语法，在这个语法的下面可以写自己的代码！这个是和<code>&lt;%- defineContent(&#39;header&#39;) %&gt;</code>呼应的，定义的名字要相同</p>
+</blockquote>
+<h6 id="首先想要使用这个布局，需要安装express-ejs-layouts依赖"><a href="#首先想要使用这个布局，需要安装express-ejs-layouts依赖" class="headerlink" title="首先想要使用这个布局，需要安装express-ejs-layouts依赖"></a>首先想要使用这个布局，需要安装express-ejs-layouts依赖</h6><ol>
+<li><code>npm i express-ejs-layouts</code>  =&gt; 下载包</li>
+<li>在 <code>app.js</code> 中引入<br><img src="https://img-blog.csdnimg.cn/20210329145837123.png" alt="在这里插入图片描述"><h6 id="实际使用"><a href="#实际使用" class="headerlink" title="实际使用"></a>实际使用</h6><blockquote>
+<p>layout.ejs  ———– 这个是公共页面，包含头部和左侧菜单<br><code>&lt;%- defineContent(&#39;rightContent&#39;) %&gt;</code>原本就是项目中用来渲染视图的，为了方便学习测试，简单改了一下</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;title&gt;&lt;%= title %&gt;&lt;/title&gt;</span><br><span class="line">    &lt;% include ../common/header.ejs %&gt;</span><br><span class="line">    &lt;%- defineContent(&#x27;header&#x27;) %&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body data-page=&quot;&lt;%= page %&gt;&quot; data-pageClass=&quot;&lt;%= pageClass %&gt;&quot;&gt;</span><br><span class="line">&lt;div class=&quot;app-layout app-layout-home&quot;&gt;</span><br><span class="line">    &lt;% include ../common/home-head.ejs %&gt;</span><br><span class="line">    &lt;div class=&quot;app-side app-side-white&quot;&gt;</span><br><span class="line">        &lt;% include ../common/home-left.ejs %&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">    &lt;div class=&quot;app-body&quot;&gt;</span><br><span class="line">        &lt;div class=&quot;app-right&quot;&gt;</span><br><span class="line">            &lt;div class=&quot;register-nav&quot; style=&quot;height: 300px;background: red&quot;&gt;</span><br><span class="line">                &lt;div class=&quot;layui-tab&quot; lay-filter=&quot;navTab&quot;&gt;</span><br><span class="line">                    &lt;h1&gt;这里是test&lt;/h1&gt;</span><br><span class="line">                    &lt;%- defineContent(&#x27;test&#x27;) %&gt;</span><br><span class="line">                &lt;/div&gt;</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">            &lt;div class=&quot;layui-content&quot; style=&quot;height: 300px;background: green&quot;&gt;</span><br><span class="line">                &lt;h1&gt;这里是rightcontent&lt;/h1&gt;</span><br><span class="line">                &lt;%- defineContent(&#x27;rightContent&#x27;) %&gt;</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">    &lt;div class=&quot;app-footer&quot;&gt;</span><br><span class="line">        &lt;% include ../common/footer.ejs %&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;%- defineContent(&#x27;footerContent&#x27;) %&gt;</span><br><span class="line">&lt;script type=&quot;text/javascript&quot; src=&quot;&lt;%=basehost%&gt;javascripts/common/content-&lt;%= pageClass %&gt;.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>home.ejs ———– 调用页面，使用 <code>contentFor</code> 调用对应的<br><code>&lt;%- defineContent(&#39;rightContent&#39;) %&gt;&lt;%- defineContent(&#39;test&#39;) %&gt;</code></p>
+</blockquote>
+</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;%- contentFor(&#x27;header&#x27;) %&gt;</span><br><span class="line">&lt;link type=&quot;text/css&quot; rel=&quot;stylesheet&quot; href=&quot;&lt;%= basehost %&gt;stylesheets/aptRegSea.css&quot;/&gt;</span><br><span class="line">&lt;!-- 主要看下面四行调用代码 --&gt;</span><br><span class="line">&lt;%- contentFor(&#x27;rightContent&#x27;) %&gt;</span><br><span class="line">&lt;h2&gt;rightContentrightContentrightContentrightContentrightContentrightContentrightContent&lt;/h2&gt;</span><br><span class="line">&lt;%- contentFor(&#x27;test&#x27;) %&gt;</span><br><span class="line">&lt;h2&gt;testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest&lt;/h2&gt;</span><br><span class="line"></span><br><span class="line">&lt;%- contentFor(&#x27;footerContent&#x27;) %&gt;</span><br></pre></td></tr></table></figure>
+<h6 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h6><p><img src="https://img-blog.csdnimg.cn/2021032915341495.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80Mzk5Njk5OQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<blockquote>
+<p>到这里就结束了，写这个就是为了搞明白 <code>express-ejs-layouts</code>布局的<br><code>&lt;%- defineContent(&#39;rightContent&#39;) %&gt;&lt;%- defineContent(&#39;test&#39;) %&gt;</code> 这两个是什么关系！</p>
+</blockquote>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                        
+                            <li title="1" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="false"
+        data-ae="false"
+        data-ci=""
+        data-cs=""
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>

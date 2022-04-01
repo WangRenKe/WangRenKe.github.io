@@ -1,0 +1,396 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>常用的正则表达式 - R•K</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="WangRenKe的个人博客,"> 
+    <meta name="description" content="路要一步一步走，坑要一个一个填！—— from WangRenKe的博客,正则表达式
+移动手机号①：/^[1][3,4,5,6,7,8,9][0-9]&amp;#123;9&amp;#125;$/匹配比较全的号码段(目前没出什么问题)；
+移动手机号②：/^1[3456789]\d&amp;#12,"> 
+    <meta name="author" content="WangRenKe"> 
+    <link rel="alternative" href="atom.xml" title="R•K" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="常用的正则表达式 - R•K"/>
+    <meta name="twitter:description" content="路要一步一步走，坑要一个一个填！—— from WangRenKe的博客,正则表达式
+移动手机号①：/^[1][3,4,5,6,7,8,9][0-9]&amp;#123;9&amp;#125;$/匹配比较全的号码段(目前没出什么问题)；
+移动手机号②：/^1[3456789]\d&amp;#12,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="R•K"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="常用的正则表达式 - R•K"/>
+    <meta property="og:description" content="路要一步一步走，坑要一个一个填！—— from WangRenKe的博客,正则表达式
+移动手机号①：/^[1][3,4,5,6,7,8,9][0-9]&amp;#123;9&amp;#125;$/匹配比较全的号码段(目前没出什么问题)；
+移动手机号②：/^1[3456789]\d&amp;#12,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">R•K</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://example.com"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">常用的正则表达式</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">常用的正则表达式</h1>
+        <div class="stuff">
+            <span>十一月 01, 2019</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" rel="tag">正则表达式</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <h2 id="正则表达式"><a href="#正则表达式" class="headerlink" title="正则表达式"></a>正则表达式</h2><ol>
+<li>移动手机号①：<code>/^[1][3,4,5,6,7,8,9][0-9]&#123;9&#125;$/</code>匹配比较全的号码段(目前没出什么问题)；</li>
+<li>移动手机号②：<code>/^1[3456789]\d&#123;9&#125;$/</code>;可能号码段不是很全:<code>!(/^1[3456789]\d&#123;9&#125;$/.test(phone))</code></li>
+<li>邮箱①：<code>/^[a-zA-Z0-9]+([._\\-]*[a-zA-Z0-9])*@([a-zA-Z0-9]+[-a-zA-Z0-9]*[a-zA-Z0-9]+.)&#123;1,63&#125;[a-zA-Z0-9]+$/</code></li>
+<li>邮箱②：<code>/^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]&#123;2,3&#125;$/</code></li>
+<li>座机(区号-分机号)：<code>/0\d&#123;2,3&#125;-\d&#123;7,8&#125;$/</code>：<br>var data = obj.dicItemText + “-“ + obj.dicItemValue;<pre><code>                 if (!isMob.test(data)) &#123;
+                     abp.message.error(&quot;固定电话格式错误&quot;);
+                 &#125;
+</code></pre>
+</li>
+<li>QQ号：<code>/^[1-9]\d&#123;4,10&#125;$/</code>———–<code>!isQQ.test(item)</code></li>
+<li>不能输入空格：<code>onkeyup=&quot;javascript: this.value = this.value.replace(/^ +| +$/g, &#39;&#39;)&quot;</code>;</li>
+<li>不能输入回车：<code>onkeyup=&quot;javascript: this.value = this.value.replace(/[\r\n]/g,&#39;&#39;)&quot;</code>;</li>
+<li>回车、换行都不能输入：<code> onkeyup=&quot;javascript: this.value = (this.value = this.value.replace(/^ +| +$/g, &#39;&#39;).replace(/[\r\n]/g,&#39;&#39;))&quot;</code></li>
+<li>只能输入整数或小数(不兼容火狐，火狐浏览器不能输入小数点)：<br><code>oninput=&quot;javascript:this.value=this.value.replace(/[^\.\d]/g,&#39;&#39;)&quot;</code></li>
+<li>只能输入整数或小数(兼容火狐，解决了兼容问题)：<br><code>onkeypress=&quot;return (/[\d.]/.test(String.fromCharCode(event.which||event.KeyCode)))&quot;</code></li>
+<li>只能输入数字：<code>onkeyup=&quot;value=value.replace(/[^\d.]/g,&#39;&#39;)&quot;</code></li>
+<li>只能输入整数和两位小数的正则：<code>/^\d+(\.\d&#123;0,2&#125;)?$/</code></li>
+<li>保留四位小数：<code>/^\d&#123;1,4&#125;(\.\d&#123;1,4&#125;)?$/</code></li>
+</ol>
+<p><code>https://www.jb51.net/article/147033.htm</code>  比较有用的一个正则文章</p>
+<h2 id="没有实验过的正则，网上搜集的各种"><a href="#没有实验过的正则，网上搜集的各种" class="headerlink" title="没有实验过的正则，网上搜集的各种"></a>没有实验过的正则，网上搜集的各种</h2><pre><code>固定电话+手机号码正则表达式
+区号+座机号码+分机号码：regexp=&quot;^(0[0-9]&#123;2,3&#125;/-)?([2-9][0-9]&#123;6,7&#125;)+(/-[0-9]&#123;1,4&#125;)?$&quot;
+
+手机(中国移动手机号码)：regexp=&quot;^((/(/d&#123;3&#125;/))|(/d&#123;3&#125;/-))?13[456789]/d&#123;8&#125;|15[89]/d&#123;8&#125;&quot;
+
+所有手机号码：regexp=&quot;^((/(/d&#123;3&#125;/))|(/d&#123;3&#125;/-))?13[0-9]/d&#123;8&#125;|15[89]/d&#123;8&#125;&quot;(新添加了158,159两个号段)
+
+((/d&#123;11&#125;)|^((/d&#123;7,8&#125;)|(/d&#123;4&#125;|/d&#123;3&#125;)-(/d&#123;7,8&#125;)|(/d&#123;4&#125;|/d&#123;3&#125;)-(/d&#123;7,8&#125;)-(/d&#123;4&#125;|/d&#123;3&#125;|/d&#123;2&#125;|/d&#123;1&#125;)|(/d&#123;7,8&#125;)-(/d&#123;4&#125;|/d&#123;3&#125;|/d&#123;2&#125;|/d&#123;1&#125;))$)
+
+匹配格式：
+11位手机号码
+3-4位区号，7-8位直播号码，1－4位分机号
+如：12345678901、1234-12345678-1234
+ 
+1.用正则表达式限制只能输入全角字符： onkeyup=&quot;value=value.replace(/[^/uFF00-/uFFFF]/g,&#39;&#39;)&quot; onbeforepaste=&quot;clipboardData.setData(&#39;text&#39;,clipboardData.getData(&#39;text&#39;).replace(/[^/uFF00-/uFFFF]/g,&#39;&#39;))&quot; 
+
+2.用正则表达式限制只能输入数字：onkeyup=&quot;value=value.replace(/[^/d]/g,&#39;&#39;) &quot;onbeforepaste=&quot;clipboardData.setData(&#39;text&#39;,clipboardData.getData(&#39;text&#39;).replace(/[^/d]/g,&#39;&#39;))&quot; 
+
+3.用正则表达式限制只能输入数字和英文：onkeyup=&quot;value=value.replace(/[/W]/g,&#39;&#39;) &quot;onbeforepaste=&quot;clipboardData.setData(&#39;text&#39;,clipboardData.getData(&#39;text&#39;).replace(/[^/d]/g,&#39;&#39;))&quot; 
+
+4.计算字符串的长度（一个双字节字符长度计2，ASCII字符计1） 
+
+String.prototype.len=function()&#123;return this.replace([^/x00-/xff]/g,&quot;aa&quot;).length;&#125; 
+
+5.javascript中没有像vbscript那样的trim函数，我们就可以利用这个表达式来实现，如下： 
+
+String.prototype.trim = function() 
+&#123; 
+return this.replace(/(^/s*)|(/s*$)/g, &quot;&quot;); 
+&#125; 
+
+利用正则表达式分解和转换IP地址： 
+
+6.下面是利用正则表达式匹配IP地址，并将IP地址转换成对应数值的Javascript程序： 
+
+function IP2V(ip) 
+&#123; 
+re=/(/d+)/.(/d+)/.(/d+)/.(/d+)/g //匹配IP地址的正则表达式 
+if(re.test(ip)) 
+&#123; 
+return RegExp.$1*Math.pow(255,3))+RegExp.$2*Math.pow(255,2))+RegExp.$3*255+RegExp.$4*1 
+&#125; 
+else 
+&#123; 
+throw new Error(&quot;不是一个正确的IP地址!&quot;) 
+&#125; 
+&#125; 
+
+不过上面的程序如果不用正则表达式，而直接用split函数来分解可能更简单，程序如下： 
+
+var ip=&quot;10.100.20.168&quot; 
+ip=ip.split(&quot;.&quot;) 
+alert(&quot;IP值是：&quot;+(ip[0]*255*255*255+ip[1]*255*255+ip[2]*255+ip[3]*1)) 
+正则表达式用于字符串处理、表单验证等场合，实用高效。现将一些常用的表达式收集于此，以备不时之需。 
+
+
+匹配中文字符的正则表达式： [/u4e00-/u9fa5] 
+评注：匹配中文还真是个头疼的事，有了这个表达式就好办了 
+
+匹配双字节字符(包括汉字在内)：[^/x00-/xff] 
+评注：可以用来计算字符串的长度（一个双字节字符长度计2，ASCII字符计1） 
+
+匹配空白行的正则表达式：/n/s*/r 
+评注：可以用来删除空白行 
+
+匹配HTML标记的正则表达式：&lt;(/S*?)[^&gt;]*&gt;.*?&lt;//1&gt;|&lt;.*? /&gt; 
+评注：网上流传的版本太糟糕，上面这个也仅仅能匹配部分，对于复杂的嵌套标记依旧无能为力 
+
+匹配首尾空白字符的正则表达式：^/s*|/s*$ 
+评注：可以用来删除行首行尾的空白字符(包括空格、制表符、换页符等等)，非常有用的表达式 
+
+匹配Email地址的正则表达式：/w+([-+.]/w+)*@/w+([-.]/w+)*/./w+([-.]/w+)* 
+评注：表单验证时很实用 
+
+匹配网址URL的正则表达式：[a-zA-z]+://[^/s]* 
+评注：网上流传的版本功能很有限，上面这个基本可以满足需求 
+
+匹配帐号是否合法(字母开头，允许5-16字节，允许字母数字下划线)：^[a-zA-Z][a-zA-Z0-9_]&#123;4,15&#125;$ 
+评注：表单验证时很实用 
+
+匹配国内电话号码：/d&#123;3&#125;-/d&#123;8&#125;|/d&#123;4&#125;-/d&#123;7&#125; 
+评注：匹配形式如 0511-4405222 或 021-87888822 
+
+匹配腾讯QQ号：[1-9][0-9]&#123;4,&#125; 
+评注：腾讯QQ号从10000开始 
+
+匹配中国邮政编码：[1-9]/d&#123;5&#125;(?!/d) 
+评注：中国邮政编码为6位数字 
+
+匹配身份证：/d&#123;15&#125;|/d&#123;18&#125; 
+评注：中国的身份证为15位或18位 
+
+匹配ip地址：/d+/./d+/./d+/./d+ 
+评注：提取ip地址时有用 
+
+匹配特定数字： 
+^[1-9]/d*$ //匹配正整数 
+^-[1-9]/d*$ //匹配负整数 
+^-?[1-9]/d*$ //匹配整数 
+^[1-9]/d*|0$ //匹配非负整数（正整数 + 0） 
+^-[1-9]/d*|0$ //匹配非正整数（负整数 + 0） 
+^[1-9]/d*/./d*|0/./d*[1-9]/d*$ //匹配正浮点数 
+^-([1-9]/d*/./d*|0/./d*[1-9]/d*)$ //匹配负浮点数 
+^-?([1-9]/d*/./d*|0/./d*[1-9]/d*|0?/.0+|0)$ //匹配浮点数 
+^[1-9]/d*/./d*|0/./d*[1-9]/d*|0?/.0+|0$ //匹配非负浮点数（正浮点数 + 0） 
+^(-([1-9]/d*/./d*|0/./d*[1-9]/d*))|0?/.0+|0$ //匹配非正浮点数（负浮点数 + 0） 
+评注：处理大量数据时有用，具体应用时注意修正 
+
+匹配特定字符串： 
+^[A-Za-z]+$ //匹配由26个英文字母组成的字符串 
+^[A-Z]+$ //匹配由26个英文字母的大写组成的字符串 
+^[a-z]+$ //匹配由26个英文字母的小写组成的字符串 
+^[A-Za-z0-9]+$ //匹配由数字和26个英文字母组成的字符串 
+^/w+$ //匹配由数字、26个英文字母或者下划线组成的字符串 
+评注：最基本也是最常用的一些表达式 
+
+匹配中文字符的正则表达式： [/u4e00-/u9fa5] 
+
+匹配双字节字符(包括汉字在内)：[^/x00-/xff] 
+
+匹配空行的正则表达式：/n[/s| ]*/r 
+
+匹配HTML标记的正则表达式：/&lt;(.*)&gt;.*&lt;///1&gt;|&lt;(.*) //&gt;/ 
+
+匹配首尾空格的正则表达式：(^/s*)|(/s*$) 
+
+匹配Email地址的正则表达式：/w+([-+.]/w+)*@/w+([-.]/w+)*/./w+([-.]/w+)* 
+
+匹配网址URL的正则表达式：http://([/w-]+/.)+[/w-]+(/[/w- ./?%&amp;=]*)? 
+
+
+^/d+$ //匹配非负整数（正整数 + 0） 
+^[0-9]*[1-9][0-9]*$ //匹配正整数 
+^((-/d+)|(0+))$ //匹配非正整数（负整数 + 0） 
+^-[0-9]*[1-9][0-9]*$ //匹配负整数 
+^-?/d+$ //匹配整数 
+^/d+(/./d+)?$ //匹配非负浮点数（正浮点数 + 0） 
+^(([0-9]+/.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*/.[0-9]+)|([0-9]*[1-9][0-9]*))$ //匹配正浮点数 
+^((-/d+(/./d+)?)|(0+(/.0+)?))$ //匹配非正浮点数（负浮点数 + 0） 
+^(-(([0-9]+/.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*/.[0-9]+)|([0-9]*[1-9][0-9]*)))$ //匹配负浮点数 
+^(-?/d+)(/./d+)?$ //匹配浮点数 
+^[A-Za-z]+$ //匹配由26个英文字母组成的字符串 
+^[A-Z]+$ //匹配由26个英文字母的大写组成的字符串 
+^[a-z]+$ //匹配由26个英文字母的小写组成的字符串 
+^[A-Za-z0-9]+$ //匹配由数字和26个英文字母组成的字符串 
+^/w+$ //匹配由数字、26个英文字母或者下划线组成的字符串 
+^[/w-]+(/.[/w-]+)*@[/w-]+(/.[/w-]+)+$ 
+
+
+
+&quot;^/d+$&quot;　　//非负整数（正整数 + 0） 
+&quot;^[0-9]*[1-9][0-9]*$&quot;　　//正整数 
+&quot;^((-/d+)|(0+))$&quot;　　//非正整数（负整数 + 0） 
+&quot;^-[0-9]*[1-9][0-9]*$&quot;　　//负整数 
+&quot;^-?/d+$&quot;　　　　//整数 
+&quot;^/d+(/./d+)?$&quot;　　//非负浮点数（正浮点数 + 0） 
+&quot;^(([0-9]+/.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*/.[0-9]+)|([0-9]*[1-9][0-9]*))$&quot;　　//正浮点数 
+&quot;^((-/d+(/./d+)?)|(0+(/.0+)?))$&quot;　　//非正浮点数（负浮点数 + 0） 
+&quot;^(-(([0-9]+/.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*/.[0-9]+)|([0-9]*[1-9][0-9]*)))$&quot;　　//负浮点
+数 
+&quot;^(-?/d+)(/./d+)?$&quot;　　//浮点数 
+&quot;^[A-Za-z]+$&quot;　　//由26个英文字母组成的字符串 
+&quot;^[A-Z]+$&quot;　　//由26个英文字母的大写组成的字符串 
+&quot;^[a-z]+$&quot;　　//由26个英文字母的小写组成的字符串 
+&quot;^[A-Za-z0-9]+$&quot;　　//由数字和26个英文字母组成的字符串 
+&quot;^/w+$&quot;　　//由数字、26个英文字母或者下划线组成的字符串 
+&quot;^[/w-]+(/.[/w-]+)*@[/w-]+(/.[/w-]+)+$&quot;　　　　//email地址 
+&quot;^[a-zA-z]+://(/w+(-/w+)*)(/.(/w+(-/w+)*))*(/?/S*)?$&quot;　　//url 
+/^13/d&#123;9&#125;$/gi手机号正则表达式
+public static bool IsValidMobileNo(string MobileNo)
+&#123;
+   const string regPattern = @&quot;^(130|131|132|133|134|135|136|137|138|139)/d&#123;8&#125;$&quot;;
+   return Regex.IsMatch(MobileNo, regPattern);
+&#125;
+正则表达式--验证手机号码:13[0-9]&#123;9&#125;
+实现手机号前带86或是+86的情况:^((/+86)|(86))?(13)/d&#123;9&#125;$
+电话号码与手机号码同时验证:(^(/d&#123;3,4&#125;-)?/d&#123;7,8&#125;)$|(13[0-9]&#123;9&#125;) 
+提取信息中的网络链接:(h|H)(r|R)(e|E)(f|F) *= *(&#39;|&quot;)?(/w|//|//|/.)+(&#39;|&quot;| *|&gt;)?  
+提取信息中的邮件地址:/w+([-+.]/w+)*@/w+([-.]/w+)*/./w+([-.]/w+)*  
+提取信息中的图片链接:(s|S)(r|R)(c|C) *= *(&#39;|&quot;)?(/w|//|//|/.)+(&#39;|&quot;| *|&gt;)?
+提取信息中的IP地址:(/d+)/.(/d+)/.(/d+)/.(/d+)    
+提取信息中的中国手机号码:(86)*0*13/d&#123;9&#125;    
+提取信息中的中国固定电话号码:(/(/d&#123;3,4&#125;/)|/d&#123;3,4&#125;-|/s)?/d&#123;8&#125;    
+提取信息中的中国电话号码（包括移动和固定电话）:(/(/d&#123;3,4&#125;/)|/d&#123;3,4&#125;-|/s)?/d&#123;7,14&#125;    
+提取信息中的中国邮政编码:[1-9]&#123;1&#125;(/d+)&#123;5&#125;    
+提取信息中的中国身份证号码:/d&#123;18&#125;|/d&#123;15&#125;    
+提取信息中的整数：/d+    
+提取信息中的浮点数（即小数）：(-?/d*)/.?/d+    
+提取信息中的任何数字 ：(-?/d*)(/./d+)?  
+提取信息中的中文字符串：[/u4e00-/u9fa5]*    
+提取信息中的双字节字符串 (汉字)：[^/x00-/xff]* 
+</code></pre>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                        
+                            <li title="1" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="false"
+        data-ae="false"
+        data-ci=""
+        data-cs=""
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>

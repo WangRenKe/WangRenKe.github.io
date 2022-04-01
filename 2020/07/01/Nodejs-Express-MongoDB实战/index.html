@@ -1,0 +1,610 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Nodejs+Express+MongoDB实战 - R•K</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="WangRenKe的个人博客,"> 
+    <meta name="description" content="路要一步一步走，坑要一个一个填！—— from WangRenKe的博客,项目安装
+安装express脚手架：npm install express-generator -g
+
+创建项目：express -e project -e代表使用ejs模板，project是项目名,"> 
+    <meta name="author" content="WangRenKe"> 
+    <link rel="alternative" href="atom.xml" title="R•K" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="Nodejs+Express+MongoDB实战 - R•K"/>
+    <meta name="twitter:description" content="路要一步一步走，坑要一个一个填！—— from WangRenKe的博客,项目安装
+安装express脚手架：npm install express-generator -g
+
+创建项目：express -e project -e代表使用ejs模板，project是项目名,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="R•K"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="Nodejs+Express+MongoDB实战 - R•K"/>
+    <meta property="og:description" content="路要一步一步走，坑要一个一个填！—— from WangRenKe的博客,项目安装
+安装express脚手架：npm install express-generator -g
+
+创建项目：express -e project -e代表使用ejs模板，project是项目名,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">R•K</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://example.com"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">Nodejs+Express+MongoDB实战</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">Nodejs+Express+MongoDB实战</h1>
+        <div class="stuff">
+            <span>七月 01, 2020</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/Express/" rel="tag">Express</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/MongoDB/" rel="tag">MongoDB</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/Nodejs/" rel="tag">Nodejs</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <h5 id="项目安装"><a href="#项目安装" class="headerlink" title="项目安装"></a>项目安装</h5><ol>
+<li><p>安装express脚手架：<code>npm install express-generator -g</code></p>
+</li>
+<li><p>创建项目：<code>express -e project</code> -e代表使用ejs模板，project是项目名称</p>
+</li>
+<li><p>进入项目：<code>npm install</code>下载依赖包</p>
+</li>
+<li><p>安装nodemon：<code>npm install nodemon -g</code> 使用nodemon来启动项目，不用node来启动<br><img src="https://img-blog.csdnimg.cn/2020010414254140.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80Mzk5Njk5OQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+</li>
+<li><p>启动项目：<code>npm start</code>,端口号在www启动文件中可以看。</p>
+<h5 id="项目连接MongoDB数据库"><a href="#项目连接MongoDB数据库" class="headerlink" title="项目连接MongoDB数据库"></a>项目连接MongoDB数据库</h5></li>
+<li><p>安装集成与nodejs的mongodb：<code>npm install mongodb -S</code></p>
+</li>
+<li><p>在项目中创建model文件，在下面创建index.js,所有和数据库连接的代码都封装在这个文件下</p>
+<pre><code> const MongoClient = require(&#39;mongodb&#39;).MongoClient;  // 创建Mongo的客户端对象
+ const url = &#39;mongodb://localhost:27017&#39;;  // 连接数据库url
+ const dbName = &#39;project&#39;;   // 连接的数据库名字
+ // 数据库的连接方法封装
+ function connect(callback)&#123;
+     // 使用connect方法连接到服务器
+     // err:错误对象。client：客户端连接成功的对象
+     MongoClient.connect(url, function(err, client) &#123;
+         if(err)&#123; // 如果连接错误，打印错误信息
+             console.log(&#39;数据库连接错误！&#39;,err);
+         &#125;else&#123;  // 否则
+             const db = client.db(dbName);  // 数据库连接成功的对象
+             callback &amp;&amp; callback(db);  // 利用回调函数处理
+             client.close();  // 每次调用成功,还要再关闭数据库
+         &#125;
+     &#125;);
+ &#125;
+ 
+ module.exports = &#123;connect&#125;
+</code></pre>
+</li>
+<li><p>调用：通过路由向数据库写入数据会用到</p>
+<pre><code> var express = require(&#39;express&#39;);
+ var router = express.Router();
+ var model = require(&#39;../model&#39;);  // 引入连接数据库方法
+ /* GET users listing. */
+ router.get(&#39;/&#39;, function(req, res, next) &#123;
+   res.send(&#39;respond with a resource&#39;);
+ &#125;);
+ 
+ // 注册接口
+ router.post(&#39;/regist&#39;,function(req, res, next)&#123;
+   var data = &#123;
+     username:req.body.username,
+     password:req.body.password,
+     password2:req.body.password2
+   &#125;
+   model.connect(function(db)&#123;
+     db.collection(&#39;users&#39;).insert(data,function(err,ret)&#123;
+       if(err)&#123;
+         console.log(&#39;注册失败!&#39;,err);
+         res.redirect(&#39;/regist&#39;);
+       &#125;else&#123;
+         res.redirect(&#39;/login&#39;);
+       &#125;
+     &#125;)
+   &#125;)
+ &#125;)
+ 
+ module.exports = router;
+</code></pre>
+<h5 id="项目引入MongoDB后的操作数据库语法"><a href="#项目引入MongoDB后的操作数据库语法" class="headerlink" title="项目引入MongoDB后的操作数据库语法"></a>项目引入MongoDB后的操作数据库语法</h5></li>
+<li><p>注册时，向数据库中写入用户注册的数据</p>
+<pre><code> model.connect(function(db)&#123; // 这里的data是form表单提交过来的数据
+     db.collection(&#39;users&#39;).insert(data,function(err,ret)&#123;
+       if(err)&#123;
+         console.log(&#39;注册失败!&#39;,err);
+         res.redirect(&#39;/regist&#39;);
+       &#125;else&#123;
+         res.redirect(&#39;/login&#39;);
+       &#125;
+     &#125;)
+   &#125;)
+</code></pre>
+</li>
+<li><p>登陆时，在数据库中查找对应的数据，看看是否和数据库中一致</p>
+<pre><code> model.connect(function(db)&#123;  // 连接数据库
+ // 进入users库,寻找data这个数据.toArray转换成数组
+ db.collection(&#39;users&#39;).find(data).toArray(function(err,docs)&#123;
+   // 如果报错,重新登陆
+   if(err)&#123;
+     res.redirect(&#39;/login&#39;);
+   &#125;else&#123;  
+     // 否则校验数据,如果是空数组,说明没找到这个用户,让他去重新登录.找到的话.登陆成功,进入主页面
+     if(docs.length &gt; 0)&#123;
+       // 登陆成功,进行session会话存储(将用户的信息进行存储)
+       // 这样的话,前端每次去请求的时候,先去session里面找username,如果有值,那么证明他是登陆状态的,那么直接跳转登陆页面就好
+       req.session.username = data.username;
+       res.redirect(&#39;/&#39;); // 进入主页
+     &#125;else&#123;
+       res.redirect(&#39;/login&#39;);
+     &#125;
+   &#125;
+ &#125;)
+</code></pre>
+<p>   })</p>
+<h5 id="登录拦截-登陆成功后，会保存下用户的信息，在指定的时间里，用户再登录就不需要输入帐号和密码了"><a href="#登录拦截-登陆成功后，会保存下用户的信息，在指定的时间里，用户再登录就不需要输入帐号和密码了" class="headerlink" title="登录拦截(登陆成功后，会保存下用户的信息，在指定的时间里，用户再登录就不需要输入帐号和密码了)"></a>登录拦截(登陆成功后，会保存下用户的信息，在指定的时间里，用户再登录就不需要输入帐号和密码了)</h5></li>
+<li><p>在这里用到了一个工具模块<code>express-session</code>—-服务端就是要通过session来保存</p>
+</li>
+<li><p>安装：<code>npm install express-session -S</code></p>
+</li>
+<li><p>配置session第一步：在app.js中引入<code>var session = require(&#39;express-session&#39;);</code></p>
+</li>
+<li><p>配置session第二步：在app.js中配置session中间件</p>
+<pre><code> // session配置
+ app.use(session(&#123;
+   secret: &#39;wangrenke project&#39;, // 可以随便改的
+   resave: false,
+   saveUninitialized: true,
+   cookie: &#123; maxAge: 1000 * 60 * 5 &#125;  // 在服务端使用session时,会向客户端写入cookie,所以这里要指定一个cookie的有效期(即用户登陆多久是有效的)这里是五分钟
+ &#125;))
+</code></pre>
+</li>
+<li><p>使用：在用户登陆成功的时候，要去做一个会话的存储，将用户用存进session中，这样我们前端再请求的时候，先去seesion中取username，如果有值，说明是登陆状态，直接跳过登陆页面，否则，跳转登陆页面重新登陆</p>
+<pre><code> model.connect(function(db)&#123;  // 连接数据库
+     // 进入users库,寻找data这个数据.toArray转换成数组
+     db.collection(&#39;users&#39;).find(data).toArray(function(err,docs)&#123;
+       // 如果报错,重新登陆
+       if(err)&#123;
+         res.redirect(&#39;/login&#39;);
+       &#125;else&#123;  
+         // 否则校验数据,如果是空数组,说明没找到这个用户,让他去重新注册.找到的话.登陆成功,进入主页面
+         if(docs.length &gt; 0)&#123;
+           // 登陆成功,进行session会话存储(将用户的信息进行存储)
+           // 这样的话,前端每次去请求的时候,先去session里面找username,如果有值,那么证明他是登陆状态的,那么直接跳转登陆页面就好
+           req.session.username = data.username;
+           res.redirect(&#39;/&#39;); // 进入主页
+         &#125;else&#123;
+           res.redirect(&#39;/login&#39;);
+         &#125;
+       &#125;
+     &#125;)
+   &#125;)
+</code></pre>
+</li>
+<li><p>设置登录拦截</p>
+<pre><code> // 登录拦截(当进入系统的时候)
+ app.get(&#39;*&#39;,function(req,res,next)&#123;
+   var user = req.session.username;
+   var path = req.path;
+   console.log(&quot;session----user&quot;,user);
+   // 如果是进的登录页或注册页,我们不拦截
+   if(path != &#39;/login&#39; &amp;&amp; path != &#39;/regist&#39;)&#123;
+     if(!user)&#123;
+       res.redirect(&#39;/login&#39;);
+     &#125;
+   &#125;
+   next();
+ &#125;)
+</code></pre>
+<h5 id="退出登录"><a href="#退出登录" class="headerlink" title="退出登录"></a>退出登录</h5></li>
+<li><p>清除session中的人员信息</p>
+</li>
+<li><p>跳转到登陆页面</p>
+<pre><code> // 退出登录
+ router.get(&#39;/loginout&#39;,function(req,res,next)&#123;
+   req.session.username = null;
+   res.redirect(&#39;/login&#39;);
+ &#125;)
+</code></pre>
+<h5 id="增删改查（写文章发布功能）—-增"><a href="#增删改查（写文章发布功能）—-增" class="headerlink" title="增删改查（写文章发布功能）—-增"></a>增删改查（写文章发布功能）—-增</h5></li>
+<li><p>写文章时需要用到富文本框插件xhEditor：<code>http://xheditor.com/download</code></p>
+</li>
+<li><p>下载xhEditor后，将xheditor文件夹放在我们项目中，pulice下。<br><img src="https://img-blog.csdnimg.cn/20200105224354753.png" alt="在这里插入图片描述"></p>
+</li>
+<li><p>使用：在相应html 文件中引入依赖的文件并且初始化xheditor</p>
+<pre><code> &lt;script type=&quot;text/javascript&quot; src=&quot;/xheditor/jquery/jquery-1.4.4.min.js&quot;&gt;&lt;/script&gt;
+ &lt;script type=&quot;text/javascript&quot; src=&quot;/xheditor/xheditor-1.2.2.min.js&quot;&gt;&lt;/script&gt;
+ &lt;script type=&quot;text/javascript&quot; src=&quot;/xheditor/xheditor_lang/zh-cn.js&quot;&gt;&lt;/script&gt;
+ &lt;script&gt;
+ // 其实在本项目中基本上用前两个就行了
+ $(&#39;#elm1&#39;).xheditor(&#123;
+     tools: &#39;full&#39;,
+     skin: &#39;default&#39;,
+     showBlocktag: true,
+     internalScript: false,
+     internalStyle: false,
+     width: 300,
+     height: 200,
+     loadCSS: &#39;http://xheditor.com/test.css&#39;,
+     fullscreen: true,
+     sourceMode: true,
+     forcePtag: true,
+     upImgUrl: &quot;upload.php&quot;,
+     upImgExt: &quot;jpg,jpeg,gif,png&quot;
+ &#125;);
+</code></pre>
+<p> </script></p>
+</li>
+<li><p>在textarea元素上加一个<code>class=&#39;xheditor&#39;</code>，这样刷新页面就可以看到效果了<br><img src="https://img-blog.csdnimg.cn/20200105225423243.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80Mzk5Njk5OQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+</li>
+<li><p>新建一个专门处理写文章的路由article.js。然后在app.js中配置article：<code>var articleRouter = require(&#39;./routes/article&#39;);app.use(&#39;/article&#39;, articleRouter);</code></p>
+</li>
+<li><p>写文章提交保存时，我们需要在mongodb数据库中，添加一条保存文章的数据。让我们提交保存时，能够存到数据库中。</p>
+<h5 id="文章列表实现"><a href="#文章列表实现" class="headerlink" title="文章列表实现"></a>文章列表实现</h5></li>
+<li><p>文章新增—-写文章实现后，保存到了mongodb中的数据库中。保存后肯定要跳转到主页，那么主页一定有一个文章列表。那么我们在渲染主页页面路由的时候。操作mongodb，从对应的列表数据中取出来。展示到页面上</p>
+<pre><code> router.get(&#39;/&#39;, function(req, res, next) &#123;
+   var username = req.session.username;
+   model.connect(function(db)&#123;
+     // 从库中，将articles文章张列表的数据。取出来转换成数组
+     db.collection(&#39;articles&#39;).find().toArray(function(err,docs)&#123;
+       console.log(&#39;文章列表------&#39;,docs);
+       var list = docs; // 文章列表，用来传到index.ejs中
+       res.render(&#39;index&#39;, &#123; msg: &#39;首页&#39;,username:username,list:list &#125;);
+     &#125;);
+   &#125;)
+ &#125;);
+</code></pre>
+</li>
+<li><p>我们存到库中的时间是毫秒。取出来也是，所以要使用一个插件用来转换时间：<code>npm install moment -S</code></p>
+</li>
+<li><p>使用<code>moment</code>：在需要用的文件引入<code>var moment = require(&quot;moment&quot;);</code></p>
+<pre><code> model.connect(function(db)&#123;
+     // 从库中，将articles文章张列表的数据。取出来转换成数组
+     db.collection(&#39;articles&#39;).find().toArray(function(err,docs)&#123;
+       console.log(&#39;文章列表------&#39;,docs);
+       var list = docs; // 文章列表，用来传到index.ejs中
+       list.map(function(item)&#123;
+         item.time = moment(item.id).format(&quot;YYYY-MM-DD hh:mm:ss&quot;);
+         return item;
+       &#125;)
+       res.render(&#39;index&#39;, &#123; msg: &#39;首页&#39;,username:username,list:list &#125;);
+     &#125;);
+   &#125;)
+</code></pre>
+<h5 id="分页查询"><a href="#分页查询" class="headerlink" title="分页查询"></a>分页查询</h5></li>
+<li><p>js部分</p>
+<pre><code> router.get(&#39;/&#39;, function(req, res, next) &#123;
+   var username = req.session.username || &#39;&#39;;
+   // 当前页
+   var pageIndex = req.query.pageIndex || 1;
+   // 分页
+   var data = &#123;
+     total: 0,  // 文章总共的页数
+     curPage: pageIndex,  // 当前页
+     list: [],   // 当前页的文章列表
+   &#125;
+   var pageSize = 10;  // 每次请求10条数据
+   model.connect(function(db)&#123;
+     // 第一步：查询所有文章(从库中，将articles文章张列表的数据。取出来转换成数组)
+     db.collection(&#39;articles&#39;).find().toArray(function(err,docs)&#123;
+       // 文章列表总条数/每页显示的条数，向上取整。得到一共有多少页。
+       data.total = Math.ceil(docs.length / pageSize);
+       // 第二步：查询当前页的文章列表(分页查询)
+       model.connect(function(db)&#123;
+         // 重点：sort(&#123;_id:-1&#125;)表示倒序查询；limit(pageSize)表示限制多少条；skip((pageIndex - 1)*pageSize)从多少条开始查
+         db.collection(&#39;articles&#39;).find().sort(&#123;_id:-1&#125;).limit(pageSize).skip((pageIndex - 1)*pageSize).toArray(function(err,doc2)&#123;
+         // 这里考虑到如果删除的时候，当前页只剩一条数据，那么删完之后，需要把对应的页签也删掉。
+           if(doc2.length == 0)&#123;
+             res.redirect(&#39;/?pageIndex=&#39;+((pageIndex-1) || 1));
+             return;
+           &#125;
+           doc2.map(function(item)&#123;
+             item.time = moment(item.id).format(&quot;YYYY-MM-DD hh:mm:ss&quot;);
+             return item;
+           &#125;)
+           data.list = doc2;
+         res.render(&#39;index&#39;, &#123; msg: &#39;首页&#39;,username:username,data:data &#125;);
+         &#125;)
+       &#125;)
+     &#125;);
+   &#125;)
+ &#125;);
+</code></pre>
+</li>
+<li><p>ejs部分</p>
+<pre><code> &lt;!-- 分页 --&gt;
+   &lt;div class=&quot;page&quot;&gt;
+     &lt;span&gt;共&lt;%= data.list.length %&gt;条&lt;/span&gt;
+     &lt;a class=&quot;top&quot;&gt;上一页&lt;/a&gt;
+     &lt;% for(var i = 1; i&lt;=data.total; i++)&#123; %&gt;
+       &lt;a href=&quot;/?pageIndex=&lt;% i %&gt;&quot; class=&quot;pages&quot;&gt;&lt;%= i %&gt;&lt;/a&gt;
+     &lt;% &#125; %&gt;
+     &lt;a class=&quot;next&quot;&gt;下一页&lt;/a&gt;
+   &lt;/div&gt;
+</code></pre>
+<h5 id="删除文章"><a href="#删除文章" class="headerlink" title="删除文章"></a>删除文章</h5><p> // ejs页面<br> <a href="/article/delete?id=<%= item.id %>&pageIndex=<%= data.curPage %>">删除</a><br> // /delete路由代码<br> // 删除<br> router.get(‘/delete’,function(req,res,next){<br>   var id = parseInt(req.query.id); // 页面传过来的需要删除的id<br>   var pageIndex = req.query.pageIndex; // 页面传过来的当前页<br>   model.connect(function(db){</p>
+<pre><code>   // 删除对应id的数据deleteOne()
+ db.collection(&#39;articles&#39;).deleteOne(&#123;id: id&#125;,function(err,ret)&#123;
+   if(err)&#123;
+     console.log(&#39;删除失败！！&#39;);
+   &#125;else&#123;
+     console.log(&#39;删除成功！！&#39;);
+   &#125;
+   // 删除完成后接着跳转对应的页面路由，这里有一个问题，就是如果删除时只剩一条数据，那么删掉之后需要把那一页的分页也删掉。这个限制在主体路由上。
+   res.redirect(&#39;/?pageIndex=&#39;+pageIndex);
+ &#125;)
+</code></pre>
+<p>   })<br> })</p>
+<h5 id="修改文章"><a href="#修改文章" class="headerlink" title="修改文章"></a>修改文章</h5></li>
+<li><p>点击编辑时，页面和新增共用一个页面</p>
+</li>
+<li><p>修改时：和新增共用一个接口，同一个数据路集合</p>
+<pre><code> // 渲染写文章页面 || 编辑文章页面
+ router.get(&#39;/write&#39;,function(req,res,next)&#123;
+   var username = req.session.username;
+   var id = parseInt(req.query.id);
+   var pageIndex = req.query.pageIndex;
+   var item = &#123;
+     title:&#39;&#39;,  // 标题
+     content:&#39;&#39;  // 内容
+   &#125;
+   if(id)&#123;  // 如果有id，那么就是编辑
+     model.connect(function(db)&#123;
+       db.collection(&#39;articles&#39;).findOne(&#123;id:id&#125;,function(err,docs)&#123;
+         if(err)&#123;
+           console.log(&#39;查询失败！！！！&#39;);
+         &#125;else&#123;
+           item = docs
+           item.pageIndex = pageIndex;
+           console.log(&#39;aaaaaaa-------&#39;,item);
+           res.render(&#39;write&#39;,&#123;msg:&#39;编辑文章&#39;,username:username,item:item&#125;);
+         &#125;
+       &#125;)
+     &#125;)
+   &#125;else&#123;  // 否则就是新增
+     res.render(&#39;write&#39;,&#123;msg:&#39;写文章&#39;,username:username,item:item&#125;);
+   &#125;
+ &#125;)
+ /* 新增 || 编辑 */
+ router.post(&#39;/add&#39;, function(req, res, next) &#123;
+   var id = parseInt(req.body.id);
+   if(id)&#123;  // 编辑
+     var pageIndex = req.body.pageIndex;
+     var title = req.body.title;
+     var content = req.body.content;
+     model.connect(function(db)&#123;
+       db.collection(&#39;articles&#39;).updateOne(&#123;id:id&#125;,&#123;$set:&#123;title:title,content:content&#125;&#125;,function(err,ret)&#123;
+           if(err)&#123;
+               console.log(&#39;文章修改失败!&#39;,err);
+           &#125;else&#123;
+             console.log(&#39;文章修改成功!&#39;);
+               res.redirect(&#39;/?pageIndex=&#39;+pageIndex);
+           &#125;
+       &#125;)
+     &#125;)
+   &#125;else&#123;   // 新增
+     var data = &#123;
+       title: req.body.title,  // 标题
+       content: req.body.content,  // 内容
+       id: Date.now(),   // 时间戳(什么时候提交的)
+       username: req.session.username  // 提交的用户(是谁写的)
+     &#125;
+     model.connect(function(db)&#123;
+       db.collection(&#39;articles&#39;).insert(data,function(err,ret)&#123;
+           if(err)&#123;
+               console.log(&#39;文章发布失败!&#39;,err);
+               res.redirect(&#39;/write&#39;);
+           &#125;else&#123;
+               res.redirect(&#39;/&#39;);
+           &#125;
+       &#125;)
+     &#125;)
+   &#125;
+ &#125;);
+</code></pre>
+<h5 id="文章详情页-点击标题可以查看详情"><a href="#文章详情页-点击标题可以查看详情" class="headerlink" title="文章详情页(点击标题可以查看详情)"></a>文章详情页(点击标题可以查看详情)</h5></li>
+<li><p>基本逻辑同编辑一样</p>
+</li>
+<li><p>新建一个详情页</p>
+<pre><code> &lt;td&gt;&lt;a href=&quot;/detail?id=&lt;%= item.id %&gt;&quot;&gt;&lt;%= item.title %&gt;&lt;/a&gt;&lt;/td&gt;
+ ---------------------------------------------------
+ // 查看文章详情页面
+ router.get(&#39;/detail&#39;,function(req,res,next)&#123;
+   var username = req.session.username;
+   var id = parseInt(req.query.id);
+   var item = &#123;
+     title:&#39;&#39;,  // 标题
+     username:&#39;&#39;,  // 作者
+     id:&#39;&#39;,   // 时间&amp;&amp;id
+     content:&#39;&#39;,  // 内容
+   &#125;
+   model.connect(function(db)&#123;
+     db.collection(&#39;articles&#39;).findOne(&#123;id:id&#125;,function(err,docs)&#123;
+       if(err)&#123;
+         console.log(&#39;查询失败！！！！&#39;);
+         res.redirect(&#39;/&#39;);
+       &#125;else&#123;
+         item = docs;
+         item.time = moment(item.id).format(&#39;YYYY-MM-DD hh:mm:ss&#39;);
+         res.render(&#39;detail&#39;,&#123;msg:&#39;详情页&#39;,username:username,item:item&#125;);
+       &#125;
+     &#125;)
+   &#125;)
+ &#125;)
+</code></pre>
+<h5 id="文件上传-也是通过富文本插件xheditor"><a href="#文件上传-也是通过富文本插件xheditor" class="headerlink" title="文件上传(也是通过富文本插件xheditor)"></a>文件上传(也是通过富文本插件xheditor)</h5></li>
+<li><p>配置参数<br><img src="https://img-blog.csdnimg.cn/20200106172745511.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80Mzk5Njk5OQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+</li>
+<li><p>在服务端定义<code>/upload路由</code></p>
+</li>
+<li><p>处理文件上传需要用到第三方插件<code>multiparty</code>，上传固定格式必须要是<code>multiparty/form-data</code></p>
+</li>
+<li><p>下载：<code>npm install multiparty -S</code>,引入：<code>var multiparty = require(&#39;multiparty&#39;);</code>,实例化：<code>var form = new multiparty.Form()</code>实例化后就可以通过form对象，来解析请求体，把请求体中的文件解析处理。得到我们想要的结果；</p>
+<pre><code> // 文件上传
+ router.post(&#39;/upload&#39;,function(req,res,next)&#123;
+   var form = new multiparty.Form();
+   form.parse(req,function(err,fields,files)&#123;
+     if(err)&#123;
+       console.log(&#39;上传失败呗！！！&#39;);
+     &#125;else&#123;
+       console.log(&#39;文件列表----&#39;,files);
+       // 这个就是拿到的上传的文件数据，我们需要使用fs管道流的方式，写入到硬盘
+       var file = files.filedata[0];
+       var newPath = &#39;/uploads/&#39;+file.originalFilename;  // 写入的路径加文件名字
+       var rs = fs.createReadStream(file.path);  // 第一个流(读取的)--读的时候，就读带的路径就行
+       var ws = fs.createWriteStream(&quot;./public&quot;+newPath);  // 第二个流(写入的)--写的时候要写在服务端-这里放在pulice下的uploads中
+       rs.pipe(ws);
+       // 当写入完成的时候，监听一个on(&#39;close&#39;)事件
+       ws.on(&#39;close&#39;,function()&#123;
+         console.log(&#39;文件上传成功！！！&#39;);
+         res.send(&#123;err:&#39;&#39;,msg:newPath&#125;);
+       &#125;)
+     &#125;
+   &#125;)
+ &#125;)
+</code></pre>
+<h5 id="项目总结"><a href="#项目总结" class="headerlink" title="项目总结"></a>项目总结</h5><p>集合了注册、登录、登录拦截、会话存储、分页、结合mongodb增删改查</p>
+</li>
+</ol>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                        
+                            <li title="1" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="false"
+        data-ae="false"
+        data-ci=""
+        data-cs=""
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>

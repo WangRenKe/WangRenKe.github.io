@@ -1,0 +1,726 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Angularjs Form表单验证机制 - R•K</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="WangRenKe的个人博客,"> 
+    <meta name="description" content="路要一步一步走，坑要一个一个填！—— from WangRenKe的博客,个人总结
+one: 一般来讲表单可能遇到的问题
+        1.如何数据绑定
+        2.验证表单
+        3.显示出错信息
+        4.整个form的验证
+      ,"> 
+    <meta name="author" content="WangRenKe"> 
+    <link rel="alternative" href="atom.xml" title="R•K" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="Angularjs Form表单验证机制 - R•K"/>
+    <meta name="twitter:description" content="路要一步一步走，坑要一个一个填！—— from WangRenKe的博客,个人总结
+one: 一般来讲表单可能遇到的问题
+        1.如何数据绑定
+        2.验证表单
+        3.显示出错信息
+        4.整个form的验证
+      ,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="R•K"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="Angularjs Form表单验证机制 - R•K"/>
+    <meta property="og:description" content="路要一步一步走，坑要一个一个填！—— from WangRenKe的博客,个人总结
+one: 一般来讲表单可能遇到的问题
+        1.如何数据绑定
+        2.验证表单
+        3.显示出错信息
+        4.整个form的验证
+      ,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">R•K</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://example.com"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">Angularjs Form表单验证机制</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">Angularjs Form表单验证机制</h1>
+        <div class="stuff">
+            <span>七月 07, 2019</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/angular/" rel="tag">angular</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <p><strong>个人总结</strong></p>
+<pre><code>one: 一般来讲表单可能遇到的问题
+        1.如何数据绑定
+        2.验证表单
+        3.显示出错信息
+        4.整个form的验证
+        5.避免提交没有验证通过的表单
+        6.防止多次提交
+
+two: input表单验证需要的属性
+        * name   名字(这里需要注意:不光是input元素需要,最外层的form标签也需要一个name属性)
+        * ng-model  绑定的数据
+        * ng-required   是否必填 (true/false)
+        * ng-minlength  最小长度
+        * ng-maxlength  最大长度
+        * ng-pattrn   匹配模式（正则匹配）
+        * ng-change  值变化时的回调
+        
+three: 表单验证css样式
+        * ng-valid   当表单验证通过时的设置
+        * ng-invalid  当表单验证失败时的设置
+        * ng-pristine  表单的未被动之前拥有
+        * ng-dirty  表单被动过之后拥有
+four: formName控制变量(返回的错误信息true/false);
+        * formName.inputName.$pristine   字段是否未更改
+        * formName.inputName.$dirty     字段是否更改
+        * formName.inputName.$valid    字段有效
+        * formName.inputName.$invalid   字段无效
+        * formName.inputName.$error    字段错误信息(是一个对象,里面是每一个判断属性的bol值)
+        这里的formName就是form标签上的name属性,inputName就是input标签上name属性,最后的$xxx则是angularjs内置的变量
+        
+five: Form的方法;
+        * $setPristine 重置表单时可以用 将表单复位原始状态,包括class,$dirty,$pristine这三个方法
+          $scope.myForm.$setPristine(); $scope.myForm就是表单form标签的name,$setPristine()是它下面的一个重置方法
+</code></pre>
+<p><strong>补充</strong></p>
+<pre><code>1. 省市三级联动select标签,可以写成
+   &lt;select class=&quot;form-control&quot; ng-change=&quot;data.area = false&quot; ng-model=&quot;data.province&quot; ng-options=&quot;x.id as x.name for x in citys | cityFilter:0&quot;&gt;&lt;/select&gt;
+   ng-options就是代替了&lt;option value=&#39;x.id&#39;&gt;&lt;/option&gt;标签
+   ng-options里的x.id as x.name for x in citys就是循环的city城市数组,x.id就是option的vaue值,x.name就是option显示的值
+   
+2. 自定义过滤器的一种用法(只是在本篇文章中的案例中涉及到了,在此粗略的总结一下,后面写到过滤器总结的时候会详细总结)
+   var app=angular.module(&#39;app&#39;,[]);
+   app.fliter(&#39;cityFilter&#39;,function()&#123;
+      //参数一,在循环后用的话就是默认当条数据,参数二,就是用过滤器时冒号后跟的参数
+      // 例: ng-options=&quot;x.id as x.name for x in citys | cityFilter:0&quot;;  0就是第二个参数,第一个参数默认就是循环的当前数据
+      return function(data,id)&#123;  
+      var formData=[];
+         // 在这里假设我们要过留下数据的id为0的;
+         angular.forEach(data,function(v)&#123;
+            if(v.id===id)&#123;
+               formData.push(v);
+            &#125;
+         &#125;)
+      &#125;
+      return formData;
+   &#125;)
+   
+3. 如果工作中用到的是这样的表单验证,submit提交时,可以用来控制提交按钮是否禁止
+      例: &lt;button type=&quot;submit&quot; class=&quot;btn btn-default&quot; ng-disabled=&quot;myForm.$invalid || data.hobbies === undefined || data.hobbies.length === 0&quot;&gt;注册&lt;/button&gt;
+          前提是表单元素必须要加上ng-required=&#39;tru/e&#39;,checkbox除外,checkbox可以用逻辑来控制
+
+4. ng-model;    //后面详细总结指令各个属性时在做详细总结，在此涉及一些
+   * ng-model是angular原生的directive
+   * 可以通过require ngModel可以更深的去处理数据的双向绑定
+   * 使用方法：在directive指令中的require定义require:&#39;ngModel&#39;
+     例：app.directive(&quot;directive&quot;, [ &quot;$rootScope&quot;, function ($rootScope) &#123;
+            return &#123;
+                restrict: &quot;E&quot;,
+                scope: &#123;
+                    changeCbk: &quot;&amp;&quot;,
+                &#125;,
+                require: &quot;ngModel&quot;,  // 这个就是外面的ng-model绑定的数据
+                link: function (scope, element, attr, ngModelCtrl)&#123;
+                     ngModelCtrl就是ngModel
+                &#125;
+            &#125;
+         ]&#125;);
+    * ngModel里的属性
+      &amp; $parsers属性，保存了从viewValue向modelValue绑定过程中的处理函数，他们将来会依次执行
+      &amp; $formatters，他保存的是从modelValue向viewValue绑定过程中的处理函数
+      &amp; $setViewValue,当view发生了某件事情时，从view向model绑定调用
+        $setViewValue把viewValue保存下来
+      &amp; $render 当模型发生变化时，应该怎么去更新视图，从model向view绑定
+         调用ctrl.$render方法，将viewValue渲染到页面上
+      &amp; $setValidity 设置验证结果
+      &amp; $viewValue 视图的值
+      &amp; $modelValue 模型里的值
+</code></pre>
+<blockquote>
+<p>案例一: 结合bootstrap样式,利用angularjs自带验证功能实现表单验证.</p>
+</blockquote>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;utf-8&quot;&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;../../vendor/bootstrap3/css/bootstrap.min.css&quot;/&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div ng-app=&quot;myApp&quot; style=&quot;margin-top: 100px;&quot;&gt;
+    &lt;form name=&quot;myForm&quot; action=&quot;kittencup.php&quot; ng-controller=&quot;firstController&quot; class=&quot;container form-horizontal&quot;&gt;
+        &lt;div class=&quot;form-group&quot; ng-class=&quot;&#123;&#39;has-error&#39;:myForm.username.$dirty &amp;&amp; myForm.username.$invalid&#125;&quot;&gt;
+            &lt;label class=&quot;col-sm-2 control-label&quot;&gt;用户名&lt;/label&gt;
+            &lt;div class=&quot;col-sm-10&quot;&gt;
+                &lt;input type=&quot;text&quot; autocomplete=&quot;off&quot; name=&quot;username&quot; ng-pattern=&quot;/^[a-zA-Z]&#123;1&#125;/&quot; ng-required=&quot;true&quot; ng-minlength=&quot;5&quot; ng-maxlength=&quot;10&quot; ng-model=&quot;data.username&quot; class=&quot;form-control&quot; placeholder=&quot;用户名&quot;&gt;
+                &lt;div ng-show=&quot;myForm.username.$dirty &amp;&amp; myForm.username.$error.maxlength&quot; class=&quot;alert alert-danger help-block&quot;&gt;
+                    用户名长度不能超过10位
+                &lt;/div&gt;
+                &lt;div ng-show=&quot;myForm.username.$dirty &amp;&amp; myForm.username.$error.minlength&quot; class=&quot;alert alert-danger help-block&quot;&gt;
+                    用户名长度不能小于5位
+                &lt;/div&gt;
+                &lt;div ng-show=&quot;myForm.username.$dirty &amp;&amp; myForm.username.$error.pattern&quot; class=&quot;alert alert-danger help-block&quot;&gt;
+                    用户名必须已英文字母开始
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;form-group&quot; ng-class=&quot;&#123;&#39;has-error&#39;:myForm.password.$dirty &amp;&amp; myForm.password.$invalid&#125;&quot;&gt;
+            &lt;label class=&quot;col-sm-2 control-label&quot;&gt;密 码&lt;/label&gt;
+            &lt;div class=&quot;col-sm-10&quot;&gt;
+                &lt;input type=&quot;password&quot; autocomplete=&quot;off&quot; name=&quot;password&quot; ng-required=&quot;true&quot; ng-minlength=&quot;5&quot; ng-maxlength=&quot;10&quot; ng-model=&quot;data.password&quot; class=&quot;form-control&quot; placeholder=&quot;密码&quot;&gt;
+                &lt;div ng-show=&quot;myForm.password.$dirty &amp;&amp; myForm.password.$error.maxlength&quot; class=&quot;alert alert-danger help-block&quot;&gt;
+                    密码长度不能超过10位
+                &lt;/div&gt;
+                &lt;div ng-show=&quot;myForm.password.$dirty &amp;&amp; myForm.password.$error.minlength&quot; class=&quot;alert alert-danger help-block&quot;&gt;
+                    密码长度不能小于5位
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;form-group&quot; ng-class=&quot;&#123;&#39;has-error&#39;:myForm.passwordConfirm.$dirty &amp;&amp; myForm.passwordConfirm.$invalid&#125;&quot;&gt;
+            &lt;label class=&quot;col-sm-2 control-label&quot;&gt;确认密码&lt;/label&gt;
+            &lt;div class=&quot;col-sm-10&quot;&gt;
+                &lt;input type=&quot;password&quot; autocomplete=&quot;off&quot; name=&quot;passwordConfirm&quot; ng-required=&quot;true&quot; ng-model=&quot;data.passwordConfirm&quot; class=&quot;form-control&quot; placeholder=&quot;确认密码&quot;&gt;
+                &lt;div ng-show=&quot;myForm.password.$dirty &amp;&amp; myForm.passwordConfirm.$dirty &amp;&amp; data.password !== data.passwordConfirm&quot; class=&quot;alert alert-danger help-block&quot;&gt;
+                    密码和确认密码不一致
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;form-group&quot; ng-class=&quot;&#123;&#39;has-error&#39;:myForm.email.$dirty &amp;&amp; myForm.email.$invalid&#125;&quot;&gt;
+            &lt;label class=&quot;col-sm-2 control-label&quot;&gt;邮箱&lt;/label&gt;
+            &lt;div class=&quot;col-sm-10&quot;&gt;
+                &lt;input type=&quot;email&quot; autocomplete=&quot;off&quot; name=&quot;email&quot; ng-required=&quot;true&quot; ng-minlength=&quot;5&quot; ng-maxlength=&quot;30&quot; ng-model=&quot;data.email&quot; class=&quot;form-control&quot; placeholder=&quot;邮箱&quot;&gt;
+                &lt;div ng-show=&quot;myForm.email.$dirty &amp;&amp; myForm.email.$error.maxlength&quot; class=&quot;alert alert-danger help-block&quot;&gt;
+                    邮箱长度不能超过30位
+                &lt;/div&gt;
+                &lt;div ng-show=&quot;myForm.email.$dirty &amp;&amp; myForm.email.$error.minlength&quot; class=&quot;alert alert-danger help-block&quot;&gt;
+                    邮箱长度不能小于5位
+                &lt;/div&gt;
+                &lt;div ng-show=&quot;myForm.email.$dirty &amp;&amp; myForm.email.$error.email&quot; class=&quot;alert alert-danger help-block&quot;&gt;
+                    邮箱格式不正确
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;form-group&quot; ng-class=&quot;&#123;&#39;has-error&#39;:myForm.blog.$dirty &amp;&amp; myForm.blog.$invalid&#125;&quot;&gt;
+            &lt;label class=&quot;col-sm-2 control-label&quot;&gt;博客网址&lt;/label&gt;
+            &lt;div class=&quot;col-sm-10&quot;&gt;
+                &lt;input type=&quot;url&quot; autocomplete=&quot;off&quot; name=&quot;blog&quot; ng-required=&quot;true&quot; ng-minlength=&quot;5&quot; ng-maxlength=&quot;30&quot; ng-model=&quot;data.blog&quot; class=&quot;form-control&quot; placeholder=&quot;博客网址&quot;&gt;
+                &lt;div ng-show=&quot;myForm.blog.$dirty &amp;&amp; myForm.blog.$error.maxlength&quot; class=&quot;alert alert-danger help-block&quot;&gt;
+                    网址长度不能超过30位
+                &lt;/div&gt;
+                &lt;div ng-show=&quot;myForm.blog.$dirty &amp;&amp; myForm.blog.$error.minlength&quot; class=&quot;alert alert-danger help-block&quot;&gt;
+                    网址长度不能小于5位
+                &lt;/div&gt;
+                &lt;div ng-show=&quot;myForm.blog.$dirty &amp;&amp; myForm.blog.$error.url&quot; class=&quot;alert alert-danger help-block&quot;&gt;
+                    网址格式不正确
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;form-group&quot; ng-class=&quot;&#123;&#39;has-error&#39;:myForm.age.$dirty &amp;&amp; myForm.age.$invalid&#125;&quot;&gt;
+            &lt;label class=&quot;col-sm-2 control-label&quot;&gt;年龄&lt;/label&gt;
+            &lt;div class=&quot;col-sm-10&quot;&gt;
+                &lt;input type=&quot;number&quot; autocomplete=&quot;off&quot; name=&quot;age&quot; min=&quot;10&quot; max=&quot;99&quot; ng-required=&quot;true&quot; ng-model=&quot;data.age&quot; class=&quot;form-control&quot; placeholder=&quot;年龄&quot;&gt;
+                &lt;div ng-show=&quot;myForm.age.$dirty &amp;&amp; myForm.age.$error.max&quot; class=&quot;alert alert-danger help-block&quot;&gt;
+                    年龄不能超过99岁
+                &lt;/div&gt;
+                &lt;div ng-show=&quot;myForm.age.$dirty &amp;&amp; myForm.age.$error.min&quot; class=&quot;alert alert-danger help-block&quot;&gt;
+                    年龄不能小于10岁
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;form-group&quot;&gt;
+            &lt;label class=&quot;col-sm-2 control-label&quot;&gt;性别&lt;/label&gt;
+            &lt;div class=&quot;col-sm-10&quot;&gt;
+                &lt;label class=&quot;radio-inline&quot;&gt;
+                    &lt;input type=&quot;radio&quot; ng-required=&quot;true&quot; name=&quot;sex&quot; ng-model=&quot;data.sex&quot; value=&quot;1&quot; /&gt; 男
+                &lt;/label&gt;
+                &lt;label class=&quot;radio-inline&quot;&gt;
+                    &lt;input type=&quot;radio&quot; ng-required=&quot;true&quot; name=&quot;sex&quot; ng-model=&quot;data.sex&quot; value=&quot;0&quot; /&gt; 女
+                &lt;/label&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;form-group&quot;&gt;
+            &lt;label class=&quot;col-sm-2 control-label&quot;&gt;爱好&lt;/label&gt;
+            &lt;div class=&quot;col-sm-10&quot;&gt;
+                &lt;label class=&quot;checkbox-inline&quot; ng-repeat=&quot;hobby in hobbies&quot;&gt;
+                    &lt;input type=&quot;checkbox&quot; ng-model=&quot;hobby.checked&quot; name=&quot;hobby[]&quot; ng-checked=&quot;data.hobbies === undefined ? false : data.hobbies.indexOf(hobby.id) !== -1&quot; ng-click=&quot;toggleHobbySelection(hobby.id)&quot;/&gt; &#123;&#123;hobby.name&#125;&#125;
+                &lt;/label&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;form-group&quot;&gt;
+            &lt;label class=&quot;col-sm-2 control-label&quot;&gt;出生地&lt;/label&gt;
+            &lt;div class=&quot;col-sm-3&quot;&gt;
+                &lt;select class=&quot;form-control&quot; ng-change=&quot;data.area = false&quot; ng-model=&quot;data.province&quot; ng-options=&quot;x.id as x.name for x in cities | cityFilter:0&quot;&gt;&lt;/select&gt;
+            &lt;/div&gt;
+            &lt;div class=&quot;col-sm-3&quot;&gt;
+                &lt;select class=&quot;form-control&quot; ng-show=&quot;data.province&quot; ng-model=&quot;data.area&quot; ng-options=&quot;x.id as x.name for x in cities | cityFilter:data.province&quot;&gt;&lt;/select&gt;
+            &lt;/div&gt;
+            &lt;div class=&quot;col-sm-3&quot;&gt;
+                &lt;select class=&quot;form-control&quot; ng-required=&quot;true&quot; ng-show=&quot;data.province &amp;&amp; data.area&quot; ng-model=&quot;data.city&quot; ng-options=&quot;x.id as x.name for x in cities | cityFilter:data.area&quot;&gt;&lt;/select&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;form-group&quot;&gt;
+            &lt;label class=&quot;col-sm-2 control-label&quot;&gt;只能输入偶数&lt;/label&gt;
+            &lt;div class=&quot;col-sm-10&quot;&gt;
+               &lt;input type=&quot;text&quot; name=&quot;even&quot; class=&quot;form-group&quot; placeholder=&quot;偶数&quot; ng-model=&quot;data.even&quot; even&gt;
+                &lt;div ng-show=&quot;myForm.even.$error.even&quot; class=&quot;alert alert-danger help-block&quot;&gt;
+                    数字必须是偶数
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;form-group&quot;&gt;
+            &lt;label class=&quot;col-sm-2 control-label&quot;&gt;个人介绍&lt;/label&gt;
+            &lt;div class=&quot;col-sm-10&quot;&gt;
+                &lt;custom-text-area ng-model=&quot;data.introduct&quot;&gt;aaa&lt;/custom-text-area&gt;
+                &lt;custom-text-area ng-model=&quot;data.introduct&quot;&gt;&lt;/custom-text-area&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;form-group&quot;&gt;
+           &lt;div class=&quot;col-sm-offset-2 col-sm-10&quot;&gt;
+               &lt;button type=&quot;submit&quot; class=&quot;btn btn-default&quot; ng-disabled=&quot;myForm.$invalid || data.hobbies === undefined || data.hobbies.length === 0&quot;&gt;注册&lt;/button&gt;
+               &lt;button type=&quot;reset&quot; class=&quot;btn btn-default&quot; ng-click=&quot;reset()&quot;&gt;重置&lt;/button&gt;
+           &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/form&gt;
+&lt;/div&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;../../vendor/angular/angularjs.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;app/index.js&quot;&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<blockquote>
+<p>案例一: index.js</p>
+</blockquote>
+<pre><code>angular.module(&#39;myApp&#39;, [])
+
+.filter(&#39;cityFilter&#39;, function () &#123;
+    return function (data, parent) &#123;
+        var filterData = [];
+        angular.forEach(data, function (obj) &#123;
+            if (obj.parent === parent) &#123;
+                filterData.push(obj);
+            &#125;
+        &#125;)
+        return filterData;
+    &#125;
+&#125;)
+
+.directive(&#39;even&#39;,function()&#123;
+    return &#123;
+        require : &#39;ngModel&#39;,
+        link:function(scope,elm,attrs,ngModelController)&#123;
+            ngModelController.$parsers.push(function(viewValue)&#123;
+                if(viewValue % 2 === 0)&#123;
+                    ngModelController.$setValidity(&#39;even&#39;,true);
+                &#125;else&#123;
+                    ngModelController.$setValidity(&#39;even&#39;,false);
+                &#125;
+                return viewValue;
+            &#125;);
+//                ngModelController.$formatters.push(function(modelValue)&#123;
+//                    return modelValue + &#39;kittencup&#39;;
+//                &#125;)
+            &#125;
+        &#125;;
+    &#125;)
+
+.directive(&#39;customTextArea&#39;,function()&#123;
+    return &#123;
+        restrict:&#39;E&#39;,
+        template:&#39;&lt;div contenteditable=&quot;true&quot;&gt;&lt;/div&gt;&#39;,
+        replace:true,
+        require : &#39;ngModel&#39;,
+        link:function(scope,elm,attrs,ngModelController)&#123;
+            // view-&gt;model
+            elm.on(&#39;keyup&#39;,function()&#123;
+                scope.$apply(function()&#123;
+                    ngModelController.$setViewValue(elm.html());
+                &#125;);
+            &#125;)
+            ngModelController.$render = function()&#123;
+                elm.html(ngModelController.$viewValue);
+            &#125;
+
+        &#125;
+    &#125;;
+&#125;)
+
+
+.controller(&#39;firstController&#39;, [&#39;$scope&#39;, function ($scope) &#123;
+    var that = this;
+    $scope.hobbies = [
+        &#123;id: 1,name: &#39;玩游戏&#39;&#125;,
+        &#123;id: 2,name: &#39;写代码&#39;&#125;,
+        &#123;id: 3,name: &#39;睡觉&#39;&#125;,
+    ];
+    $scope.cities = [
+        &#123;name: &#39;上海&#39;,parent: 0,id: 1&#125;,
+        &#123;name: &#39;上海市&#39;,parent: 1,id: 2&#125;,
+        &#123;name: &#39;徐汇区&#39;,parent: 2,id: 8&#125;,
+        &#123;name: &#39;长宁区&#39;,parent: 2,id: 3&#125;,
+        &#123;name: &#39;北京&#39;,parent: 0,id: 4&#125;,
+        &#123;name: &#39;北京市&#39;,parent: 4,id: 5&#125;,
+        &#123;name: &#39;东城区&#39;,parent: 5,id: 6&#125;,
+        &#123;name: &#39;丰台区&#39;,parent: 5,id: 7&#125;,
+        &#123;name: &#39;浙江&#39;,parent: 0,id: 9&#125;,
+        &#123;name: &#39;杭州&#39;,parent: 9,id: 100&#125;,
+        &#123;name: &#39;宁波&#39;,parent: 9,id: 11&#125;,
+        &#123;name: &#39;西湖区&#39;,parent: 100,id: 12&#125;,
+        &#123;name: &#39;北仑区‎&#39;,parent: 11,id: 13&#125;
+    ];
+    $scope.data = &#123;
+        hobbies: [1, 2],
+        city: 3
+    &#125;;
+    
+    // 先保留一份默认值
+    $scope.origData = angular.copy($scope.data);
+    $scope.reset = function()&#123;
+        $scope.data = angular.copy($scope.origData);
+        that.initCity();
+        console.log(&#39;aaaaaaaaaaaaaa-----&#39;,$scope.myForm);
+        $scope.myForm.$setPristine();
+    &#125;
+
+    // 让城市关联使用
+    this.findCityId = function (parent) &#123;
+        var parentId;
+        angular.forEach($scope.cities, function (city) &#123;
+            if (city.id === parent) &#123;
+                parentId = city.parent;
+                return;
+            &#125;
+        &#125;)
+        return parentId;
+    &#125;
+
+    this.initCity = function()&#123;
+        if ($scope.data.city !== undefined) &#123;
+            $scope.data.area = this.findCityId($scope.data.city);
+            $scope.data.province = this.findCityId($scope.data.area);
+        &#125;
+    &#125;
+
+    // 第一次打开页面 需要初始化一下
+    this.initCity.call(this);
+
+    $scope.toggleHobbySelection = function (id) &#123;
+
+        var index = -1;
+        if ($scope.data.hobbies === undefined) &#123;
+            $scope.data.hobbies = [];
+        &#125; else &#123;
+            index = $scope.data.hobbies.indexOf(id);
+        &#125;
+
+        if (index === -1) &#123;
+            $scope.data.hobbies.push(id);
+        &#125; else &#123;
+            $scope.data.hobbies.splice(index, 1);
+        &#125;
+
+    &#125;
+&#125;]);
+</code></pre>
+<blockquote>
+<p>案例二:  与案例一相同,但效果不同</p>
+</blockquote>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot; ng-app=&#39;App&#39;&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+    &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;ie=edge&quot;&gt;
+    &lt;title&gt;表单提示&lt;/title&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;../../angularjs/bootstrap-3.3.7-dist/css/bootstrap.min.css&quot;&gt;
+    &lt;style&gt;
+        body&#123;
+            padding-top: 50px;
+        &#125;
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div ng-controller=&quot;firstController&quot; class=&quot;container&quot;&gt;
+        &lt;div class=&quot;col-md-6&quot;&gt;
+            &lt;form role=&quot;form&quot; name=&quot;myForm&quot; ng-submit=&quot;submitForm(myForm.$valid)&quot; class=&quot;form-horizontal&quot; novalidate&gt;
+                &lt;div class=&quot;form-group has-feedback&quot;&gt;
+                    &lt;div class=&quot;col-md-4&quot;&gt;
+                        &lt;label for=&quot;name&quot;&gt;1.必填项&lt;/label&gt;
+                    &lt;/div&gt;
+                    &lt;div class=&quot;col-md-8&quot;&gt;
+                        &lt;input class=&quot;form-control&quot; id=&quot;name&quot; name=&quot;name&quot; type=&quot;text&quot; required ng-model=&#39;user.name&#39; /&gt;
+                        &lt;span class=&quot;glyphicon glyphicon-ok form-control-feedback&quot;
+                            ng-show=&quot;myForm.name.$dirty &amp;&amp; myForm.name.$valid&quot;&gt;&lt;/span&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+                &lt;div class=&quot;form-group has-feedback&quot;&gt;
+                    &lt;div class=&quot;col-md-4&quot;&gt;
+                        &lt;label for=&quot;minlength&quot;&gt;2.最小长度=5&lt;/label&gt;
+                    &lt;/div&gt;
+                    &lt;div class=&quot;col-md-8&quot;&gt;
+                        &lt;input type=&quot;text&quot; id=&quot;minlength&quot; name=&quot;minlength&quot; ng-minlength=&quot;5&quot; ng-model=&quot;user.minlength&quot;
+                            class=&quot;form-control&quot; /&gt;
+                        &lt;span class=&quot;glyphicon glyphicon-ok form-control-feedback&quot;
+                            ng-show=&quot;myForm.minlength.$dirty &amp;&amp; myForm.minlength.$valid&quot;&gt;&lt;/span&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+                &lt;div class=&quot;form-group has-feedback&quot;&gt;
+                    &lt;div class=&quot;col-md-4&quot;&gt;
+                        &lt;label for=&quot;maxlength&quot;&gt;3.最大长度=20&lt;/label&gt;
+                    &lt;/div&gt;
+                    &lt;div class=&quot;col-md-8&quot;&gt;
+                        &lt;input type=&quot;text&quot; id=&quot;maxlength&quot; name=&quot;maxlength&quot; ng-model=&quot;user.maxlength&quot; ng-maxlength=&quot;20&quot;
+                            class=&quot;form-control&quot; /&gt;
+                        &lt;span class=&quot;glyphicon glyphicon-ok form-control-feedback&quot;
+                            ng-show=&quot;myForm.maxlength.$dirty &amp;&amp; myForm.maxlength.$valid&quot;&gt;&lt;/span&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+                &lt;div class=&quot;form-group has-feedback&quot;&gt;
+                    &lt;div class=&quot;col-md-4&quot;&gt;
+                        &lt;label for=&quot;pattern&quot;&gt;4. 模式匹配&lt;/label&gt;
+                    &lt;/div&gt;
+                    &lt;div class=&quot;col-md-8&quot;&gt;
+                        &lt;input type=&quot;text&quot; id=&quot;pattern&quot; name=&quot;pattern&quot; ng-model=&quot;user.pattern&quot;
+                            ng-pattern=&quot;/^[a-zA-Z]*\d$/&quot; class=&quot;form-control&quot; /&gt;
+                        &lt;span class=&quot;glyphicon glyphicon-ok form-control-feedback&quot;
+                            ng-show=&quot;myForm.pattern.$dirty &amp;&amp; myForm.pattern.$valid&quot;&gt;&lt;/span&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+                &lt;div class=&quot;form-group has-feedback&quot;&gt;
+                    &lt;div class=&quot;col-md-4&quot;&gt;
+                        &lt;label for=&quot;email&quot;&gt;5. 电子邮件&lt;/label&gt;
+                    &lt;/div&gt;
+                    &lt;div class=&quot;col-md-8&quot;&gt;
+                        &lt;input type=&quot;email&quot; id=&quot;email&quot; name=&quot;email&quot; ng-model=&quot;user.email&quot; class=&quot;form-control&quot; /&gt;
+                        &lt;span class=&quot;glyphicon glyphicon-ok form-control-feedback&quot;
+                            ng-show=&quot;myForm.email.$dirty &amp;&amp; myForm.email.$valid&quot;&gt;&lt;/span&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+                &lt;div class=&quot;form-group has-feedback&quot;&gt;
+                    &lt;div class=&quot;col-md-4&quot;&gt;
+                        &lt;label for=&quot;age&quot;&gt;6. 数字&lt;/label&gt;
+                    &lt;/div&gt;
+                    &lt;div class=&quot;col-md-8&quot;&gt;
+                        &lt;input type=&quot;number&quot; id=&quot;age&quot; name=&quot;age&quot; ng-model=&quot;user.age&quot; class=&quot;form-control&quot; /&gt;
+                        &lt;span class=&quot;glyphicon glyphicon-ok form-control-feedback&quot;
+                            ng-show=&quot;myForm.age.$dirty &amp;&amp; myForm.age.$valid&quot;&gt;&lt;/span&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+                &lt;div class=&quot;form-group has-feedback&quot;&gt;
+                    &lt;div class=&quot;col-md-4&quot;&gt;
+                        &lt;label for=&quot;url&quot;&gt; 7. URL&lt;/label&gt;
+                    &lt;/div&gt;
+                    &lt;div class=&quot;col-md-8&quot;&gt;
+                        &lt;input type=&quot;url&quot; id=&quot;url&quot; name=&quot;url&quot; ng-model=&quot;user.url&quot; class=&quot;form-control&quot; /&gt;
+                        &lt;span class=&quot;glyphicon glyphicon-ok form-control-feedback&quot;
+                            ng-show=&quot;myForm.url.$dirty &amp;&amp; myForm.url.$valid&quot;&gt;&lt;/span&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+                &lt;div class=&quot;form-group text-center&quot;&gt;
+                    &lt;input class=&quot;btn btn-primary btn-lg&quot; ng-disabled=&quot;myForm.$invalid&quot; type=&quot;submit&quot; value=&quot;提交&quot; /&gt;
+                &lt;/div&gt;
+            &lt;/form&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;col-md-12&quot;&gt;
+            1.必填项:&#123;&#123;user.name&#125;&#125;
+            $pristine 【没修改】：&#123;&#123;myForm.name.$pristine &#125;&#125;
+            $dirty【修改过】：&#123;&#123;myForm.name.$dirty&#125;&#125;
+            $invalid【验证失败】：&#123;&#123;myForm.name.$invalid&#125;&#125;
+            $invalid【验证成功】：&#123;&#123;myForm.name.$valid&#125;&#125;
+            required：&#123;&#123;myForm.name.$error.required&#125;&#125;
+            &lt;br&gt;
+            2.最小长度=5:&#123;&#123;user.minlength&#125;&#125;
+            $pristine 【没修改】：&#123;&#123;myForm.minlength.$pristine &#125;&#125;
+            $dirty【修改过】：&#123;&#123;myForm.minlength.$dirty&#125;&#125;
+            $invalid【验证失败】：&#123;&#123;myForm.minlength.$invalid&#125;&#125;
+            $invalid【验证成功】：&#123;&#123;myForm.minlength.$valid&#125;&#125;
+            $error【错误详情】：&#123;&#123;myForm.minlength.$error&#125;&#125; &lt;br&gt;
+            3.最大长度=20:&#123;&#123;user.maxlength&#125;&#125;
+            $pristine 【没修改】：&#123;&#123;myForm.maxlength.$pristine &#125;&#125;
+            $dirty【修改过】：&#123;&#123;myForm.maxlength.$dirty&#125;&#125;
+            $invalid【验证失败】：&#123;&#123;myForm.maxlength.$invalid&#125;&#125;
+            $invalid【验证成功】：&#123;&#123;myForm.maxlength.$valid&#125;&#125;
+            $error【错误详情】：&#123;&#123;myForm.maxlength.$error&#125;&#125; &lt;br&gt;
+            4.模式匹配:&#123;&#123;user.pattern&#125;&#125;
+            $pristine 【没修改】：&#123;&#123;myForm.pattern.$pristine &#125;&#125;
+            $dirty【修改过】：&#123;&#123;myForm.pattern.$dirty&#125;&#125;
+            $invalid【验证失败】：&#123;&#123;myForm.pattern.$invalid&#125;&#125;
+            $invalid【验证成功】：&#123;&#123;myForm.pattern.$valid&#125;&#125;
+            $error【错误详情】：&#123;&#123;myForm.pattern.$error&#125;&#125; &lt;br&gt;
+            5.电子邮件:&#123;&#123;user.email&#125;&#125;
+            $pristine 【没修改】：&#123;&#123;myForm.email.$pristine &#125;&#125;
+            $dirty【修改过】：&#123;&#123;myForm.email.$dirty&#125;&#125;
+            $invalid【验证失败】：&#123;&#123;myForm.email.$invalid&#125;&#125;
+            $invalid【验证成功】：&#123;&#123;myForm.email.$valid&#125;&#125;
+            $error【错误详情】：&#123;&#123;myForm.email.$error&#125;&#125; &lt;br&gt;
+            6.数字:&#123;&#123;user.age&#125;&#125;
+            $pristine 【没修改】：&#123;&#123;myForm.age.$pristine &#125;&#125;
+            $dirty【修改过】：&#123;&#123;myForm.age.$dirty&#125;&#125;
+            $invalid【验证失败】：&#123;&#123;myForm.age.$invalid&#125;&#125;
+            $invalid【验证成功】：&#123;&#123;myForm.age.$valid&#125;&#125;
+            $error【错误详情】：&#123;&#123;myForm.age.$error&#125;&#125; &lt;br&gt;
+            7.URL:&#123;&#123;user.url&#125;&#125;
+            $pristine 【没修改】：&#123;&#123;myForm.url.$pristine &#125;&#125;
+            $dirty【修改过】：&#123;&#123;myForm.url.$dirty&#125;&#125;
+            $invalid【验证失败】：&#123;&#123;myForm.url.$invalid&#125;&#125;
+            $invalid【验证成功】：&#123;&#123;myForm.url.$valid&#125;&#125;
+            $error【错误详情】：&#123;&#123;myForm.url.$error&#125;&#125; &lt;br&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;script src=&quot;../../angularjs/jquery-1.12.4.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;../../angularjs/bootstrap-3.3.7-dist/js/bootstrap.min.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;../../angularjs/angular-1.5.8/angular.js&quot;&gt;&lt;/script&gt;
+    &lt;script&gt;
+        var app=angular.module(&#39;App&#39;,[]);
+        app.controller(&#39;firstController&#39;,[&#39;$scope&#39;,function($scope)&#123;
+            
+        &#125;])
+
+    &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                        
+                            <li title="1" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="false"
+        data-ae="false"
+        data-ci=""
+        data-cs=""
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>

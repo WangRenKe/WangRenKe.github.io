@@ -1,0 +1,410 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>bootstrap-table-fixed-columns表格控件使用方法（操作复杂表头并且固定表头和固定列） - R•K</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="WangRenKe的个人博客,"> 
+    <meta name="description" content="路要一步一步走，坑要一个一个填！—— from WangRenKe的博客,需要引入的东西
+bootstrap.min.css
+bootstrap-table.css
+bootstrap-table-fixed-columns.css
+jquery.min.js
+boots,"> 
+    <meta name="author" content="WangRenKe"> 
+    <link rel="alternative" href="atom.xml" title="R•K" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="bootstrap-table-fixed-columns表格控件使用方法（操作复杂表头并且固定表头和固定列） - R•K"/>
+    <meta name="twitter:description" content="路要一步一步走，坑要一个一个填！—— from WangRenKe的博客,需要引入的东西
+bootstrap.min.css
+bootstrap-table.css
+bootstrap-table-fixed-columns.css
+jquery.min.js
+boots,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="R•K"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="bootstrap-table-fixed-columns表格控件使用方法（操作复杂表头并且固定表头和固定列） - R•K"/>
+    <meta property="og:description" content="路要一步一步走，坑要一个一个填！—— from WangRenKe的博客,需要引入的东西
+bootstrap.min.css
+bootstrap-table.css
+bootstrap-table-fixed-columns.css
+jquery.min.js
+boots,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">R•K</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://example.com"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">bootstrap-table-fixed-columns表格控件使用方法（操作复杂表头并且固定表头和固定列）</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">bootstrap-table-fixed-columns表格控件使用方法（操作复杂表头并且固定表头和固定列）</h1>
+        <div class="stuff">
+            <span>十一月 01, 2019</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/bootstrap-table-fixed-columns/" rel="tag">bootstrap-table-fixed-columns</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <h2 id="需要引入的东西"><a href="#需要引入的东西" class="headerlink" title="需要引入的东西"></a>需要引入的东西</h2><ol>
+<li>bootstrap.min.css</li>
+<li>bootstrap-table.css</li>
+<li>bootstrap-table-fixed-columns.css</li>
+<li>jquery.min.js</li>
+<li>bootstrap.min.js</li>
+<li>bootstrap-table.js</li>
+<li>bootstrap-table-fixed-columns.js</li>
+</ol>
+<h2 id="用法"><a href="#用法" class="headerlink" title="用法"></a>用法</h2><ol>
+<li>一个方法；<pre><code>     $el.bootstrapTable(&#39;destroy&#39;).bootstrapTable(&#123;
+         columns: columns,  // 渲染表头，columns是我们拿到数据后，表头数据的数组
+         data: data,   // 表格主题内容  data是我们拿到数据后，表格主体的数据
+         fixedColumns: true,  // 是否固定表头
+         fixedNumber: 1   // 固定几列
+     &#125;);
+</code></pre>
+</li>
+<li>表格的主体内容渲染的时候是根据最后一行表头的field来对应的。会在下面的例子中体现</li>
+<li>这里有一个bug，解决列对不齐问题；<br>修改bootstrap-table-fixed-coluumns.js源码：133行：-2改为-1；154行：-1删掉<br><img src="https://img-blog.csdnimg.cn/20191106134300516.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80Mzk5Njk5OQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></li>
+</ol>
+<h2 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h2><pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+    &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;ie=edge&quot;&gt;
+    &lt;title&gt;Document&lt;/title&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;./css/bootstrap.min.css&quot;&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;./css/bootstrap-table.css&quot;&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;./css/bootstrap-table-fixed-columns.css&quot;&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;button class=&quot;btn btn-primary&quot; id=&quot;btn1&quot;&gt;点我是公司/服务资质&lt;/button&gt;
+    &lt;button class=&quot;btn btn-primary&quot; id=&quot;btn2&quot;&gt;点我是产品资质&lt;/button&gt;
+    &lt;div class=&quot;container&quot;&gt;
+        &lt;table id=&quot;table&quot; data-height=&quot;500&quot;&gt;&lt;/table&gt;
+    &lt;/div&gt;
+    &lt;script src=&quot;./js/jquery.min.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;./js/bootstrap.min.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;./js/bootstrap-table.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;./js/bootstrap-table-fixed-columns.js&quot;&gt;&lt;/script&gt;
+    &lt;script&gt;
+        $(function()&#123;
+            var $table=$(&#39;#table&#39;);
+            // 点击公司/服务资质
+            $(&#39;#btn1&#39;).on(&#39;click&#39;,function(e)&#123;
+                $.ajax(&#123;
+                    url:&#39;./公司服务资质.json&#39;,
+                    type:&#39;get&#39;,
+                    async:false,
+                    dataType:&#39;json&#39;,
+                    success:function(data)&#123;
+                        console.log(data);
+                        ajaxQualification($table,data.ReturnObject.title,data.ReturnObject.body,data.ReturnObject.dataType);
+                    &#125;,
+                    error:function(data)&#123;
+                        console.log(&#39;失败了！！！&#39;);
+                    &#125;
+                &#125;)
+            &#125;)
+            // 点击产品资质
+            $(&#39;#btn2&#39;).on(&#39;click&#39;,function(e)&#123;
+                $.ajax(&#123;
+                    url:&#39;./产品资质.json&#39;,
+                    type:&#39;get&#39;,
+                    async:false,
+                    dataType:&#39;json&#39;,
+                    success:function(data)&#123;
+                        console.log(data);
+                        ajaxQualification($table,data.ReturnObject.title,data.ReturnObject.body,data.ReturnObject.dataType);
+                    &#125;,
+                    error:function(data)&#123;
+                        console.log(&#39;失败了！！！&#39;);
+                    &#125;
+                &#125;)
+                
+            &#125;)
+        &#125;)
+        function ajaxQualification($el,dataTitl,dataBody,dataType)&#123;
+            // console.log(&#39;data--------------------&#39;,data);
+            var columns=[],th1=[],th2=[],th3=[],data=[],row=&#123;&#125;;
+            if(dataType==&#39;公司/服务资质&#39;)&#123;
+                th1=[&#123;
+                    field:&#39;type&#39;,
+                    title:&#39;&lt;span style=&quot;color:green&quot;&gt;资质分类&lt;/span&gt;&#39;,
+                    align:&#39;center&#39;,
+                    valign:&#39;middle&#39;
+                &#125;];
+                th2=[&#123;
+                    field:&#39;name&#39;,
+                    title:&#39;&lt;span style=&quot;color:green&quot;&gt;资质名称&lt;/span&gt;&#39;,
+                    align:&#39;center&#39;,
+                    valign:&#39;middle&#39;
+                &#125;];
+                th3=[&#123;
+                    field:&#39;explain&#39;,
+                    title:&#39;&lt;span style=&quot;color:green&quot;&gt;级别说明&lt;/span&gt;&#39;,
+                    align:&#39;center&#39;,
+                    valign:&#39;middle&#39;
+                &#125;]
+                // 渲染头部
+                dataTitl.forEach(function(item)&#123;
+                    th1.push(&#123;
+                        field:item.competitorsQualificationType,
+                        title:item.competitorsQualificationType,
+                        colspan:item.competitorsQualificationMsg.length,
+                        align:&#39;center&#39;,
+                        valign:&#39;middle&#39;
+                    &#125;)
+                    item.competitorsQualificationMsg.forEach(function(items)&#123;
+                        th2.push(&#123;
+                            field:items.competitorsQualificationName,
+                            title:&quot;&lt;a href=&#39;&quot;+items.qualificationQueryUrl+&quot;&#39; target=&#39;_blank&#39;&gt;&quot;+items.competitorsQualificationName+&quot;&lt;/a&gt;&quot;,
+                            align:&#39;center&#39;,
+                            valign:&#39;middle&#39;
+                        &#125;)
+                        th3.push(&#123;
+                            field:items.dataKeyName,
+                            title:items.levelInstruction,
+                            align:&#39;center&#39;,
+                            valign:&#39;middle&#39;
+                        &#125;)
+                    &#125;)
+                &#125;);
+                // 渲染主体
+                dataBody.forEach(function(item)&#123;
+                    row[&#39;explain&#39;]=item.competitorsCompanyName;
+                    item.competitorsCompanyAptitude.forEach(function(items)&#123;
+                        if(items.level==&#39;√&#39;)&#123;
+                            items.level=&#39;&lt;i class=&quot;layui-icon&quot; style=&quot;color: green;font-size: 14px;font-weight: 700;&quot;&gt;&amp;#10003;&lt;/i&gt;&#39;;
+                        &#125;else if(items.level==&#39;×&#39;)&#123;
+                            items.level=&#39;&lt;i class=&quot;layui-icon&quot; style=&quot;color: red;font-size: 14px;font-weight: 700;&quot;&gt;&amp;#10005;&lt;/i&gt;&lt;/a&gt;&#39;;
+                        &#125;
+                        row[items.dataKey]=items.level;
+                    &#125;)
+                    data.push(row);
+                &#125;)
+            &#125;else if(dataType==&#39;产品资质&#39;)&#123;
+                th1=[&#123;
+                    field:&#39;aptitudeName&#39;,
+                    title:&#39;&lt;span style=&quot;color:green&quot;&gt;资质名称&lt;/span&gt;&#39;,
+                    align:&#39;center&#39;,
+                    valign:&#39;middle&#39;
+                &#125;];
+                th2=[&#123;
+                    field:&#39;issueUnit&#39;,
+                    title:&#39;&lt;span style=&quot;color:green&quot;&gt;发证单位&lt;/span&gt;&#39;,
+                    align:&#39;center&#39;,
+                    valign:&#39;middle&#39;
+                &#125;];
+                th3=[&#123;
+                    field:&#39;companyName&#39;,
+                    title:&#39;&lt;span style=&quot;color:green&quot;&gt;公司名称&lt;/span&gt;&#39;,
+                    align:&#39;center&#39;,
+                    valign:&#39;middle&#39;
+                &#125;]
+                // 渲染头部
+                dataTitl.forEach(function(item)&#123;
+                    th1.push(&#123;
+                        field:item.certificateName,
+                        title:item.certificateName,
+                        colspan:3,
+                        align:&#39;center&#39;,
+                        valign:&#39;middle&#39;
+                    &#125;)
+                    th2.push(&#123;
+                        field:item.dataKeyName,
+                        title:item.issuedUnit,
+                        colspan:3,
+                        align:&#39;center&#39;,
+                        valign:&#39;middle&#39;
+                    &#125;)
+                    th3.push(&#123;
+                        field:item.competitorsProductMsg.dataKey+&#39;name&#39;,
+                        title:item.competitorsProductMsg.competitorsProductName,  // 产品名称
+                        align:&#39;center&#39;,
+                        valign:&#39;middle&#39;
+                    &#125;,&#123;
+                        field:item.competitorsProductMsg.dataKey+&#39;level&#39;,
+                        title:item.competitorsProductMsg.level,   // 级别
+                        align:&#39;center&#39;,
+                        valign:&#39;middle&#39;
+                    &#125;,&#123;
+                        field:item.competitorsProductMsg.dataKey+&#39;day&#39;,
+                        title:item.competitorsProductMsg.competitorsProductValidityPeriod,   // 有效期
+                        align:&#39;center&#39;,
+                        valign:&#39;middle&#39;
+                    &#125;)
+
+                &#125;);
+                // 渲染主体
+                dataBody.forEach(function(item)&#123;
+                    row[&#39;companyName&#39;]=item.competitorsCompanyName;
+                    item.competitorsProductAptitude.forEach(function(items)&#123;
+                        row[items.dateKey+&#39;name&#39;]=items.competitorsProductName;  // 产品名称
+                        row[items.dateKey+&#39;level&#39;]=items.competitorsProductLevel;  // 等级
+                        row[items.dateKey+&#39;day&#39;]=items.competitorsProductValidityPeriod;  // 有效期
+                    &#125;)
+                    data.push(row);
+                &#125;)
+            &#125;
+            columns.push(th1);
+            columns.push(th2);
+            columns.push(th3);
+            $el.bootstrapTable(&#39;destroy&#39;).bootstrapTable(&#123;
+                columns: columns,
+                data: data,
+                search: true,
+                toolbar: &#39;.toolbar&#39;,
+                fixedColumns: true,
+                fixedNumber: 1
+            &#125;);
+        &#125;
+    &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                        
+                            <li title="1" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="false"
+        data-ae="false"
+        data-ci=""
+        data-cs=""
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>

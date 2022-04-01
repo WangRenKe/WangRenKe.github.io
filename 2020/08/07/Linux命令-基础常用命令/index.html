@@ -1,0 +1,223 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Linux命令 - 基础常用命令 - R•K</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="WangRenKe的个人博客,"> 
+    <meta name="description" content="路要一步一步走，坑要一个一个填！—— from WangRenKe的博客,
+基于项目中用到的一些命令
+
+
+重启服务：pm2 reload xxx
+显示当前文件：ls
+删除文件命令：rm -rf xxx
+修改某个文件：vim ./xxx
+退出：:q
+不保存退出：:q!
+保存,"> 
+    <meta name="author" content="WangRenKe"> 
+    <link rel="alternative" href="atom.xml" title="R•K" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="Linux命令 - 基础常用命令 - R•K"/>
+    <meta name="twitter:description" content="路要一步一步走，坑要一个一个填！—— from WangRenKe的博客,
+基于项目中用到的一些命令
+
+
+重启服务：pm2 reload xxx
+显示当前文件：ls
+删除文件命令：rm -rf xxx
+修改某个文件：vim ./xxx
+退出：:q
+不保存退出：:q!
+保存,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="R•K"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="Linux命令 - 基础常用命令 - R•K"/>
+    <meta property="og:description" content="路要一步一步走，坑要一个一个填！—— from WangRenKe的博客,
+基于项目中用到的一些命令
+
+
+重启服务：pm2 reload xxx
+显示当前文件：ls
+删除文件命令：rm -rf xxx
+修改某个文件：vim ./xxx
+退出：:q
+不保存退出：:q!
+保存,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">R•K</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://example.com"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">Linux命令 - 基础常用命令</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">Linux命令 - 基础常用命令</h1>
+        <div class="stuff">
+            <span>八月 07, 2020</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/Linux/" rel="tag">Linux</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <blockquote>
+<p>基于项目中用到的一些命令</p>
+</blockquote>
+<ol>
+<li>重启服务：<code>pm2 reload xxx</code></li>
+<li>显示当前文件：<code>ls</code></li>
+<li>删除文件命令：<code>rm -rf xxx</code></li>
+<li>修改某个文件：<code>vim ./xxx</code></li>
+<li>退出：<code>:q</code></li>
+<li>不保存退出：<code>:q!</code></li>
+<li>保存退出：<code>:wq</code></li>
+<li>显示当前所在位置的路径：<code>pwd</code></li>
+<li>将服务器上的文件拷贝下来，用作备份：<code>sz xxx</code></li>
+<li>全量部署代码：<br>10.1：代码备份：<code>cd /opt/web</code>进入项目文件执行备份命令 <code>tar -cvf xxxx.tar i8Community || i8WorkflowNode</code><br>10.2：进入根目录：<code>cd /</code> –&gt; 进入script目录：<code>cd script</code> –&gt; 执行更新脚本：<code>./release_community.sh || ./release_workflow.sh</code></li>
+<li>pm2常用命令<br>11.1：启动 –&gt; <code>pm2 start app.js</code><br>11.2：查看 –&gt; <code>pm2 list</code><br>11.3：重启 –&gt; <code>pm2 restart app.js</code><br>11.4：停止 –&gt; <code>pm2 stop xxx;pm2 stop all</code><br>11.5：删除 –&gt; <code>pm2 delete xxx;pm2 delete all</code><br>11.6：查看日志 –&gt; <code>pm2 ls;pm2 info xxx;view /test/pm2_logs/i8workflow.log</code><br>11.7：查看历史 –&gt; <code>history | grep xxx</code><br>11.8：停止/重启服务器上的nginx：<code>/opt/tengine/sbin/nginx -s stop  |  ~/nginx -s start</code></li>
+</ol>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                        
+                            <li title="1" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="false"
+        data-ae="false"
+        data-ci=""
+        data-cs=""
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>

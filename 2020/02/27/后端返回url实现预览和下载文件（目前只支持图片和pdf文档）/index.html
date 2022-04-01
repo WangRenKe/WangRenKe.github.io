@@ -1,0 +1,289 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>后端返回url实现预览和下载文件（目前只支持图片和pdf文档） - R•K</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="WangRenKe的个人博客,"> 
+    <meta name="description" content="路要一步一步走，坑要一个一个填！—— from WangRenKe的博客,最近新接触的一个node+express的项目，要做一个在线预览和下载的功能。费了好大的劲，总算是写的差不多了，下面总结一下：一：首先是通过url预览(以后可能还会让预览word、xlsx文件，这种,"> 
+    <meta name="author" content="WangRenKe"> 
+    <link rel="alternative" href="atom.xml" title="R•K" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="后端返回url实现预览和下载文件（目前只支持图片和pdf文档） - R•K"/>
+    <meta name="twitter:description" content="路要一步一步走，坑要一个一个填！—— from WangRenKe的博客,最近新接触的一个node+express的项目，要做一个在线预览和下载的功能。费了好大的劲，总算是写的差不多了，下面总结一下：一：首先是通过url预览(以后可能还会让预览word、xlsx文件，这种,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="R•K"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="后端返回url实现预览和下载文件（目前只支持图片和pdf文档） - R•K"/>
+    <meta property="og:description" content="路要一步一步走，坑要一个一个填！—— from WangRenKe的博客,最近新接触的一个node+express的项目，要做一个在线预览和下载的功能。费了好大的劲，总算是写的差不多了，下面总结一下：一：首先是通过url预览(以后可能还会让预览word、xlsx文件，这种,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">R•K</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://example.com"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">后端返回url实现预览和下载文件（目前只支持图片和pdf文档）</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">后端返回url实现预览和下载文件（目前只支持图片和pdf文档）</h1>
+        <div class="stuff">
+            <span>二月 27, 2020</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/js/" rel="tag">js</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E9%A2%84%E8%A7%88%E4%B8%8B%E8%BD%BD/" rel="tag">前端预览下载</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <h5 id="最近新接触的一个node-express的项目，要做一个在线预览和下载的功能。费了好大的劲，总算是写的差不多了，下面总结一下："><a href="#最近新接触的一个node-express的项目，要做一个在线预览和下载的功能。费了好大的劲，总算是写的差不多了，下面总结一下：" class="headerlink" title="最近新接触的一个node+express的项目，要做一个在线预览和下载的功能。费了好大的劲，总算是写的差不多了，下面总结一下："></a>最近新接触的一个node+express的项目，要做一个在线预览和下载的功能。费了好大的劲，总算是写的差不多了，下面总结一下：</h5><h6 id="一：首先是通过url预览-以后可能还会让预览word、xlsx文件，这种方法就不能用了，还得另寻他法"><a href="#一：首先是通过url预览-以后可能还会让预览word、xlsx文件，这种方法就不能用了，还得另寻他法" class="headerlink" title="一：首先是通过url预览(以后可能还会让预览word、xlsx文件，这种方法就不能用了，还得另寻他法)"></a>一：首先是通过url预览(以后可能还会让预览word、xlsx文件，这种方法就不能用了，还得另寻他法)</h6><ol>
+<li><p>这次并没有调取接口，是在列表的操作列有一个预览按钮。然后后端将文件的url、type、id都在列表的每条数据里返给了我们</p>
+</li>
+<li><p>点击预览的时候需要弹框展示，这里用到的是layui的模态框</p>
+</li>
+<li><p>我们拿到文件url，在弹框完成时，将url赋值给弹框里的元素。(我们项目中是要预览N个文件的，所以弹框里用的轮播组件)</p>
+</li>
+<li><p>赋值时判断文件类型，如果是图片：赋值给img的src；如果是pdf：赋值给object的data</p>
+</li>
+<li><p>只要把url赋上值，只要url能用，不出意外就可以预览了(涉及到样式什么的可以自己调试)</p>
+<h6 id="二：其次是使用预览的url实现下载功能。-亲测图片和pdf可行"><a href="#二：其次是使用预览的url实现下载功能。-亲测图片和pdf可行" class="headerlink" title="二：其次是使用预览的url实现下载功能。(亲测图片和pdf可行)"></a>二：其次是使用预览的url实现下载功能。(亲测图片和pdf可行)</h6></li>
+<li><p>因为这个url是预览用的，所以使用普通的a链接、iframe等都不行。</p>
+</li>
+<li><p>拿到路径后可以先在前端转一下，转成文件流，然后再使用a链接下载</p>
+<h6 id="三：贴图"><a href="#三：贴图" class="headerlink" title="三：贴图"></a>三：贴图</h6><p><img src="https://img-blog.csdnimg.cn/20200227105718446.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80Mzk5Njk5OQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<h6 id="四：贴代码（这是我自己项目里的代码，大家看上面的思路就可）"><a href="#四：贴代码（这是我自己项目里的代码，大家看上面的思路就可）" class="headerlink" title="四：贴代码（这是我自己项目里的代码，大家看上面的思路就可）"></a>四：贴代码（这是我自己项目里的代码，大家看上面的思路就可）</h6> <!-- 预览弹框 -->
+ <div id="previewBox" style="display: none;">
+     <div class="layui-carousel" id="test1">
+         <div class="previewCarousel" carousel-item style="overflow: scroll;">
+             <!-- 预览的内容 -->
+         </div>
+     </div>
+ </div>
+
+<p> // 文件预览</p>
+<pre><code> function filePreview(data) &#123;  // data是列表数据
+     // 点击预览按钮
+     $(&#39;.previewApt&#39;).on(&#39;click&#39;,function()&#123;
+         var qInfoIDFlag = $(this).data(&#39;flie&#39;);
+         var attachmentArr = [];
+         data.forEach(function(item)&#123;
+             if(item.QInfoID == qInfoIDFlag)&#123;
+                 attachmentArr = item.Attachment;
+                 return;
+             &#125;
+         &#125;)
+         $(&#39;#test1 .previewCarousel&#39;).empty(); // 销毁预览容器里的所有元素
+         var addOpenedit = layer.open(&#123;
+             type: 1,
+             title: &quot;预览&quot;,
+             closeBtn: 1,
+             skin: &quot;pop-set&quot;,
+             area: [&quot;1000px&quot;,&quot;700px&quot;],
+             maxHeight:&quot;800px&quot;,
+             moveType: 1,
+             resize: false,
+             isOutAnim: true,
+             scrollbar: true,
+             anim: 1,
+             content: $(&#39;#previewBox&#39;).html(),
+             success: function (layero, index) &#123;
+                 var children = &#39;&#39;,content = &#39;&#39;;
+                 attachmentArr.forEach(function(item)&#123;
+                     if(item.FileSuffix == &#39;pdf&#39;)&#123;
+                         content = &#39;&lt;div&gt;&lt;div style=&quot;width: 100%;height: 30px;line-height: 30px;text-align: center;font-size: 18px;font-weight: 700;&quot;&gt;&#39;+item.FileName+&#39;.&#39;+item.FileSuffix+&#39;&lt;a data-flieurl=&quot;&#39;+item.WaterUrl+&#39;&quot; data-fliename=&quot;&#39;+item.FileName+&#39;.&#39;+item.FileSuffix+&#39;&quot; class=&quot;downloadFlie&quot; style=&quot;color: blue;font-size: 12px;font-weight: 500;margin-left: 50px;cursor: pointer;&quot;&gt;点击下载...&lt;/a&gt;&lt;/div&gt;&lt;object type=&quot;text/x-scriptlet&quot; data=&quot;&#39;+item.WaterUrl+&#39;&quot; width=100% height=570 id=&quot;content_info&quot;&gt;&lt;/object&gt;&lt;/div&gt;&#39;
+                     &#125;else&#123;
+                         content = &#39;&lt;div&gt;&lt;div style=&quot;width: 100%;height: 30px;line-height: 30px;text-align: center;font-size: 18px;font-weight: 700;&quot;&gt;&#39;+item.FileName+&#39;.&#39;+item.FileSuffix+&#39;&lt;a data-flieurl=&quot;&#39;+item.WaterUrl+&#39;&quot; data-fliename=&quot;&#39;+item.FileName+&#39;.&#39;+item.FileSuffix+&#39;&quot; class=&quot;downloadFlie&quot; style=&quot;color: blue;font-size: 12px;font-weight: 500;margin-left: 50px;cursor: pointer;&quot;&gt;点击下载...&lt;/a&gt;&lt;/div&gt;&lt;img style=&quot;width: 100%;&quot; src=&quot;&#39;+item.WaterUrl+&#39;&quot;  alt=&quot;附件预览&quot; /&gt;&lt;/div&gt;&#39;
+                     &#125;
+                     children += &#39;&lt;div&gt;&#39;+content+&#39;&lt;/div&gt;&#39;;
+                 &#125;)
+                 $(&#39;#test1 .previewCarousel&#39;).append(children);
+                 //建造实例
+                 carousel.render(&#123;
+                     elem: $(layero).find(&#39;#test1&#39;)
+                     ,width: &#39;100%&#39; //设置容器宽度
+                     ,arrow: &#39;always&#39; //始终显示箭头
+                     ,height:&#39;620px&#39;
+                     ,autoplay:false
+                     ,anim: &#39;fade&#39; //切换动画方式
+                 &#125;);
+                 $(layero).find(&#39;.downloadFlie&#39;).on(&#39;click&#39;,function()&#123;
+                     var flieurl = $(this).data(&#39;flieurl&#39;);
+                     var fliename = $(this).data(&#39;fliename&#39;);
+                     getFileAndDownload(fliename,flieurl);
+                 &#125;)
+                 // console.log(layero, index);
+                 $(layero).find(&#39;.returnBtn&#39;).on(&#39;click&#39;, function () &#123;
+                     layer.close(index);
+                 &#125;)
+                  $(layero).find(&#39;.register-sub a&#39;).attr(&#39;href&#39;,&#39;javascript:void(0)&#39;).on(&#39;click&#39;, function () &#123;
+                     layer.close(index);
+                 &#125;)
+
+                 // 下载方法
+                 function getFileAndDownload(fileName, url) &#123;
+                     var x = new XMLHttpRequest();
+                     x.open(&quot;GET&quot;, url, true);
+                     x.responseType = &#39;blob&#39;;
+                     x.onload = function (e) &#123;
+                         var blob = x.response;
+                         if (&#39;msSaveOrOpenBlob&#39; in navigator) &#123;//IE导出
+                             window.navigator.msSaveOrOpenBlob(blob, fileName);
+                         &#125;
+                         else &#123;
+                             var a = document.createElement(&#39;a&#39;);
+                             a.download = fileName;
+                             a.href = URL.createObjectURL(blob);
+                             $(&quot;body&quot;).append(a);
+                             a.click();
+                             $(a).remove();
+                         &#125;
+                     &#125;;
+                     x.send();
+                 &#125;
+             &#125;
+         &#125;);
+
+     &#125;)
+ &#125;
+</code></pre>
+</li>
+</ol>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                        
+                            <li title="1" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="false"
+        data-ae="false"
+        data-ci=""
+        data-cs=""
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>

@@ -1,0 +1,337 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>angularjs的angular-tree-dnd、angular-tree-control树结构控件简单使用 - R•K</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="WangRenKe的个人博客,"> 
+    <meta name="description" content="路要一步一步走，坑要一个一个填！—— from WangRenKe的博客,个人总结
+
+做树形图的话用angular-ui-tree比较方便，但这个控件并不支持树形表格
+
+一：angular-tree-dnd树形表格
+
+先说说数据格式的问题，说到树形图，很多人脑子里出现的数,"> 
+    <meta name="author" content="WangRenKe"> 
+    <link rel="alternative" href="atom.xml" title="R•K" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="angularjs的angular-tree-dnd、angular-tree-control树结构控件简单使用 - R•K"/>
+    <meta name="twitter:description" content="路要一步一步走，坑要一个一个填！—— from WangRenKe的博客,个人总结
+
+做树形图的话用angular-ui-tree比较方便，但这个控件并不支持树形表格
+
+一：angular-tree-dnd树形表格
+
+先说说数据格式的问题，说到树形图，很多人脑子里出现的数,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="R•K"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="angularjs的angular-tree-dnd、angular-tree-control树结构控件简单使用 - R•K"/>
+    <meta property="og:description" content="路要一步一步走，坑要一个一个填！—— from WangRenKe的博客,个人总结
+
+做树形图的话用angular-ui-tree比较方便，但这个控件并不支持树形表格
+
+一：angular-tree-dnd树形表格
+
+先说说数据格式的问题，说到树形图，很多人脑子里出现的数,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">R•K</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://example.com"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">angularjs的angular-tree-dnd、angular-tree-control树结构控件简单使用</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">angularjs的angular-tree-dnd、angular-tree-control树结构控件简单使用</h1>
+        <div class="stuff">
+            <span>七月 22, 2019</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/angular-tree-control/" rel="tag">angular-tree-control</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/angular-tree-dnd/" rel="tag">angular-tree-dnd</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <p><strong>个人总结</strong></p>
+<blockquote>
+<p>做树形图的话用angular-ui-tree比较方便，但这个控件并不支持树形表格</p>
+</blockquote>
+<p><strong>一：angular-tree-dnd树形表格</strong></p>
+<blockquote>
+<p>先说说数据格式的问题，说到树形图，很多人脑子里出现的数据格式可能就是子节点套在父节点里面，子子节点再套在子节点里面，一层一层嵌套下去，这样的数据格式阅读起来结构是比较清晰，做成树形图的话依赖angular-ui-tree会比较好,例如：<br>{<br>    “id”: 1,<br>    “title”: “node1”,<br>    “nodes”: []<br>  }<br>还有一种数据格式是通过parent_id来确定父子节点对应关系，而我现在的项目的数据格式就是这种：<br>[<br>  {<br>    “DemographicId”: 1,<br>    “ParentId”: null,<br>    “Name”: “United States of America”,<br>    “Description”: “United States of America”,<br>    “Area”: 9826675,<br>    “Population”: 318212000,<br>    “TimeZone”: “UTC -5 to -10”<br>  },<br>  {<br>    “DemographicId”: 2,<br>    “ParentId”: 1,<br>    “Name”: “California”,<br>    “Description”: “The Tech State”,<br>    “Area”: 423970,<br>    “Population”: 38340000,<br>    “TimeZone”: “Pacific Time”<br>  }<br>]</p>
+</blockquote>
+<blockquote>
+<p>相关网站：<a target="_blank" rel="noopener" href="https://www.npmjs.com/package/ng-tree-dnd">https://www.npmjs.com/package/ng-tree-dnd</a></p>
+</blockquote>
+<pre><code>结合angularjs、bootstrap、使用angular-tree-dnd控件的步骤
+1.css样式需要引入：bootstrap.css、ng-tree-dnd.css
+2.js需要引入：jquery-1.12.4.js、bootstrap.min.js、angular.min.js、prism.jstoaster.min.js、ng-tree-dnd.debug.js
+3.声明angular模块时需要注入ng-tree-dnd依赖，var app = angular.module(&#39;app&#39;,[&#39;ntt.TreeDnD&#39;]);
+4.控制器controller中要注入ng-tree-dnd控件的服务方法‘‘$TreeDnDConvert’’
+    app.controller(&#39;controlleraId&#39;, [&#39;$scope&#39;, &#39;$TreeDnDConvert&#39;, function ($scope, $TreeDnDConvert)&#123;&#125;)
+</code></pre>
+<p><strong>下面贴代码</strong></p>
+<blockquote>
+<p>html</p>
+</blockquote>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot; ng-app=&#39;app&#39;&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+    &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;ie=edge&quot;&gt;
+    &lt;title&gt;angular-tree-dnd表格树形结构&lt;/title&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;./bootstrap/dist/css/bootstrap.css&quot;&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;./ng-tree-dnd.css&quot;&gt;
+&lt;/head&gt;
+&lt;body ng-controller=&#39;controlleraId&#39;&gt;
+        &lt;div class=&quot;main-tlt&quot;&gt;&lt;div class=&quot;cn&quot;&gt;&lt;i class=&quot;glyphicon glyphicon-record&quot;&gt;&lt;/i&gt;菜单管理&lt;/div&gt;&lt;/div&gt;
+
+        &lt;div class=&quot;table-top-btn02&quot;&gt;
+            &lt;div class=&quot;col-btn&quot;&gt;
+                &lt;button type=&quot;button&quot; class=&quot;btn btn-primary&quot; ng-click=&quot;createMenu()&quot;&gt;添加菜单&lt;/button&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;table-mn&quot;&gt;
+            &lt;div class=&quot;table table-striped table-hover&quot;&gt;
+                &lt;tree-dnd tree-class=&quot;table table-bordered table-hover table-striped&quot;
+                          tree-data=&quot;tree_data&quot;
+                          tree-control=&quot;my_tree&quot;
+                          primary-key=&quot;id&quot;
+                          column-defs=&quot;col_defs&quot;
+                          expand-on=&quot;expanding_property&quot;&gt;
+                &lt;/tree-dnd&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;script src=&quot;./jquery-1.12.4.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;./bootstrap/dist/js/bootstrap.min.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;./angular.min.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;./prism.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;./toaster.min.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;./ng-tree-dnd.debug.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;./index.js&quot;&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<blockquote>
+<p>controller</p>
+</blockquote>
+<pre><code>var app = angular.module(&#39;app&#39;,[&#39;ntt.TreeDnD&#39;]);
+
+app.controller(&#39;controlleraId&#39;, [
+    &#39;$scope&#39;, &#39;$TreeDnDConvert&#39;, function ($scope, $TreeDnDConvert) &#123;
+        $scope.a = [
+            &#123;
+                child: [
+                    &#123;child: [],id: 38,isBackMenu: 1,linkUrl: &quot;createRequestForm/local&quot;,menuName: &quot;创建需求单&quot;,parentMenuId: 21,remark: &quot;&quot;,sort: 0&#125;
+                ],
+                id: 21,
+                isBackMenu: 1,
+                linkUrl: &quot;index&quot;,
+                menuName: &quot;服务需求单&quot;,
+                parentMenuId: 0,
+                remark: &quot;&quot;,
+                sort: 1
+            &#125;,
+            &#123;
+                child: [
+                    &#123;child: [],id: 52,isBackMenu: 1,linkUrl: &quot;assignRequirement&quot;,menuName: &quot;需求单指派&quot;,parentMenuId: 46,remark: &quot;&quot;,sort: 1&#125;
+                ],
+                id: 46,
+                isBackMenu: 1,
+                linkUrl: &quot;index&quot;,
+                menuName: &quot;调度管理&quot;,
+                parentMenuId: 0,
+                remark: &quot;&quot;,
+                sort: 2
+            &#125;
+        ]
+        $scope.getMenu = function () &#123;
+            $scope.tree_data = $TreeDnDConvert.line2tree($scope.a, &#39;id&#39;, &#39;parentMenuId&#39;);
+            angular.forEach($scope.tree_data, function (data) &#123;
+                data[&#39;__expanded__&#39;] = false;
+                angular.forEach(data.child, function (item) &#123;
+                    item[&#39;__expanded__&#39;] = false;
+                    angular.forEach(item.child, function (value) &#123;
+                        item[&#39;__expanded__&#39;] = false;
+                        value.newData = 3;
+                    &#125;);
+                &#125;);
+            &#125;);
+            return $scope.tree_data;
+        &#125;;
+        $scope.getMenu();
+        var tree = &#123;&#125;;
+        $scope.tree_data = $scope.getMenu();
+        $scope.my_tree = tree = &#123;&#125;;
+
+        $scope.expanding_property = &#123;
+            field: &#39;menuName&#39;,
+            titleClass: &#39;text-center&#39;,
+            cellClass: &#39;v-middle&#39;,
+            displayName: &#39;名称&#39;
+        &#125;;
+        $scope.col_defs = [
+            &#123;
+                field: &#39;linkUrl&#39;,
+                titleClass: &#39;text-center&#39;,
+                cellClass: &#39;v-middle&#39;,
+                displayName: &#39;地址&#39;
+            &#125;,
+            &#123;
+                field: &#39;remark&#39;,
+                titleClass: &#39;text-center&#39;,
+                cellClass: &#39;v-middle&#39;,
+                displayName: &#39;备注&#39;
+            &#125;,
+            &#123;
+                displayName: &#39;操作&#39;,
+                cellTemplate: &#39;&lt;i ng-if = &quot;node.newData != 3&quot;  class=&quot;glyphicon glyphicon-th&quot; aria-hidden=&quot;true&quot; title=&quot;创建子集&quot; ng-click=&quot;createMenu(node)&quot;&gt;&lt;/i&gt;&lt;i class=&quot;glyphicon glyphicon-pencil&quot; aria-hidden=&quot;true&quot; title=&quot;编辑&quot; ng-click=&quot;editMenu(node)&quot;&gt;&lt;/i&gt;&lt;i class=&quot;glyphicon glyphicon-trash&quot; aria-hidden=&quot;true&quot; title=&quot;删除&quot; ng-click=&quot;deleteMenu(node)&quot;&gt;&lt;/i&gt;&#39;
+            &#125;];
+    &#125;]);
+</code></pre>
+<p><strong>效果如下</strong><br><img src="https://img-blog.csdnimg.cn/20190722160410418.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80Mzk5Njk5OQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><strong>二：Angular-Tree——-angular-tree-control.js</strong></p>
+<blockquote>
+<p>引入步骤<br>1.css：&lt;link rel=”stylesheet” href=”./tree-control.css”&gt;&lt;link rel=”stylesheet” href=”./tree-control-attribute.css”&gt;<br>2.js：&lt;script src=”./angular.min.js”&gt;</script>&lt;script src=”./angular-tree-control.js”&gt;</script>&lt;script src=”./lib/angular-tree/context-menu.js”&gt;</script><br>3.模块注入：var app = angular.module(‘App’,[‘treeControl’]);<br>4.控制器里的内容就是定义数据结构，网上有案例，可以参考官网：<a target="_blank" rel="noopener" href="http://wix.github.io/angular-tree-control/">http://wix.github.io/angular-tree-control/</a></p>
+</blockquote>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                        
+                            <li title="1" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="false"
+        data-ae="false"
+        data-ci=""
+        data-cs=""
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>
